@@ -1,0 +1,946 @@
+{% extends 'base/cmi-index.html' %}
+{% load embed_video_tags %}
+{% load static %}
+
+{% block title %}About | AANR Knowledge Hub{% endblock %}
+
+{% block stylesheet %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+<style>
+  :root {
+    --primary: #2c6e49;
+    --secondary: #4c956c;
+    --accent: #90e0c9;
+    --light: #f8f9fa;
+    --dark: #212529;
+    --navbar-bg: #2c6e49;
+    --text-color: #333;
+    --section-padding: 4rem 0;
+    --transition: all 0.3s ease;
+  }
+
+  .main-content {
+    padding-top: 2rem;
+    padding-bottom: 4rem;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  /* Page Header */
+  .page-header {
+    padding: 4rem 0;
+    margin-bottom: 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-header::after {
+    content: '';
+    position: absolute;
+    bottom: -50px;
+    left: 0;
+    width: 100%;
+    height: 100px;
+  }
+
+  .header-content {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .page-title {
+    font-size: 2.8rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    position: relative;
+    display: inline-block;
+    color: var(--primary);
+
+  }
+
+  .page-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background-color: var(--accent);
+  }
+
+  .page-subtitle {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 1.5rem auto 0;
+  }
+
+  /* Section Styling */
+  .section {
+    padding: var(--section-padding);
+  }
+
+  .section-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 1.5rem;
+    position: relative;
+    padding-bottom: 0.8rem;
+  }
+
+  .section-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background-color: var(--accent);
+  }
+
+  .section-subtitle {
+    font-size: 1.1rem;
+    color: #555;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+  }
+
+  /* About Content */
+  .about-container {
+    background-color: white;
+    border-radius: 10px;
+    padding: 2rem;
+    margin-bottom: 3rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    line-height: 1.8;
+    color: var(--text-color);
+  }
+
+  .about-container h1, 
+  .about-container h2, 
+  .about-container h3, 
+  .about-container h4 {
+    color: var(--primary);
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .about-container p {
+    margin-bottom: 1.5rem;
+    line-height: 1.8;
+  }
+
+  .about-container ul, 
+  .about-container ol {
+    margin-bottom: 1.5rem;
+    padding-left: 2rem;
+  }
+
+  .about-container li {
+    margin-bottom: 0.5rem;
+  }
+
+  .about-container img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin: 1.5rem 0;
+  }
+
+  .about-container a {
+    color: var(--primary);
+    text-decoration: none;
+    transition: var(--transition);
+  }
+
+  .about-container a:hover {
+    color: var(--secondary);
+    text-decoration: underline;
+  }
+
+  /* Video Section */
+  .video-section {
+    padding: var(--section-padding);
+    margin: 3rem 0;
+    border-radius: 10px;
+  }
+
+  .video-content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .video-container {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    margin: 2rem 0;
+  }
+
+  .video-description {
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #555;
+  }
+
+  /* CMI Section */
+  .cmi-section {
+    padding: var(--section-padding);
+  }
+
+  .cmi-container {
+    background-color: white;
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  }
+
+  .cmi-description {
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #555;
+  }
+
+  .cmi-images {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+
+  .cmi-item {
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transition: var(--transition);
+    text-align: center;
+    padding: 1.5rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .cmi-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+  }
+
+  .cmi-item img {
+    max-width: 120px;
+    height: auto;
+    margin-bottom: 1rem;
+    transition: var(--transition);
+  }
+
+  .cmi-item:hover img {
+    transform: scale(1.05);
+  }
+
+  .cmi-details {
+    padding: 1rem 0;
+  }
+
+  .cmi-name {
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--primary);
+    display: block;
+    margin-top: 0.5rem;
+  }
+
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .page-title {
+      font-size: 2.2rem;
+    }
+    
+    .section-title {
+      font-size: 1.8rem;
+    }
+    
+    .about-container,
+    .cmi-container {
+      padding: 1.5rem;
+    }
+    
+    .cmi-images {
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 1.5rem;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .page-title {
+      font-size: 1.8rem;
+    }
+    
+    .page-subtitle {
+      font-size: 1rem;
+    }
+    
+    .section-title {
+      font-size: 1.5rem;
+    }
+    
+    .cmi-images {
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 1rem;
+    }
+  }
+
+  /* Animation Classes */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .fade-up.animated {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .container {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 24px;
+}
+
+/* Section Styles */
+.section {
+  margin-bottom: 64px;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.section-header h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #006400
+;
+  margin-bottom: 8px;
+  letter-spacing: 1px;
+}
+
+.section-subtitle {
+  color: #4c956c;
+  font-size: 1.1rem;
+  margin-bottom: 0;
+}
+
+/* Card Styles */
+.card {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(60, 72, 88, 0.08);
+  padding: 40px 32px;
+  margin-bottom: 32px;
+}
+
+.card-grid {
+  display: flex;
+  gap: 32px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 24px;
+}
+
+.feature-card {
+  background: #f5f7fa;
+  border-radius: 14px;
+  box-shadow: 0 2px 8px rgba(60, 72, 88, 0.06);
+  padding: 28px 22px 22px 22px;
+  flex: 1 1 260px;
+  min-width: 260px;
+  max-width: 340px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.feature-card:hover {
+  box-shadow: 0 8px 32px rgba(60, 72, 88, 0.13);
+  transform: translateY(-4px) scale(1.03);
+}
+
+.feature-card .icon {
+  font-size: 2.2rem;
+  color: #90e0c9;
+  margin-bottom: 12px;
+}
+
+.feature-card h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #2c6e49;
+}
+
+.feature-card p {
+  font-size: 1rem;
+  color: #444;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.feature-card ul {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 0.98rem;
+  color: #333;
+}
+
+/* Timeline Styles */
+.timeline {
+  position: relative;
+  margin: 40px 0 0 0;
+  padding-left: 30px;
+}
+
+.timeline:before {
+  content: '';
+  position: absolute;
+  left: 18px;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: linear-gradient(to bottom, #4c956c 0%, #b3c0f7 100%);
+  border-radius: 2px;
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 38px;
+  padding-left: 32px;
+}
+
+.timeline-dot {
+  position: absolute;
+  left: -2px;
+  top: 8px;
+  width: 18px;
+  height: 18px;
+  background: #fff;
+  border: 4px solid #4c956c;
+  border-radius: 50%;
+  z-index: 1;
+  box-shadow: 0 2px 8px rgba(60, 72, 88, 0.10);
+}
+
+.timeline-content {
+  background: #f5f7fa;
+  border-radius: 10px;
+  padding: 18px 22px;
+  box-shadow: 0 1px 4px rgba(60, 72, 88, 0.06);
+}
+
+.timeline-date {
+  font-size: 0.98rem;
+  color: #4c956c;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.timeline-title {
+  font-size: 1.1rem;
+  color: #2c6e49;
+  margin-bottom: 6px;
+}
+
+.timeline-description {
+  font-size: 0.98rem;
+  color: #444;
+}
+
+/* Team Section */
+.team-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  justify-content: center;
+  margin-top: 32px;
+}
+
+.team-member {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(60, 72, 88, 0.10);
+  padding: 28px 22px 22px 22px;
+  max-width: 270px;
+  min-width: 220px;
+  text-align: center;
+  transition: box-shadow 0.2s, transform 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.team-member:hover {
+  box-shadow: 0 8px 32px rgba(60, 72, 88, 0.13);
+  transform: translateY(-4px) scale(1.03);
+}
+
+.team-member img {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 14px;
+  border: 3px solid #4c956c;
+}
+
+.team-member h4 {
+  font-size: 1.1rem;
+  color: #2c6e49;
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+.team-member .position {
+  color: #4c956c;
+  font-size: 0.98rem;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.team-member .bio {
+  font-size: 0.97rem;
+  color: #444;
+  margin-bottom: 10px;
+}
+
+.team-member .contact {
+  display: inline-block;
+  color: #90e0c9;
+  font-size: 0.97rem;
+  margin-bottom: 8px;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.team-member .contact:hover {
+  color: #006400
+;
+}
+
+.social-links {
+  margin-top: 6px;
+}
+
+.social-links a {
+  color: #4c956c;
+  font-size: 1.2rem;
+  margin: 0 6px;
+  transition: color 0.2s;
+}
+
+.social-links a:hover {
+  color: #2c6e49;
+}
+.section-card {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(44, 62, 80, 0.10);
+  padding: 40px 32px;
+  margin-top: 60px;
+  margin-bottom: 32px;
+  transition: box-shadow 0.3s;
+}
+
+.section-card:hover {
+  box-shadow: 0 8px 32px rgba(44, 62, 80, 0.18);
+}
+
+.section-card h3 {
+  color: #2e8b57;
+  font-size: 1.5rem;
+  margin-bottom: 18px;
+  font-weight: 700;
+}
+
+.section-card ul {
+  padding-left: 22px;
+  margin-bottom: 18px;
+}
+
+.section-card li {
+  margin-bottom: 8px;
+  font-size: 1.08rem;
+  color: #333;
+}
+
+.section-card p {
+  color: #555;
+  font-size: 1.05rem;
+  margin-bottom: 0;
+}
+  .default-profile-icon {
+    width: 80px;
+    height: 80px;
+    background-color: #f0f0f0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+    font-size: 36px;
+    border: 1px solid #ccc;
+  }
+  .social-links {
+    display: flex;
+    gap: 10px;
+    margin-top: 8px;
+  }
+
+  .social-links .social-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8f9fa;
+    color: #6c757d;
+    border: 1.5px solid #ced4da;
+    border-radius: 50%;
+    width: 34px;
+    height: 34px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 16px;
+  }
+
+  .social-links .social-icon i {
+    color: #6c757d;
+  }
+
+  .social-links .social-icon:hover {
+    background-color: #e9ecef;
+    color: #343a40;
+    border-color: #adb5bd;
+  }
+
+  .social-links .social-icon:hover i {
+    color: #343a40;
+  }
+/* Responsive Design */
+@media (max-width: 900px) {
+  .card-grid, .team-grid {
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+  }
+  .card, .team-member {
+    padding: 24px 12px;
+  }
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 0 6px;
+  }
+  .section-header h2 {
+    font-size: 1.4rem;
+  }
+  .card {
+    padding: 16px 4px;
+  }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="main-content">
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="header-content" data-aos="fade-up">
+      <h1 class="page-title">About {{ about.project_name }}</h1>
+      <p class="page-subtitle">{{ about.project_details }}</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- About Section -->
+    <section class="section">
+      <h2 class="section-title" data-aos="fade-up">{{ about.project_name }}</h2>
+      <div class="about-container" id="summernote-content" data-aos="fade-up" data-aos-delay="100">
+       {{ about.content|safe }}
+      </div>
+    </section>
+
+        <div class="container">
+          <!-- Rationale Section -->
+          <section class="section" id="rationale">
+            <div class="card">
+              <div class="section-header">
+                <h2>Project Rationale</h2>
+                <p class="section-subtitle">{{ about.project_rationale_desc }}</p>
+              </div>
+              
+           <div class="card-grid">
+            {% for rationale in rationales %}
+              <div class="feature-card">
+                <div class="icon">
+                  <i class="{{ rationale.icon }}"></i>
+                </div>
+                <h3>{{ rationale.title }}</h3>
+                <p>{{ rationale.detail }}</p>
+              </div>
+            {% empty %}
+              <p class="text-muted">No rationale added yet.</p>
+            {% endfor %}
+          </div>
+
+      <div class="section-card">
+        <h3>Background and Significance</h3>
+        <p>{{ about.background_signature_desc }}</p>
+      </div>
+      </div>
+    </section>
+
+    <!-- Objectives Section -->
+    <section class="section" id="objectives">
+      <div class="card">
+        <div class="section-header">
+          <h2>Project Objectives</h2>
+          <p class="section-subtitle">
+          {{ about.project_objectives_desc }}
+          </p>
+        </div>
+        
+          <div class="card-grid">
+            {% for objective in objectives %}
+              <div class="feature-card">
+                <div class="icon">
+                  <i class="{{ objective.icon }}"></i>
+                </div>
+                <h3>{{ objective.title }}</h3>
+                <p>{{ objective.detail }}</p>
+              </div>
+            {% empty %}
+              <p class="text-muted">No objective added yet.</p>
+            {% endfor %}
+          </div>
+        
+       <div class="section-card">
+        <h3>Detailed Objectives</h3>
+        <ul>
+          {% for objectivedetail in objectivesdetail %}
+          <li>{{ objectivedetail.detail }}</li>
+          {% empty %}
+              <p class="text-muted">No objective detail added yet.</p>
+            {% endfor %}
+        </ul>
+        <!-- <p class="section-subtitle">{{ about.project_details }}</p> -->
+      </div>
+      </div>
+    </section>
+
+    <!-- Activities Section -->
+    <section class="section" id="activities">
+      <div class="section-header">
+        <h2>Research Activities</h2>
+        <p class="section-subtitle">{{ about.research_activities_desc }}</p>
+      </div>
+      
+        <div class="card-grid">
+            {% for activity in activities %}
+              <div class="feature-card">
+                <div class="icon">
+                  <i class="{{ activity.icon }}"></i>
+                </div>
+                <h3>{{ activity.title }}</h3>
+                <p>{{ activity.detail }}</p>
+              </div>
+            {% empty %}
+              <p class="text-muted">No activity added yet.</p>
+            {% endfor %}
+          </div>
+    </section>
+
+    <!-- Timeline Section -->
+    <section class="section" id="timeline">
+      <div class="section-header">
+        <h2>Project Timeline</h2>
+        <p class="section-subtitle">{{ about.project_timeline_desc }}</p>
+      </div>
+      
+      <div class="card">
+        <div class="timeline">
+          {% for timeline in timelines %}
+          <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-date">{{ timeline.header }}</div>
+            <h3 class="timeline-title">{{ timeline.title }}</h3>
+            <p class="timeline-description">{{ timeline.description }}</p>
+          </div>
+        </div>
+            {% empty %}
+              <p class="text-muted">No timeline added yet.</p>
+            {% endfor %}
+
+        </div>
+      </div>
+    </section>
+
+   
+
+      <!-- Team Section -->
+      <section class="section" id="team">
+        <div class="section-header">
+          <h2>Project Team</h2>
+          <p class="section-subtitle">Meet our interdisciplinary team of experts</p>
+        </div>
+
+        <div class="team-grid">
+          {% for member in team_members %}
+          <div class="team-member">
+            {% if member.profile_image %}
+              <img src="{{ member.profile_image.url }}" alt="{{ member.name }}">
+           {% else %}
+              <div class="default-profile-icon">
+                <i class="fas fa-user"></i>
+              </div>
+            {% endif %}
+
+
+            <h4>{{ member.name }}</h4>
+            <p class="position">{{ member.role }}</p>
+            <p class="bio">{{ member.description }}</p>
+            
+            <a href="mailto:{{ member.email }}" class="contact">
+              <i class="fas fa-envelope"></i> {{ member.email }}
+            </a>
+
+            <div class="social-links">
+              {% for social in member.socials.all %}
+                <a href="{{ social.link }}" target="_blank" class="social-icon">
+                  <i class="{{ social.platform }}"></i>
+                </a>
+              {% empty %}
+                <span class="text-muted">No socials</span>
+              {% endfor %}
+            </div>
+
+          </div>
+        {% endfor %}
+
+        </div>
+      </section>
+
+  </div>
+
+  <!-- <footer id="contact">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-column">
+          <h3>RAISE Program</h3>
+          <p style="color: rgba(255, 255, 255, 0.8); margin-bottom: 20px; font-size: 1.1rem;">Advancing research and innovation for sustainable excellence in healthcare technology and biomedical engineering solutions.</p>
+          <div class="footer-social">
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+            <a href="#"><i class="fab fa-researchgate"></i></a>
+          </div>
+        </div>
+        
+        <div class="footer-column">
+          <h3>Quick Links</h3>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="raise.html">About RAISE</a></li>
+            <li><a href="project1.html">ABH Project</a></li>
+            <li><a href="#">Resources</a></li>
+            <li><a href="#">Publications</a></li>
+            <li><a href="#">News & Events</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-column">
+          <h3>Contact Us</h3>
+          <ul class="footer-links">
+            <li><a href="mailto:info@raise.edu"><i class="fas fa-envelope"></i> info@raise.edu</a></li>
+            <li><a href="tel:+18005551234"><i class="fas fa-phone"></i> +1 (800) 555-1234</a></li>
+            <li><a href="#"><i class="fas fa-map-marker-alt"></i> 123 Research Drive, Innovation Center, Suite 500</a></li>
+            <li><a href="#"><i class="fas fa-clock"></i> Mon-Fri: 9am-5pm</a></li>
+          </ul>
+        </div>
+      </div>
+  </div> -->
+</div>
+{% endblock %}
+
+{% block script %}
+<!-- JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script>
+$(document).ready(function () {
+  // Initialize AOS (Animate On Scroll)
+  AOS.init({
+    duration: 800,
+    easing: 'ease-in-out',
+    once: true,
+    offset: 100
+  });
+
+  // Wait for Summernote to be fully initialized
+  $('textarea[name="content"]').on('summernote.init', function () {
+    // Apply styles after Summernote is initialized
+    applyCustomStyles();
+  });
+  
+  // Initialize Summernote
+  $('textarea[name="content"]').summernote({
+    height: 300,
+    placeholder: 'Write here...',
+    toolbar: [
+      // Your toolbar configuration here
+    ],
+    // Other Summernote options
+  });
+  
+  // Function to apply custom styles
+  function applyCustomStyles() {
+    $('#summernote-content .note-editable').css({
+      'color': '#333',
+      'line-height': '1.8'
+    });
+  }
+
+  // Simple animation for elements
+  function animateElements() {
+    $('.fade-up').each(function() {
+      const elementTop = $(this).offset().top;
+      const viewportBottom = $(window).scrollTop() + $(window).height();
+      
+      if (elementTop < viewportBottom - 100) {
+        $(this).addClass('animated');
+      }
+    });
+  }
+  
+  // Run once on page load
+  animateElements();
+  
+  // Run on scroll
+  $(window).on('scroll', animateElements);
+});
+</script>
+{% endblock script %}

@@ -1,0 +1,722 @@
+{% extends 'base/cmi-index.html' %} {% load static %} {% block title %}
+  Forum | AANR Knowledge Hub
+{% endblock %} {% block stylesheet %}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+<link rel="stylesheet" href="{% static "style/css/cmi-forum.css" %}">
+{% endblock %} {% block content %}
+  <div class="main-content">
+    <div class="container">
+      <!-- Forum Header Section -->
+      <div class="forum-header" data-aos="fade-up">
+        <img src="{% static 'assets/images/goma.JPG' %}" alt="AANR Forum" class="forum-background-img" />
+        <div class="forum-header-content">
+          <h1 class="forum-title">AANR Knowledge Community Forum</h1>
+          <p class="forum-subtitle">Join the conversation and grow your knowledge in Agriculture, Aquatic, and Natural Resources!</p>
+          <button id="toggle-discussion" class="ask-question-btn" data-toggle="modal" data-target="#questionModal"><i class="fas fa-plus-circle"></i> Ask Your Question</button>
+        </div>
+      </div>
+
+      <!-- Search Section -->
+      <div class="search-section" data-aos="fade-up" data-aos-delay="100">
+        <div class="search-container">
+          <div class="search-input-wrapper">
+            <input type="text" id="search_term" class="search-input" placeholder="What's on your mind? Search for topics..." />
+            <i class="fas fa-search search-icon"></i>
+          </div>
+          <button class="search-button" id="search_button"><i class="fas fa-search"></i> Search</button>
+        </div>
+      </div>
+
+      <!-- Topic Pills Section -->
+      <div class="row">
+        <div class="col-md-12">
+          <!-- Topic Pills -->
+          <div class="topic-pills" data-aos="fade-up" data-aos-delay="150">
+            <div class="topic-pill active">All Topics</div>
+            {% for commodity in commodities %}
+            <div class="topic-pill">{{commodity.commodity_name}}</div>
+            {% endfor %}
+          </div>
+
+          <!-- Tab Navigation -->
+          <div class="forum-tabs" data-aos="fade-up" data-aos-delay="250">
+            <button class="forum-tab active" id="newQuestions-tab" data-target="newQuestions"><i class="fas fa-clock"></i> New Questions</button>
+            <button class="forum-tab" id="popularQuestions-tab" data-target="popularQuestions"><i class="fas fa-fire"></i> Popular Questions</button>
+            <button class="forum-tab" id="myQuestions-tab" data-target="myQuestions"><i class="fas fa-user-circle"></i> My Questions</button>
+          </div>
+
+          <!-- Display Controls -->
+          <div class="display-controls" data-aos="fade-up" data-aos-delay="300">
+            <div class="items-per-page">
+              <label for="itemCount">Show:</label>
+              <select id="itemCount" class="items-select" onchange="updateDisplay()">
+                <option value="5">5 items</option>
+                <option value="10" selected>10 items</option>
+                <option value="20">20 items</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Forum Posts -->
+          <div class="forum-posts" id="newQuestions" data-aos="fade-up" data-aos-delay="350">
+            <!-- Enhanced Post Card with Interactions -->
+            {% if forums %}
+              {% for forum in forums %}
+                <div class="post-card discussion-post fade-in" data-tags="{{ forum.commodity_id.all|join:',' }}">
+                  <div class="post-header">
+                    <div class="post-avatar">
+                      <img src="{% static 'assets/images/default_profile.png' %}" alt="User Avatar" />
+                    </div>
+                    <div class="post-meta">
+                      <div class="post-author">
+                        <span class="author-name">{{ forum.author.first_name|capfirst }} {{ forum.author.last_name|capfirst }}</span>
+                      </div>
+                      <a href="{% url 'appCmi:display-forum' slug=forum.slug %}" class="post-title">{{ forum.forum_title|upper }}</a>
+                      <div class="post-tags">
+                        {% for commodity in forum.commodity_id.all %}
+                          <a href="#" class="post-tag">{{ commodity }}</a>
+                        {% endfor %}
+                      </div>
+                      <div class="post-stats">
+                        <span class="post-stat"><i class="far fa-calendar-alt"></i> {{ forum.date_posted|date:'F d, Y' }}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="post-content">
+                    <p class="forum-question-text">{{ forum.forum_question|linebreaksbr|safe }}</p>
+                  </div>
+                  <div class="post-interactions">
+                    <div class="interaction-item like-button" data-slug="{{ forum.slug }}" onclick="toggleLike(this)">
+                      <i class="far fa-thumbs-up{% if forum.is_liked_by %} liked-icon{% endif %}"></i>
+                      <span class="interaction-count">{{ forum.total_likes|default:'0' }}</span>
+                    </div>
+                    <div class="interaction-item" onclick="window.location.href='{% url 'appCmi:display-forum' slug=forum.slug %}'">
+                      <i class="far fa-comment-dots"></i>
+                      <span class="interaction-count">{{ forum.comments_count|default:'0' }}</span>
+                    </div>
+                    <div class="interaction-item bookmark-button" data-slug="{{ forum.slug }}" onclick="toggleBookmark(this)">
+                      <i class="far fa-bookmark{% if forum.is_bookmarked_by %} bookmarked-icon{% endif %}"></i>
+                      <span>Save</span>
+                    </div>
+                    <div class="interaction-item">
+                      <i class="fas fa-share-alt"></i>
+                      <span>Share</span>
+                    </div>
+                  </div>
+                </div>
+              {% endfor %}
+            {% endif %}
+          </div>
+
+          <!-- Popular Questions Tab (Hidden Initially) -->
+          <div class="forum-posts" id="popularQuestions" style="display: none">
+            {% if popular_forums %}
+              {% for forum in popular_forums %}
+                <div class="post-card discussion-post fade-in" data-tags="{{ forum.commodity_id.all|join:',' }}">
+                  <div class="post-header">
+                    <div class="post-avatar">
+                      <img src="{% static 'assets/images/default_profile.png' %}" alt="User Avatar" />
+                    </div>
+                    <div class="post-meta">
+                      <div class="post-author">
+                        <span class="author-name">{{ forum.author.first_name|capfirst }} {{ forum.author.last_name|capfirst }}</span>
+                      </div>
+                      <a href="{% url 'appCmi:display-forum' slug=forum.slug %}" class="post-title">{{ forum.forum_title|upper }}</a>
+                      <div class="post-tags">
+                        {% for commodity in forum.commodity_id.all %}
+                          <a href="#" class="post-tag">{{ commodity }}</a>
+                        {% endfor %}
+                      </div>
+                      <div class="post-stats">
+                        <span class="post-stat"><i class="far fa-calendar-alt"></i> {{ forum.date_posted|date:'F d, Y' }}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="post-content">
+                    <p class="forum-question-text">{{ forum.forum_question|linebreaksbr|safe }}</p>
+                  </div>
+                  <div class="post-interactions">
+                    <div class="interaction-item like-button" data-slug="{{ forum.slug }}" onclick="toggleLike(this)">
+                      <i class="far fa-thumbs-up{% if forum.is_liked_by %} liked-icon{% endif %}"></i>
+                      <span class="interaction-count">{{ forum.total_likes|default:'0' }}</span>
+                    </div>
+                    <div class="interaction-item" onclick="window.location.href='{% url 'appCmi:display-forum' slug=forum.slug %}'">
+                      <i class="far fa-comment-dots"></i>
+                      <span class="interaction-count">{{ forum.comments_count|default:'0' }}</span>
+                    </div>
+                    <div class="interaction-item bookmark-button" data-slug="{{ forum.slug }}" onclick="toggleBookmark(this)">
+                      <i class="far fa-bookmark{% if forum.is_bookmarked_by %} bookmarked-icon{% endif %}"></i>
+                      <span>Save</span>
+                    </div>
+                    <div class="interaction-item">
+                      <i class="fas fa-share-alt"></i>
+                      <span>Share</span>
+                    </div>
+                  </div>
+                </div>
+              {% endfor %}
+            {% endif %}
+          </div>
+
+          <div class="forum-posts" id="myQuestions" style="display: none">
+            {% if user_forums %}
+              {% for forum in user_forums %}
+                <div class="post-card discussion-post fade-in" data-tags="{{ forum.commodity_id.all|join:',' }}">
+                  <div class="post-header">
+                    <div class="post-avatar">
+                      <img src="{% static 'assets/images/default_profile.png' %}" alt="User Avatar" />
+                    </div>
+                    <div class="post-meta">
+                      <div class="post-author">
+                        <span class="author-name">{{ forum.author.first_name|capfirst }} {{ forum.author.last_name|capfirst }}</span>
+                      </div>
+                      <a href="{% url 'appCmi:display-forum' slug=forum.slug %}" class="post-title">{{ forum.forum_title|upper }}</a>
+                      <div class="post-tags">
+                        {% for commodity in forum.commodity_id.all %}
+                          <a href="#" class="post-tag">{{ commodity }}</a>
+                        {% endfor %}
+                      </div>
+                      <div class="post-stats">
+                        <span class="post-stat"><i class="far fa-calendar-alt"></i> {{ forum.date_posted|date:'F d, Y' }}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="post-content">
+                    <p class="forum-question-text">{{ forum.forum_question|linebreaksbr|safe }}</p>
+                  </div>
+                  <div class="post-interactions">
+                    <div class="interaction-item like-button" data-slug="{{ forum.slug }}" onclick="toggleLike(this)">
+                      <i class="far fa-thumbs-up{% if forum.is_liked_by %} liked-icon{% endif %}"></i>
+                      <span class="interaction-count">{{ forum.total_likes|default:'0' }}</span>
+                    </div>
+                    <div class="interaction-item" onclick="window.location.href='{% url 'appCmi:display-forum' slug=forum.slug %}'">
+                      <i class="far fa-comment-dots"></i>
+                      <span class="interaction-count">{{ forum.comments_count|default:'0' }}</span>
+                    </div>
+                    <div class="interaction-item bookmark-button" data-slug="{{ forum.slug }}" onclick="toggleBookmark(this)">
+                      <i class="far fa-bookmark{% if forum.is_bookmarked_by %} bookmarked-icon{% endif %}"></i>
+                      <span>Save</span>
+                    </div>
+                    <div class="interaction-item">
+                      <i class="fas fa-share-alt"></i>
+                      <span>Share</span>
+                    </div>
+                  </div>
+                </div>
+              {% endfor %}
+            {% else %}
+              <!-- Empty State for My Questions -->
+              <div class="forum-empty-state">
+                <div class="empty-icon">
+                  <i class="far fa-comment-dots"></i>
+                </div>
+                <h3 class="empty-title">You haven't asked any questions yet</h3>
+                <p class="empty-message">Start engaging with the community by asking your first question. Our community of experts and fellow farmers are ready to help!</p>
+                <button class="empty-action" data-toggle="modal" data-target="#questionModal"><i class="fas fa-plus-circle"></i> Ask Your First Question</button>
+              </div>
+            {% endif %}
+          </div>
+
+          <!-- Pagination -->
+          <div class="pagination-container" data-aos="fade-up" data-aos-delay="400">
+            <div class="pagination-wrapper">
+              <button class="pagination-button" id="backBtn" onclick="movePage('back')" disabled><i class="fas fa-chevron-left"></i> Previous</button>
+              <button class="pagination-button" id="nextBtn" onclick="movePage('next')">Next <i class="fas fa-chevron-right"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Action Button for Mobile -->
+  <div class="floating-action-button" data-toggle="modal" data-target="#questionModal">
+    <i class="fas fa-plus"></i>
+  </div>
+
+  {% include 'modal/forum-modals/ask-question.html' %}
+{% endblock %} {% block script %}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script>
+    // Initialize AOS
+    document.addEventListener('DOMContentLoaded', function () {
+      AOS.init({
+        duration: 800,
+        once: true,
+        offset: 100,
+        easing: 'ease-out-cubic'
+      })
+    
+      // Initialize the forum functionality
+      initForum()
+    
+      // Initialize commodity selection handling
+      initCommoditySelection()
+    })
+    
+    function initForum() {
+      // Filter dropdown toggle
+      const filterMenu = document.getElementById('filterMenu')
+    
+      // Tab functionality
+      const tabButtons = document.querySelectorAll('.forum-tab')
+      const tabContents = document.querySelectorAll('.forum-posts')
+    
+      tabButtons.forEach((button) => {
+        button.addEventListener('click', function () {
+          // Remove active class from all tabs
+          tabButtons.forEach((btn) => btn.classList.remove('active'))
+    
+          // Add active class to clicked tab
+          this.classList.add('active')
+    
+          // Get the target content
+          const targetId = this.getAttribute('data-target')
+    
+          // Hide all content
+          tabContents.forEach((content) => {
+            content.style.display = 'none'
+          })
+    
+          // Show the target content
+          document.getElementById(targetId).style.display = 'flex'
+        })
+      })
+    
+      // Topic pill selection
+      const topicPills = document.querySelectorAll('.topic-pill')
+    
+      topicPills.forEach((pill) => {
+        pill.addEventListener('click', function () {
+          // Remove active class from all pills
+          topicPills.forEach((p) => p.classList.remove('active'))
+    
+          // Add active class to clicked pill
+          this.classList.add('active')
+        })
+      })
+    
+      // Filter checkbox functionality from Code 2
+      const commodityCheckboxes = document.querySelectorAll('input[name="commodity"]')
+    
+      commodityCheckboxes.forEach((checkbox) => {
+        checkbox.addEventListener('change', function () {
+          const isAllCommodity = this.value === 'all'
+    
+          if (isAllCommodity && this.checked) {
+            // If "All Commodities" is checked, uncheck all other options
+            commodityCheckboxes.forEach((cb) => {
+              if (cb.value !== 'all') {
+                cb.checked = false
+              }
+            })
+            // Show all discussion posts
+            const discussionPosts = document.querySelectorAll('.discussion-post')
+            discussionPosts.forEach((post) => {
+              post.style.display = 'block'
+            })
+          } else if (!isAllCommodity && this.checked) {
+            // If a specific commodity is checked, uncheck "All Commodities"
+            const allCommodityCheckbox = document.querySelector('input[name="commodity"][value="all"]')
+            if (allCommodityCheckbox) {
+              allCommodityCheckbox.checked = false
+            }
+    
+            // Filter posts by the selected commodity
+            filterPostsByCommodity()
+          } else if (!isAllCommodity && !this.checked) {
+            // If a specific commodity is unchecked, check if we need to show all again
+            const anyChecked = Array.from(commodityCheckboxes).some((cb) => cb.value !== 'all' && cb.checked)
+            if (!anyChecked) {
+              // If no specific commodities are checked, check "All Commodities" again
+              const allCommodityCheckbox = document.querySelector('input[name="commodity"][value="all"]')
+              if (allCommodityCheckbox) {
+                allCommodityCheckbox.checked = true
+              }
+              // Show all discussion posts
+              const discussionPosts = document.querySelectorAll('.discussion-post')
+              discussionPosts.forEach((post) => {
+                post.style.display = 'block'
+              })
+            } else {
+              // Filter posts by the remaining checked commodities
+              filterPostsByCommodity()
+            }
+          }
+        })
+      })
+    
+      function filterPostsByCommodity() {
+        const selectedCommodities = Array.from(document.querySelectorAll('input[name="commodity"]:checked')).map((cb) => cb.value)
+    
+        const discussionPosts = document.querySelectorAll('.discussion-post')
+    
+        discussionPosts.forEach((post) => {
+          const postTags = post.dataset.tags ? post.dataset.tags.split(',') : []
+          const shouldShow = selectedCommodities.some((commodity) => postTags.includes(commodity))
+    
+          post.style.display = shouldShow ? 'block' : 'none'
+        })
+      }
+    
+      // Submit question button animation
+      const submitQuestionBtn = document.getElementById('submitQuestion')
+    
+      if (submitQuestionBtn) {
+        submitQuestionBtn.addEventListener('click', async function (e) {
+          e.preventDefault() // Prevent default form submission
+    
+          // Show loading state
+          this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Posting...'
+          this.disabled = true
+    
+          try {
+            // Get the form data
+            const form = document.getElementById('questionForm')
+            const formData = new FormData(form)
+    
+            // Submit the form
+            const response = await fetch(form.action, {
+              method: 'POST',
+              body: formData,
+              headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+              }
+            })
+    
+            const result = await response.json()
+    
+            if (result.success) {
+              // If submission was successful
+              $('#questionModal').modal('hide')
+              showNotification('Question posted successfully!', 'success')
+    
+              // Refresh only the forum-posts div
+              setTimeout(async () => {
+                try {
+                  const response = await fetch(window.location.href)
+                  const text = await response.text()
+                  const parser = new DOMParser()
+                  const doc = parser.parseFromString(text, 'text/html')
+                  const newForumPosts = doc.getElementById('forum-posts')
+    
+                  if (newForumPosts) {
+                    document.getElementById('forum-posts').innerHTML = newForumPosts.innerHTML
+                  }
+                } catch (error) {
+                  console.error('Error refreshing forum posts:', error)
+                }
+              }, 1000) // Wait for 1 second after showing notification before refreshing
+            } else {
+              // If submission failed
+              showNotification(result.message || 'Failed to post question', 'error')
+            }
+          } catch (error) {
+            showNotification('An error occurred while posting your question', 'error')
+          } finally {
+            // Reset button state
+            this.innerHTML = 'Post Question'
+            this.disabled = false
+          }
+        })
+      }
+    }
+    
+    // New function to handle commodity selection from Code 2
+    function initCommoditySelection() {
+      const commoditySelect = document.getElementById('commoditySelect')
+      const selectedCommodityList = document.getElementById('selected-commodity')
+      const commodityIdsInput = document.getElementById('commodity_ids')
+    
+      if (commoditySelect && selectedCommodityList && commodityIdsInput) {
+        const selectedCommodities = new Set()
+    
+        commoditySelect.addEventListener('change', function () {
+          const value = this.value
+          if (!value) return // If no value is selected, exit
+    
+          const text = this.options[this.selectedIndex].text
+    
+          if (!selectedCommodities.has(value)) {
+            // Add to set
+            selectedCommodities.add(value)
+    
+            // Create list item with Code 1's styling
+            const li = document.createElement('li')
+            li.dataset.value = value
+            li.className = 'selected-tag-item' // Add appropriate class for styling
+            li.innerHTML = `
+              ${text}
+              <button type="button" class="remove-tag">
+                <i class="fas fa-times"></i>
+              </button>
+            `
+    
+            // Add remove event
+            li.querySelector('.remove-tag').addEventListener('click', function () {
+              selectedCommodities.delete(value)
+              li.remove()
+              updateCommodityIds()
+            })
+    
+            // Add to list
+            selectedCommodityList.appendChild(li)
+    
+            // Update hidden input
+            updateCommodityIds()
+    
+            // Reset select
+            commoditySelect.selectedIndex = 0
+          }
+        })
+    
+        function updateCommodityIds() {
+          commodityIdsInput.value = Array.from(selectedCommodities).join(',')
+        }
+      }
+    }
+    
+    // Function to handle pagination
+    function movePage(direction) {
+      const backBtn = document.getElementById('backBtn')
+      const nextBtn = document.getElementById('nextBtn')
+    
+      // This is a simplified pagination for demo
+      // In a real app, you would load new content via AJAX
+    
+      if (direction === 'next') {
+        // Disable next button to simulate last page
+        nextBtn.disabled = true
+        backBtn.disabled = false
+    
+        // Animate out current posts
+        const posts = document.querySelectorAll('.post-card')
+        posts.forEach((post, index) => {
+          setTimeout(() => {
+            post.style.opacity = '0'
+            post.style.transform = 'translateY(20px)'
+          }, index * 100)
+        })
+    
+        // Simulate loading new posts
+        setTimeout(() => {
+          showNotification("You've reached the end of available posts", 'info')
+    
+          // Restore posts visibility
+          posts.forEach((post, index) => {
+            setTimeout(() => {
+              post.style.opacity = '1'
+              post.style.transform = 'translateY(0)'
+            }, index * 100)
+          })
+        }, 800)
+      } else {
+        // Go back
+        nextBtn.disabled = false
+        backBtn.disabled = true
+      }
+    }
+    
+    // Notification function
+    function showNotification(message, type = 'info') {
+      // Create notification element if it doesn't exist
+      let notification = document.querySelector('.notification')
+    
+      if (!notification) {
+        notification = document.createElement('div')
+        notification.className = 'notification'
+        document.body.appendChild(notification)
+    
+        // Add styles to the notification element
+        notification.style.position = 'fixed'
+        notification.style.bottom = '20px'
+        notification.style.right = '20px'
+        notification.style.padding = '15px 25px'
+        notification.style.borderRadius = '10px'
+        notification.style.boxShadow = '0 5px 15px rgba(0,0,0,0.2)'
+        notification.style.zIndex = '9999'
+        notification.style.fontWeight = '500'
+        notification.style.transition = 'all 0.3s ease-in-out'
+        notification.style.opacity = '0'
+        notification.style.transform = 'translateY(20px)'
+      }
+    
+      // Set the message
+      notification.textContent = message
+    
+      // Set the notification type
+      if (type === 'success') {
+        notification.style.backgroundColor = '#2c6e49'
+        notification.style.color = 'white'
+      } else if (type === 'error') {
+        notification.style.backgroundColor = '#dc3545'
+        notification.style.color = 'white'
+      } else {
+        notification.style.backgroundColor = '#f8f9fa'
+        notification.style.color = '#333'
+        notification.style.border = '1px solid #ddd'
+      }
+    
+      // Show the notification
+      setTimeout(() => {
+        notification.style.opacity = '1'
+        notification.style.transform = 'translateY(0)'
+      }, 100)
+    
+      // Hide the notification after 3 seconds
+      setTimeout(() => {
+        notification.style.opacity = '0'
+        notification.style.transform = 'translateY(20px)'
+      }, 3000)
+    }
+    
+    // Function to update the display of posts
+    function updateDisplay() {
+      const itemsPerPage = parseInt(document.getElementById('itemCount').value)
+      const currentTab = document.querySelector('.forum-tab.active').getAttribute('data-target')
+      const posts = document.querySelectorAll(`#${currentTab} .post-card`)
+    
+      // Show only the number of posts selected
+      posts.forEach((post, index) => {
+        if (index < itemsPerPage) {
+          post.style.display = 'block'
+        } else {
+          post.style.display = 'none'
+        }
+      })
+    
+      // Update pagination buttons
+      document.getElementById('backBtn').disabled = true
+      document.getElementById('nextBtn').disabled = posts.length <= itemsPerPage
+    }
+    
+    // Add the search functionality from Code 2
+    function initSearchFunctionality() {
+      const searchButton = document.getElementById('search_button')
+      const searchInput = document.getElementById('search_term')
+    
+      if (searchButton && searchInput) {
+        // Event listener for the Enter key press in the search input field
+        searchInput.addEventListener('keypress', function (event) {
+          if (event.key === 'Enter') {
+            performSearch()
+          }
+        })
+    
+        // Event listener for the search button click
+        searchButton.addEventListener('click', performSearch)
+    
+        function performSearch() {
+          const searchTerm = searchInput.value.trim()
+          if (!searchTerm) return
+    
+          // Here you would make an AJAX call to the server
+          // For demonstration, we'll implement a simple client-side search
+          filterPostsBySearchTerm(searchTerm)
+        }
+    
+        function filterPostsBySearchTerm(term) {
+          const lowercaseTerm = term.toLowerCase()
+          const posts = document.querySelectorAll('.post-card')
+          let foundPosts = false
+    
+          posts.forEach((post) => {
+            const title = post.querySelector('.post-title').innerText.toLowerCase()
+            const content = post.querySelector('.post-content').innerText.toLowerCase()
+    
+            if (title.includes(lowercaseTerm) || content.includes(lowercaseTerm)) {
+              post.style.display = 'block'
+              foundPosts = true
+            } else {
+              post.style.display = 'none'
+            }
+          })
+    
+          if (!foundPosts) {
+            showNotification(`No discussions found matching "${term}"`, 'info')
+          }
+        }
+      }
+    }
+    
+    // Call this to initialize the search functionality
+    document.addEventListener('DOMContentLoaded', function () {
+      initSearchFunctionality()
+    })
+
+    // Function to handle like toggling for icon-based UI
+    async function toggleLike(element) {
+      const slug = element.dataset.slug
+      const icon = element.querySelector('i')
+      const countSpan = element.querySelector('.interaction-count')
+      try {
+        const response = await fetch(`/cmi/forum/${slug}/like/`, {
+          method: 'POST',
+          headers: {
+            'X-CSRFToken': getCookie('csrftoken'),
+            'Content-Type': 'application/json'
+          }
+        })
+        const data = await response.json()
+        if (data.success) {
+          // Toggle icon color
+          if (data.is_liked) {
+            icon.classList.add('liked-icon')
+          } else {
+            icon.classList.remove('liked-icon')
+          }
+          // Update count
+          countSpan.textContent = data.total_likes
+          showNotification(data.is_liked ? 'Post liked!' : 'Post unliked!', 'success')
+        }
+      } catch (error) {
+        showNotification('Error updating like status', 'error')
+      }
+    }
+
+    // Function to handle bookmark toggling for icon-based UI
+    async function toggleBookmark(element) {
+      const slug = element.dataset.slug
+      const icon = element.querySelector('i')
+      try {
+        const response = await fetch(`/cmi/forum/${slug}/bookmark/`, {
+          method: 'POST',
+          headers: {
+            'X-CSRFToken': getCookie('csrftoken'),
+            'Content-Type': 'application/json'
+          }
+        })
+        const data = await response.json()
+        if (data.success) {
+          // Toggle icon color
+          if (data.is_bookmarked) {
+            icon.classList.add('bookmarked-icon')
+          } else {
+            icon.classList.remove('bookmarked-icon')
+          }
+          showNotification(data.is_bookmarked ? 'Post bookmarked!' : 'Post unbookmarked!', 'success')
+        }
+      } catch (error) {
+        showNotification('Error updating bookmark status', 'error')
+      }
+    }
+
+    // Helper function to get CSRF token
+    function getCookie(name) {
+      let cookieValue = null
+      if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';')
+        for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim()
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1))
+            break
+          }
+        }
+      }
+      return cookieValue
+    }
+  </script>
+  <script src="{% static 'style/js/cmi-forum.js' %}"></script>
+{% endblock %}

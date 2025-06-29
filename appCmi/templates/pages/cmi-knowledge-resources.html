@@ -1,0 +1,1120 @@
+{% extends 'base/cmi-index.html' %} 
+{% load static %}
+{% load custom_filters %}
+{% block title %} 
+Knowledge Resources | AANR Knowledge Hub {% endblock %}
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static "style/css/cmi-knowledge-resources.css" %}">
+{% endblock stylesheet %}
+
+{% block content %}
+<!-- Header Section -->
+<header class="resources-header">
+    <div class="container">
+        <h1 class="resources-title">AANR Knowledge Resources</h1>
+        <p class="resources-subtitle">Explore our comprehensive collection of resources in Agriculture, Aquatic, and Natural Resources sectors.</p>
+    </div>
+</header>
+
+<!-- Main Content -->
+<main class="container">
+    <!-- Search and Filter Bar -->
+    <div class="filter-bar">
+        <div class="search-wrapper">
+            <form method="get" action="">
+                <span class="search-icon"><i class="fas fa-search"></i></span>
+                <input type="text" id="search-input" name="q" class="search-input" placeholder="Search for resources..." {% if search_query %}value="{{ search_query }}"{% endif %}>
+            </form>
+        </div>
+        <div class="filter-dropdown">
+            <button class="filter-button" id="filter-button">
+                <span>Filter</span>
+                <i class="fas fa-sliders"></i>
+            </button>
+            <div class="filter-menu" id="filter-menu">
+                <form method="get" action="">
+                    {% if search_query %}<input type="hidden" name="q" value="{{ search_query }}">{% endif %}
+                    <div class="filter-group">
+                        <h4 class="filter-group-title">Resource Type</h4>
+                        <div class="filter-option">
+                            <input type="checkbox" id="filter-all" name="type" value="all" {% if not current_tag %}checked{% endif %}>
+                            <label for="filter-all">All Types</label>
+                        </div>
+                        {% for type_choice, type_display in resource_types %}
+                        <div class="filter-option">
+                            <input type="checkbox" id="filter-{{ type_choice }}" name="type" value="{{ type_choice }}">
+                            <label for="filter-{{ type_choice }}">{{ type_display }}</label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    
+                    <div class="filter-group">
+                        <h4 class="filter-group-title">Tags</h4>
+                        <div class="tags-container">
+                            {% for tag in all_tags %}
+                            <div class="filter-option">
+                                <input type="checkbox" id="tag-{{ tag.slug }}" name="tag" value="{{ tag.slug }}" {% if current_tag == tag.slug %}checked{% endif %}>
+                                <label for="tag-{{ tag.slug }}">{{ tag.name }}</label>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <h4 class="filter-group-title">Sort By</h4>
+                        <div class="filter-option">
+                            <input type="radio" name="sort" id="sort-newest" value="newest" checked>
+                            <label for="sort-newest">Newest First</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="radio" name="sort" id="sort-oldest" value="oldest">
+                            <label for="sort-oldest">Oldest First</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="radio" name="sort" id="sort-az" value="az">
+                            <label for="sort-az">A-Z</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="radio" name="sort" id="sort-za" value="za">
+                            <label for="sort-za">Z-A</label>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-actions">
+                        <a href="" class="filter-reset" id="filter-reset">Reset</a>
+                        <button type="submit" class="filter-apply" id="filter-apply">Apply Filters</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Resource Categories -->
+    <div class="resource-categories">
+        <div class="category-pill {% if not current_tag %}active{% endif %}" data-category="all">All Resources</div>
+        {% for resources in knowledge_resources %}
+        <div class="category-pill" data-category="{{resources.machine_name}}">{{resources.knowledge_title}}</div>
+        {% endfor %}
+    </div>
+    
+    <!-- List of All Resources -->
+    <section class="resources-section">
+        <h2 class="section-title">Knowledge Resources</h2>
+        <div class="resources-grid" id="resources-grid">
+            {% if all_resources %}
+                {% for resource in all_resources %}
+                <div class="resource-card" data-id="{{ resource.id }}" value="{{ resource.resource_type|get_machine_name }}">
+                    <div class="resource-header">
+                        <h3 class="resource-title">{{ resource.title }}</h3>
+                        <div class="resource-meta">
+                            <div class="resource-meta-item">
+                                <i class="fa-solid fa-leaf"></i>
+                                <span>{{ resource.resource_type|get_knowledge_title }}</span>
+                            </div>
+                            <div class="resource-meta-item">
+                                <i class="far fa-calendar-alt"></i>
+                                <span>{{ resource.created_at|date:"F d, Y" }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="resource-content">
+                        <p class="resource-description">{{ resource.description|truncatechars:150|capfirst }}</p>
+                        <div class="resource-tags">
+                            {% for tag in resource.tags.all|slice:":3" %}
+                                <span class="resource-tag">{{ tag.name }}</span>
+                            {% endfor %}
+                            {% if resource.tags.count > 3 %}
+                                <span class="resource-tag">+{{ resource.tags.count|add:"-3" }} more</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="resource-footer">
+                        <a href="{% url 'appCmi:cmi-display-post' slug=resource.slug %}" class="resource-button">
+                            View
+                        </a>
+                        <div class="resource-actions">
+                            <button class="action-button bookmark-button" title="Bookmark" data-slug="{{ resource.slug }}">
+                                {% if resource.is_bookmarked %}
+                                    <i class="fas fa-bookmark"></i>  <!-- Solid bookmark icon for bookmarked resources -->
+                                {% else %}
+                                    <i class="far fa-bookmark"></i>  <!-- Regular bookmark icon for non-bookmarked resources -->
+                                {% endif %}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="empty-state">
+                    <div class="empty-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3 class="empty-title">No Resources Found</h3>
+                    <p class="empty-message">We couldn't find any resources matching your search criteria. Try adjusting your filters or search term.</p>
+                    <a href="" class="empty-action">
+                        <i class="fas fa-sync"></i> Reset Filters
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+        
+        {% if all_resources.has_other_pages %}
+        <div class="pagination">
+            {% if all_resources.has_previous %}
+                <a href="?page=1{% if search_query %}&q={{ search_query }}{% endif %}{% if current_tag %}&tag={{ current_tag }}{% endif %}" class="page-button"><i class="fas fa-angle-double-left"></i></a>
+                <a href="?page={{ all_resources.previous_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}{% if current_tag %}&tag={{ current_tag }}{% endif %}" class="page-button"><i class="fas fa-angle-left"></i></a>
+            {% else %}
+                <span class="page-button disabled"><i class="fas fa-angle-double-left"></i></span>
+                <span class="page-button disabled"><i class="fas fa-angle-left"></i></span>
+            {% endif %}
+            
+            {% for i in all_resources.paginator.page_range %}
+                {% if all_resources.number == i %}
+                    <span class="page-button active">{{ i }}</span>
+                {% elif i > all_resources.number|add:'-3' and i < all_resources.number|add:'3' %}
+                    <a href="?page={{ i }}{% if search_query %}&q={{ search_query }}{% endif %}{% if current_tag %}&tag={{ current_tag }}{% endif %}" class="page-button">{{ i }}</a>
+                {% endif %}
+            {% endfor %}
+            
+            {% if all_resources.has_next %}
+                <a href="?page={{ all_resources.next_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}{% if current_tag %}&tag={{ current_tag }}{% endif %}" class="page-button"><i class="fas fa-angle-right"></i></a>
+                <a href="?page={{ all_resources.paginator.num_pages }}{% if search_query %}&q={{ search_query }}{% endif %}{% if current_tag %}&tag={{ current_tag }}{% endif %}" class="page-button"><i class="fas fa-angle-double-right"></i></a>
+            {% else %}
+                <span class="page-button disabled"><i class="fas fa-angle-right"></i></span>
+                <span class="page-button disabled"><i class="fas fa-angle-double-right"></i></span>
+            {% endif %}
+        </div>
+        {% endif %}
+    </section>
+    
+    <!-- Resource Categories Sections -->
+    {% if featured_resources %}
+    <section class="resources-section">
+        <h2 class="section-title">Featured Resources</h2>
+        <div class="resources-row">
+            {% for resource in featured_resources|slice:":3" %}
+            <div class="resource-card featured-card" data-id="{{ resource.id }}" data-type="{{ resource.machine_name }}">
+                <div class="resource-header">
+                    <span class="resource-type">{{  resource.resource_type|get_knowledge_title }}</span>
+                    <h3 class="resource-title">{{ resource.title }}</h3>
+                </div>
+                <div class="resource-content">
+                    <p class="resource-description">{{ resource.description|truncatechars:120 }}</p>
+                </div>
+                <div class="resource-footer">
+                    <a href="" class="resource-button">
+                        <i class="fas fa-eye"></i> View Details
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+    {% endif %}
+    
+    <!-- Individual Resource Type Sections -->
+    {% if events %}
+    <section class="resources-section">
+        <h2 class="section-title">Events <span class="resource-count">({{ events_count }})</span></h2>
+        <div class="resources-row">
+            {% for resource in events|slice:":3" %}
+            <div class="resource-card" data-id="{{ resource.id }}" value="events">
+                <div class="resource-header">
+                    <span class="resource-type">{{  resource.resource_type|get_knowledge_title }}</span>
+                    <h3 class="resource-title">{{ resource.title }}</h3>
+                    <div class="resource-meta">
+                        <div class="resource-meta-item">
+                            <i class="far fa-calendar-alt"></i>
+                            <span>{{ resource.event.start_date|date:"F d, Y" }}</span>
+                        </div>
+                        <div class="resource-meta-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>{{ resource.event.location }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="resource-content">
+                    <p class="resource-description">{{ resource.description|truncatechars:100 }}</p>
+                </div>
+                <div class="resource-footer">
+                    <a href="" class="resource-button">
+                        <i class="fas fa-eye"></i> View Details
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% if events_count > 3 %}
+        <div class="view-more-container">
+            <a href="?type=event" class="view-more-link">View all Events <i class="fas fa-arrow-right"></i></a>
+        </div>
+        {% endif %}
+    </section>
+    {% endif %}
+    
+    {% if publications %}
+    <section class="resources-section">
+        <h2 class="section-title">Publications <span class="resource-count">({{ publications_count }})</span></h2>
+        <div class="resources-row">
+            {% for resource in publications|slice:":3" %}
+            <div class="resource-card" data-id="{{ resource.id }}" value="publications">
+                <div class="resource-header">
+                    <span class="resource-type">{{  resource.resource_type|get_knowledge_title }}</span>
+                    <h3 class="resource-title">{{ resource.title }}</h3>
+                    <div class="resource-meta">
+                        <div class="resource-meta-item">
+                            <i class="fas fa-user"></i>
+                            <span>{{ resource.publication.authors }}</span>
+                        </div>
+                        <div class="resource-meta-item">
+                            <i class="far fa-calendar-alt"></i>
+                            <span>{{ resource.publication.publication_date|date:"F d, Y" }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="resource-content">
+                    <p class="resource-description">{{ resource.description|truncatechars:100 }}</p>
+                </div>
+                <div class="resource-footer">
+                    <a href="" class="resource-button">
+                        <i class="fas fa-eye"></i> View Details
+                    </a>
+                    <div class="resource-actions">
+                        <a href="{{ resource.publication.publication_file.url }}" class="action-button" title="Download">
+                            <i class="fas fa-download"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% if publications_count > 3 %}
+        <div class="view-more-container">
+            <a href="?type=publication" class="view-more-link">View all Publications <i class="fas fa-arrow-right"></i></a>
+        </div>
+        {% endif %}
+    </section>
+    {% endif %}
+    
+    {% if news_items %}
+    <section class="resources-section">
+        <h2 class="section-title">News <span class="resource-count">({{ news_count }})</span></h2>
+        <div class="resources-row">
+            {% for resource in news_items|slice:":3" %}
+            <div class="resource-card" data-id="{{ resource.id }}" value="news">
+                <div class="resource-header">
+                    <span class="resource-type">{{  resource.resource_type|get_knowledge_title }}</span>
+                    <h3 class="resource-title">{{ resource.title }}</h3>
+                    <div class="resource-meta">
+                        <div class="resource-meta-item">
+                            <i class="fas fa-newspaper"></i>
+                            <span>{{ resource.news.source }}</span>
+                        </div>
+                        <div class="resource-meta-item">
+                            <i class="far fa-calendar-alt"></i>
+                            <span>{{ resource.news.publication_date|date:"F d, Y" }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="resource-content">
+                    <p class="resource-description">{{ resource.description|truncatechars:100 }}</p>
+                </div>
+                <div class="resource-footer">
+                    <a href="" class="resource-button">
+                        <i class="fas fa-eye"></i> View Details
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% if news_count > 3 %}
+        <div class="view-more-container">
+            <a href="?type=news" class="view-more-link">View all News <i class="fas fa-arrow-right"></i></a>
+        </div>
+        {% endif %}
+    </section>
+    {% endif %}
+    
+    {% if info_systems %}
+    <section class="resources-section">
+        <h2 class="section-title">Information Systems <span class="resource-count">({{ info_systems_count }})</span></h2>
+        <div class="resources-row">
+            {% for resource in info_systems|slice:":3" %}
+            <div class="resource-card" data-id="{{ resource.id }}" value="information_systemwebsites">
+                <div class="resource-header">
+                    <span class="resource-type">{{  resource.resource_type|get_knowledge_title }}</span>
+                    <h3 class="resource-title">{{ resource.title }}</h3>
+                    <div class="resource-meta">
+                        <div class="resource-meta-item">
+                            <i class="fas fa-database"></i>
+                            <span>{{ resource.information_system.system_owner }}</span>
+                        </div>
+                        <div class="resource-meta-item">
+                            <i class="far fa-calendar-alt"></i>
+                            <span>{{ resource.information_system.last_updated|date:"F d, Y"|default:"Not specified" }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="resource-content">
+                    <p class="resource-description">{{ resource.description|truncatechars:100 }}</p>
+                </div>
+                <div class="resource-footer">
+                    <a href="" class="resource-button">
+                        <i class="fas fa-external-link-alt"></i> Access System
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% if info_systems_count > 3 %}
+        <div class="view-more-container">
+            <a href="?type=info_system" class="view-more-link">View all Information Systems <i class="fas fa-arrow-right"></i></a>
+        </div>
+        {% endif %}
+    </section>
+    {% endif %}
+    
+    {% if maps %}
+    <section class="resources-section">
+        <h2 class="section-title">Maps <span class="resource-count">({{ maps_count }})</span></h2>
+        <div class="resources-row">
+            {% for resource in maps|slice:":3" %}
+            <div class="resource-card" data-id="{{ resource.id }}" value="maps">
+                <div class="resource-header">
+                    <span class="resource-type">{{  resource.resource_type|get_knowledge_title }}</span>
+                    <h3 class="resource-title">{{ resource.title }}</h3>
+                </div>
+                <div class="resource-content">
+                    <p class="resource-description">{{ resource.description|truncatechars:100 }}</p>
+                </div>
+                <div class="resource-footer">
+                    <a href=" " class="resource-button">
+                        <i class="fas fa-map"></i> View Map
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% if maps_count > 3 %}
+        <div class="view-more-container">
+            <a href="?type=map" class="view-more-link">View all Maps <i class="fas fa-arrow-right"></i></a>
+        </div>
+        {% endif %}
+    </section>
+    {% endif %}
+    
+    {% if media %}
+    <section class="resources-section">
+        <h2 class="section-title">Media <span class="resource-count">({{ media_count }})</span></h2>
+        <div class="resources-row">
+            {% for resource in media|slice:":3" %}
+            <div class="resource-card" data-id="{{ resource.id }}" value="media">
+                <div class="resource-header">
+                    <span class="resource-type">{{  resource.resource_type|get_knowledge_title }}</span>
+                    <h3 class="resource-title">{{ resource.title }}</h3>
+                    <div class="resource-meta">
+                        <div class="resource-meta-item">
+                            <i class="fas fa-film"></i>
+                            <span>{{ resource.media.get_media_type_display }}</span>
+                        </div>
+                        <div class="resource-meta-item">
+                            <i class="fas fa-user"></i>
+                            <span>{{ resource.media.author|default:"Not specified" }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="resource-content">
+                    <p class="resource-description">{{ resource.description|truncatechars:100 }}</p>
+                </div>
+                <div class="resource-footer">
+                    <a href=" " class="resource-button">
+                        <i class="fas fa-play-circle"></i> View Media
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% if media_count > 3 %}
+        <div class="view-more-container">
+            <a href="?type=media" class="view-more-link">View all Media <i class="fas fa-arrow-right"></i></a>
+        </div>
+        {% endif %}
+    </section>
+    {% endif %}
+    
+    {% if policies %}
+    <section class="resources-section">
+        <h2 class="section-title">Policies <span class="resource-count">({{ policies_count }})</span></h2>
+        <div class="resources-row">
+            {% for resource in policies|slice:":3" %}
+            <div class="resource-card" data-id="{{ resource.id }}" value="policies">
+                <div class="resource-header">
+                    <span class="resource-type">{{  resource.resource_type|get_knowledge_title }}</span>
+                    <h3 class="resource-title">{{ resource.title }}</h3>
+                    <div class="resource-meta">
+                        <div class="resource-meta-item">
+                            <i class="fas fa-building"></i>
+                            <span>{{ resource.policy.issuing_body }}</span>
+                        </div>
+                        <div class="resource-meta-item">
+                            <i class="far fa-calendar-alt"></i>
+                            <span>{{ resource.policy.effective_date|date:"F d, Y" }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="resource-content">
+                    <p class="resource-description">{{ resource.description|truncatechars:100 }}</p>
+                </div>
+                <div class="resource-footer">
+                    <a href=" " class="resource-button">
+                        <i class="fas fa-eye"></i> View Policy
+                    </a>
+                    <div class="resource-actions">
+                        <a href="{{ resource.policy.policy_file.url }}" class="action-button" title="Download">
+                            <i class="fas fa-download"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% if policies_count > 3 %}
+        <div class="view-more-container">
+            <a href="?type=policy" class="view-more-link">View all Policies <i class="fas fa-arrow-right"></i></a>
+        </div>
+        {% endif %}
+    </section>
+    {% endif %}
+    
+    {% if projects %}
+    <section class="resources-section">
+        <h2 class="section-title">Projects <span class="resource-count">({{ projects_count }})</span></h2>
+        <div class="resources-row">
+            {% for resource in projects %}
+            <div class="resource-card" data-id="{{ resource.id }}" value="projects">
+                <div class="resource-header">
+                    <span class="resource-type">{{  resource.resource_type|get_knowledge_title }}</span>
+                    <h3 class="resource-title">{{ resource.title }}</h3>
+                    <div class="resource-meta">
+                        <div class="resource-meta-item">
+                            <i class="fas fa-user-tie"></i>
+                            <span>{{ resource.project.project_lead }}</span>
+                        </div>
+                        <div class="resource-meta-item">
+                            <i class="fas fa-tasks"></i>
+                            <span>{{ resource.project.get_status_display }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="resource-content">
+                    <p class="resource-description">{{ resource.description|truncatechars:100 }}</p>
+                </div>
+                <div class="resource-footer">
+                    <a href=" " class="resource-button">
+                        <i class="fas fa-project-diagram"></i> Project Details
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% if projects_count > 3 %}
+        <div class="view-more-container">
+            <a href="?type=project" class="view-more-link">View all Projects <i class="fas fa-arrow-right"></i></a>
+        </div>
+        {% endif %}
+    </section>
+    {% endif %}
+    
+    {% if technologies %}
+    <section class="resources-section">
+        <h2 class="section-title">Technologies <span class="resource-count">({{ technologies_count }})</span></h2>
+        <div class="resources-row">
+            {% for resource in technologies|slice:":3" %}
+            <div class="resource-card" data-id="{{ resource.id }}" value="technologies">
+                <div class="resource-header">
+                    <span class="resource-type">{{  resource.resource_type|get_knowledge_title }}</span>
+                    <h3 class="resource-title">{{ resource.title }}</h3>
+                    <div class="resource-meta">
+                        <div class="resource-meta-item">
+                            <i class="fas fa-industry"></i>
+                            <span>{{ resource.technology.developer }}</span>
+                        </div>
+                        <div class="resource-meta-item">
+                            <i class="far fa-calendar-alt"></i>
+                            <span>{{ resource.technology.release_date|date:"F d, Y"|default:"Not specified" }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="resource-content">
+                    <p class="resource-description">{{ resource.description|truncatechars:100}} </p>
+                </div>
+                <div class="resource-footer">
+                    <a href=" " class="resource-button">
+                        <i class="fas fa-microchip"></i> Technology Details
+                    </a>
+                    <div class="resource-actions">
+                        <a href="#" class="action-button" title="Download">
+                            <i class="fas fa-download"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% if technologies_count > 3 %}
+        <div class="view-more-container">
+            <a href="?type=technology" class="view-more-link">View all Technologies <i class="fas fa-arrow-right"></i></a>
+        </div>
+        {% endif %}
+    </section>
+    {% endif %}
+    
+    {% if trainings %}
+    <section class="resources-section">
+        <h2 class="section-title">Training/Seminars <span class="resource-count">({{ trainings_count }})</span></h2>
+        <div class="resources-row">
+            {% for resource in trainings|slice:":3" %}
+            <div class="resource-card" data-id="{{ resource.id }}" value="trainingseminars">
+                <div class="resource-header">
+                    <span class="resource-type">{{  resource.resource_type|get_knowledge_title }}</span>
+                    <h3 class="resource-title">{{ resource.title }}</h3>
+                    <div class="resource-meta">
+                        <div class="resource-meta-item">
+                            <i class="far fa-calendar-alt"></i>
+                            <span>{{ resource.training_seminar.start_date|date:"F d, Y" }}</span>
+                        </div>
+                        <div class="resource-meta-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>{{ resource.training_seminar.location }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="resource-content">
+                    <p class="resource-description">{{ resource.description|truncatechars:100 }}</p>
+                </div>
+                <div class="resource-footer">
+                    <a href=" " class="resource-button">
+                        <i class="fas fa-chalkboard-teacher"></i> Training Details
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% if trainings_count > 3 %}
+        <div class="view-more-container">
+            <a href="?type=training" class="view-more-link">View all Training/Seminars <i class="fas fa-arrow-right"></i></a>
+        </div>
+        {% endif %}
+    </section>
+    {% endif %}
+    
+    {% if webinars %}
+    <section class="resources-section">
+        <h2 class="section-title">Webinars <span class="resource-count">({{ webinars_count }})</span></h2>
+        <div class="resources-row">
+            {% for resource in webinars|slice:":3" %}
+            <div class="resource-card" data-id="{{ resource.id }}" value="webinars">
+                <div class="resource-header">
+                    <span class="resource-type">{{  resource.resource_type|get_knowledge_title }}</span>
+                    <h3 class="resource-title">{{ resource.title }}</h3>
+                    <div class="resource-meta">
+                        <div class="resource-meta-item">
+                            <i class="far fa-calendar-alt"></i>
+                            <span>{{ resource.webinar.webinar_date|date:"F d, Y" }}</span>
+                        </div>
+                        <div class="resource-meta-item">
+                            <i class="fas fa-desktop"></i>
+                            <span>{{ resource.webinar.platform }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="resource-content">
+                    <p class="resource-description">{{ resource.description|truncatechars:100 }}</p>
+                </div>
+                <div class="resource-footer">
+                    <a href=" " class="resource-button">
+                        <i class="fas fa-video"></i> Webinar Details
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% if webinars_count > 3 %}
+        <div class="view-more-container">
+            <a href="?type=webinar" class="view-more-link">View all Webinars <i class="fas fa-arrow-right"></i></a>
+        </div>
+        {% endif %}
+    </section>
+    {% endif %}
+    
+    {% if products %}
+    <section class="resources-section">
+        <h2 class="section-title">Products <span class="resource-count">({{ products_count }})</span></h2>
+        <div class="resources-row">
+            {% for resource in products|slice:":3" %}
+            <div class="resource-card" data-id="{{ resource.id }}" value="products">
+                <div class="resource-header">
+                    <span class="resource-type">{{  resource.resource_type|get_knowledge_title }}</span>
+                    <h3 class="resource-title">{{ resource.title }}</h3>
+                    <div class="resource-meta">
+                        <div class="resource-meta-item">
+                            <i class="fas fa-industry"></i>
+                            <span>{{ resource.product.manufacturer }}</span>
+                        </div>
+                        <div class="resource-meta-item">
+                            <i class="fas fa-tag"></i>
+                            <span>{% if resource.product.price %}₱{{ resource.product.price }}{% else %}Price upon request{% endif %}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="resource-content">
+                    <p class="resource-description">{{ resource.description|truncatechars:100 }}</p>
+                </div>
+                <div class="resource-footer">
+                    <a href=" " class="resource-button">
+                        <i class="fas fa-shopping-cart"></i> Product Details
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% if products_count > 3 %}
+        <div class="view-more-container">
+            <a href="?type=product" class="view-more-link">View all Products <i class="fas fa-arrow-right"></i></a>
+        </div>
+        {% endif %}
+    </section>
+    {% endif %}
+    
+    <!-- Resource Detail Modal -->
+    <div class="modal fade" id="resourcesData" tabindex="-1" role="dialog" aria-labelledby="resourcesDataLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+    
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h5 class="modal-title" id="resourcesDataLabel">Resource Title</h5>
+            </div>
+    
+            <!-- Modal Body -->
+            <div class="modal-body">
+            </div>
+    
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+    
+          </div>
+        </div>
+      </div>
+</main>
+{% endblock content %}
+
+{% block script %}
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+        // Initialize DOM elements
+        const filterButton = document.getElementById('filter-button');
+        const filterMenu = document.getElementById('filter-menu');
+        const categoryPills = document.querySelectorAll('.category-pill');
+        const resourceModal = document.getElementById('resource-modal');
+        const modalClose = document.getElementById('modal-close');
+
+        $('#resourcesData').on('show.bs.modal', function (event) {
+            const button = $(event.relatedTarget); // Button that triggered the modal
+            const resourceSlug = button.data('slug');
+            const resourceUrl = button.data('url');
+            const modal = $(this);
+            
+            // Show loading state in the modal
+            modal.find('.modal-body').html('<div class="text-center py-4"><div class="spinner-border text-primary" role="status"><span class="sr-only">Loading...</span></div><p class="mt-2">Loading resource details...</p></div>');
+            
+            // Record the view and get resource data
+            fetch(resourceUrl, {
+                method: 'GET',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Populate the modal with resource data
+                populateResourceModal(modal, data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                
+                // Show error message in modal
+                modal.find('.modal-body').html(`
+                    <div class="alert alert-danger" role="alert">
+                        <h4 class="alert-heading">Error!</h4>
+                        <p>Failed to load resource details. Please try again later.</p>
+                    </div>
+                `);
+            });
+        });
+
+        function populateResourceModal(modal, data) {
+            const resource = data.resource;
+            const specificData = data.specific_data;
+            
+            // Set modal title
+            modal.find('.modal-title').text(resource.title);
+            
+            // Restore modal content structure
+            modal.find('.modal-body').html(`
+                <div class="resource-detail-grid">
+                    <div class="resource-detail-section">
+                        <h3 class="detail-section-title">Description</h3>
+                        <p class="resource-description-full">Resource description will appear here.</p>
+                        
+                        <h3 class="detail-section-title">Tags</h3>
+                        <div class="resource-tags" id="modal-tags">
+                            <!-- Tags will be added dynamically -->
+                        </div>
+                    </div>
+                    <div class="resource-detail-section">
+                        <h3 class="detail-section-title">Details</h3>
+                        <div class="detail-item">
+                            <p class="detail-label">Resource Type</p>
+                            <p class="detail-value" id="modal-type">-</p>
+                        </div>
+                        <div class="detail-item">
+                            <p class="detail-label">Created By</p>
+                            <p class="detail-value" id="modal-author">-</p>
+                        </div>
+                        <div class="detail-item">
+                            <p class="detail-label">Created Date</p>
+                            <p class="detail-value" id="modal-created">-</p>
+                        </div>
+                        <div class="detail-item">
+                            <p class="detail-label">Last Updated</p>
+                            <p class="detail-value" id="modal-updated">-</p>
+                        </div>
+                        
+                        <!-- Dynamic fields for specific resource types -->
+                        <div id="resource-specific-details">
+                            <!-- Will be populated based on resource type -->
+                        </div>
+                    </div>
+                </div>
+            `);
+            
+            // Set description
+            modal.find('.resource-description-full').text(
+            resource.description.charAt(0).toUpperCase() + resource.description.slice(1)
+            );
+
+            // Set basic details
+            modal.find('#modal-type').text(formatResourceType(resource.resource_type));
+            modal.find('#modal-created').text(resource.created_at);
+            modal.find('#modal-updated').text(resource.updated_at || 'N/A');
+            modal.find('#modal-author').text(resource.created_by || 'N/A');
+            
+            // Populate tags
+            const tagsContainer = modal.find('#modal-tags');
+            tagsContainer.empty();
+            
+            if (resource.tags && resource.tags.length > 0) {
+                resource.tags.forEach(tag => {
+                    tagsContainer.append(`<span class="resource-tag">${tag.name}</span>`);
+                });
+            } else {
+                tagsContainer.append('<span class="resource-tag muted">No tags</span>');
+            }
+            
+            // Populate resource-specific details
+            const specificDetailsContainer = modal.find('#resource-specific-details');
+            specificDetailsContainer.empty();
+            
+            if (specificData && Object.keys(specificData).length > 0) {
+                // Create a header for the specific details section
+                specificDetailsContainer.append(`
+                    <h3 class="detail-section-title">${formatResourceType(resource.resource_type)} Details</h3>
+                `);
+                
+                // Add each specific field
+                for (const [key, value] of Object.entries(specificData)) {
+                    if (value) {
+                        const displayValue = typeof value === 'boolean' ? (value ? 'Yes' : 'No') : value;
+                        
+                        specificDetailsContainer.append(`
+                            <div class="detail-item">
+                                <p class="detail-label">${formatFieldName(key)}</p>
+                                <p class="detail-value">${displayValue}</p>
+                            </div>
+                        `);
+                    }
+                }
+            }
+        }
+
+        // Helper function to format resource type strings
+        function formatResourceType(type) {
+            if (!type) return 'Unknown';
+            
+            // Map of resource types to display names
+            const typeMap = {
+                'event': 'Event',
+                'info_system': 'Information System',
+                'map': 'Map',
+                'media': 'Media',
+                'news': 'News',
+                'policy': 'Policy',
+                'project': 'Project',
+                'publication': 'Publication',
+                'technology': 'Technology',
+                'training': 'Training/Seminar',
+                'webinar': 'Webinar',
+                'product': 'Product'
+            };
+            
+            return typeMap[type] || type.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+        }
+        
+        // Helper function to format field names
+        function formatFieldName(name) {
+            if (!name) return '';
+            
+            // Special cases for common abbreviations
+            const specialCases = {
+                'doi': 'DOI',
+                'isbn': 'ISBN',
+                'url': 'URL'
+            };
+            
+            if (specialCases[name.toLowerCase()]) {
+                return specialCases[name.toLowerCase()];
+            }
+            
+            // Convert snake_case to Title Case
+            return name.replace(/_/g, ' ')
+                .replace(/\b\w/g, l => l.toUpperCase());
+        }
+        
+        // Function to show toast notifications
+        function showToast(message) {
+            // Remove existing toasts
+            $('.toast').remove();
+            
+            // Create Bootstrap toast
+            const toast = $(`
+                <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="3000">
+                    <div class="toast-header">
+                        <strong class="mr-auto">Notification</strong>
+                        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="toast-body">
+                        ${message}
+                    </div>
+                </div>
+            `);
+            
+            // Add toast container if it doesn't exist
+            if (!$('.toast-container').length) {
+                $('body').append('<div class="toast-container" style="position: fixed; top: 20px; right: 20px; z-index: 9999;"></div>');
+            }
+            
+            // Add toast to container and show it
+            $('.toast-container').append(toast);
+            toast.toast('show');
+        }
+            
+            // Filter menu toggle
+            if (filterButton && filterMenu) {
+                filterButton.addEventListener('click', function() {
+                    filterMenu.classList.toggle('show');
+                    // Close when clicking outside
+                    document.addEventListener('click', function closeMenu(e) {
+                        if (!filterButton.contains(e.target) && !filterMenu.contains(e.target)) {
+                            filterMenu.classList.remove('show');
+                            document.removeEventListener('click', closeMenu);
+                        }
+                    });
+                });
+            }
+
+            // Category pill selection
+            categoryPills.forEach(pill => {
+                pill.addEventListener('click', function(e) {
+                    // If this is a normal link (not a filter-in-page action), let it proceed normally
+                    if (this.getAttribute('href') && !e.ctrlKey && !e.metaKey) {
+                        return;
+                    }
+                    
+                    e.preventDefault();
+                    
+                    // Remove active class from all pills
+                    categoryPills.forEach(p => p.classList.remove('active'));
+                    
+                    // Add active class to clicked pill
+                    this.classList.add('active');
+                    
+                    // Get category
+                    const category = this.getAttribute('data-category');
+                    
+                    // Filter resources
+                    filterResources(category);
+                });
+            });
+
+            // Filter resources in the grid
+            function filterResources(category) {
+                const resourceCards = document.querySelectorAll('.resource-card');
+                console.log("Filtering by category:", category);
+                
+                resourceCards.forEach(card => {
+                    const cardValue = card.getAttribute('value');
+                    console.log("Card value:", cardValue, "Should display:", (category === 'all' || cardValue === category));
+                    
+                    if (category === 'all' || cardValue === category) {
+                        card.style.display = '';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            }
+
+            // Toast notification
+            function showToast(message, type = 'success') {
+                // Create toast container if it doesn't exist
+                let toastContainer = document.querySelector('.toast-container');
+                if (!toastContainer) {
+                    toastContainer = document.createElement('div');
+                    toastContainer.className = 'toast-container';
+                    document.body.appendChild(toastContainer);
+                }
+                
+                // Create toast
+                const toast = document.createElement('div');
+                toast.className = 'toast';
+                toast.innerHTML = `
+                    <div class="toast-icon">
+                        <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
+                    </div>
+                    <div class="toast-content">
+                        <p>${message}</p>
+                    </div>
+                    <button class="toast-close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                `;
+                
+                // Add to container
+                toastContainer.appendChild(toast);
+                
+                // Show toast
+                setTimeout(() => {
+                    toast.classList.add('show');
+                }, 10);
+                
+                // Close toast
+                toast.querySelector('.toast-close').addEventListener('click', function() {
+                    toast.classList.remove('show');
+                    setTimeout(() => {
+                        toast.remove();
+                    }, 300);
+                });
+                
+                // Auto close after 3 seconds
+                setTimeout(() => {
+                    if (toast && toast.parentNode) {
+                        toast.classList.remove('show');
+                        setTimeout(() => {
+                            toast.remove();
+                        }, 300);
+                    }
+                }, 3000);
+            }
+
+            // URL parameter handling for direct resource access
+            function checkUrlParameters() {
+                const urlParams = new URLSearchParams(window.location.search);
+                const resourceId = urlParams.get('id');
+                
+                if (resourceId) {
+                    // You can implement AJAX to fetch resource details and open modal
+                    // For now, we'll try to find it in the DOM
+                    const card = document.querySelector(`.resource-card[data-id="${resourceId}"]`);
+                    if (card) {
+                        const viewButton = card.querySelector('.resource-button');
+                        if (viewButton) {
+                            viewButton.click();
+                        }
+                    }
+                }
+            }
+
+            // Check URL parameters on load
+            checkUrlParameters();
+
+
+            $(document).on('click', '.bookmark-button', function(e) {
+                e.preventDefault();
+            
+                const bookmarkButton = $(this);
+                const resourceSlug = bookmarkButton.data('slug');
+                
+                // Show loading state
+                bookmarkButton.addClass('loading');
+                
+                // Get CSRF token
+                function getCookie(name) {
+                    let cookieValue = null;
+                    if (document.cookie && document.cookie !== '') {
+                        const cookies = document.cookie.split(';');
+                        for (let i = 0; i < cookies.length; i++) {
+                            const cookie = cookies[i].trim();
+                            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                                break;
+                            }
+                        }
+                    }
+                    return cookieValue;
+                }
+                
+                const csrfToken = getCookie('csrftoken');
+                
+                // Send AJAX request to toggle bookmark
+                $.ajax({
+                    url: '{% url "appCmi:bookmark-resource" %}',
+                    type: 'POST',
+                    data: {
+                        resource_slug: resourceSlug
+                    },
+                    // Note: No contentType specified, so jQuery will use application/x-www-form-urlencoded
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-CSRFToken': csrfToken
+                    },
+                    success: function(data) {
+                        // Remove loading state
+                        bookmarkButton.removeClass('loading');
+                        
+                        if (data.status === 'success') {
+                            console.log(data.message);
+                            window.location.reload();
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        // Remove loading state
+                        bookmarkButton.removeClass('loading');
+                        console.error('Error toggling bookmark:', error);
+                        console.log('Response:', xhr.responseText);
+                    }
+                });
+            });
+        });
+</script>
+{% endblock script %}

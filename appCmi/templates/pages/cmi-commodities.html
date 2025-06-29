@@ -1,0 +1,236 @@
+{% extends 'base/cmi-index.html' %}
+{% load static %}
+
+{% block title %}Commodities | AANR Knowledge Hub{% endblock %}
+
+{% block stylesheet %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+<link rel="stylesheet" href="{% static 'style/css/cmi-all-commodities.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="main-content">
+  <div class="container">
+    <!-- Page Header -->
+    <div class="page-header" data-aos="fade-up">
+      <div class="header-content">
+        <h1 class="page-title">AANR Commodities</h1>
+        <p class="page-subtitle">Explore our collection of Agriculture, Aquatic, and Natural Resources commodities. Find detailed information, market insights, and best practices for each commodity.</p>
+      </div>
+    </div>
+
+    <!-- Categories & Search -->
+    <div class="categories-section" data-aos="fade-up" data-aos-delay="100">
+      <div class="categories-wrapper">
+        <div class="category-pill active" data-filter="all">All Commodities</div>
+        <div class="category-pill" data-filter="Agriculture">Agriculture</div>
+        <div class="category-pill" data-filter="Aquatic">Aquatic</div>
+        <div class="category-pill" data-filter="Natural Resources">Natural Resources</div>
+      </div>
+      
+      <div class="search-wrapper">
+        <input type="text" id="commoditySearch" class="search-input" placeholder="Search for commodities...">
+        <i class="fas fa-search search-icon"></i>
+      </div>
+    </div>
+
+    <!-- Commodities Grid -->
+    <div class="commodities-grid" data-aos="fade-up" data-aos-delay="200">
+      {% if commodities %}
+        {% for commodity in commodities %}
+          <div class="commodity-card" data-category="{{ commodity.resources_type|title }}" data-aos="fade-up" data-aos-delay="{{ forloop.counter|add:200 }}">
+            <div class="commodity-image">
+              <span class="commodity-category">{{ commodity.resources_type|title }}</span>
+              <img src="{{ commodity.commodity_img.url }}" alt="{{ commodity.commodity_name }} Image">
+            </div>
+            <div class="commodity-content">
+              <h3 class="commodity-title">{{ commodity.commodity_name }}</h3>
+              <p class="commodity-description">{{ commodity.description|truncatechars:100 }}</p>
+              <div class="commodity-stats">
+                <div class="stat-item">
+                  <i class="far fa-file-alt"></i>
+                  <span>{{ commodity.resources_count|default:'0' }} Resources</span>
+                </div>
+                <div class="stat-item">
+                  <i class="far fa-calendar-alt"></i>
+                  <span>{{ commodity.updated_at|date:"M d, Y"|default:'Recently Updated' }}</span>
+                </div>
+              </div>
+            </div>
+            <div class="commodity-actions">
+              <a href="{% url 'appCmi:display-commodity' commodity.slug %}" class="action-button primary-action">
+                <i class="fas fa-info-circle"></i> View Details
+              </a>
+              <a href="" class="action-button secondary-action">
+                <i class="fas fa-book"></i> Resources
+              </a>
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <!-- Empty State -->
+        <div class="empty-state" data-aos="fade-up">
+          <div class="empty-icon">
+            <i class="fas fa-seedling"></i>
+          </div>
+          <h3 class="empty-title">No Commodities Found</h3>
+          <p class="empty-message">We're currently working on adding commodities to our database. Please check back later or try a different search term.</p>
+          <a href="{% url 'appCmi:home' %}" class="empty-action">
+            <i class="fas fa-home"></i> Back to Home
+          </a>
+        </div>
+      {% endif %}
+    </div>
+
+    <!-- Pagination (if needed) -->
+    {% if commodities.has_other_pages %}
+      <div class="pagination-container" data-aos="fade-up">
+        <div class="pagination-wrapper">
+          <a href="{% if commodities.has_previous %}?page={{ commodities.previous_page_number }}{% else %}#{% endif %}" class="pagination-arrow {% if not commodities.has_previous %}disabled{% endif %}">
+            <i class="fas fa-chevron-left"></i>
+          </a>
+          
+          {% for num in commodities.paginator.page_range %}
+            {% if commodities.number == num %}
+              <span class="pagination-item active">{{ num }}</span>
+            {% elif num > commodities.number|add:'-3' and num < commodities.number|add:'3' %}
+              <a href="?page={{ num }}" class="pagination-item">{{ num }}</a>
+            {% endif %}
+          {% endfor %}
+          
+          <a href="{% if commodities.has_next %}?page={{ commodities.next_page_number }}{% else %}#{% endif %}" class="pagination-arrow {% if not commodities.has_next %}disabled{% endif %}">
+            <i class="fas fa-chevron-right"></i>
+          </a>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Initialize AOS
+  AOS.init({
+    duration: 800,
+    easing: 'ease-in-out',
+    once: true,
+    offset: 100
+  });
+
+  // Category Filtering
+  const categoryPills = document.querySelectorAll('.category-pill');
+  const commodityCards = document.querySelectorAll('.commodity-card');
+  
+  categoryPills.forEach(pill => {
+    pill.addEventListener('click', function() {
+      // Update active state
+      categoryPills.forEach(p => p.classList.remove('active'));
+      this.classList.add('active');
+      
+      // Filter items
+      const filter = this.getAttribute('data-filter');
+      let hasVisibleCards = false;
+      
+      commodityCards.forEach(card => {
+        if (filter === 'all' || card.getAttribute('data-category').trim() === filter) {
+          card.style.display = 'flex';
+          hasVisibleCards = true;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+      
+      // If no cards are visible after filtering, show empty state
+      if (!hasVisibleCards && filter !== 'all') {
+        showEmptyState();
+      } else {
+        removeEmptyState();
+      }
+    });
+  });
+  
+  // Search functionality
+  const searchInput = document.getElementById('commoditySearch');
+  
+  searchInput.addEventListener('input', function() {
+    const searchTerm = this.value.toLowerCase();
+    let hasVisibleCards = false;
+    
+    commodityCards.forEach(card => {
+      const title = card.querySelector('.commodity-title').textContent.toLowerCase();
+      const description = card.querySelector('.commodity-description').textContent.toLowerCase();
+      const category = card.getAttribute('data-category').toLowerCase();
+      
+      if (title.includes(searchTerm) || description.includes(searchTerm) || category.includes(searchTerm)) {
+        card.style.display = 'flex';
+        hasVisibleCards = true;
+      } else {
+        card.style.display = 'none';
+      }
+    });
+    
+    // If no cards are visible after searching, show empty state
+    if (!hasVisibleCards && searchTerm) {
+      showEmptyState();
+    } else {
+      removeEmptyState();
+    }
+  });
+  
+  // Function to show empty state
+  function showEmptyState() {
+    const existingEmptyState = document.querySelector('.empty-state');
+    const commoditiesGrid = document.querySelector('.commodities-grid');
+    
+    if (!existingEmptyState) {
+      const emptyHTML = `
+        <div class="empty-state" data-aos="fade-up">
+          <div class="empty-icon">
+            <i class="fas fa-search"></i>
+          </div>
+          <h3 class="empty-title">No Matching Commodities</h3>
+          <p class="empty-message">We couldn't find any commodities matching your search criteria. Try adjusting your filters or search terms.</p>
+          <button class="empty-action" id="resetFilters">
+            <i class="fas fa-redo"></i> Reset Filters
+          </button>
+        </div>
+      `;
+      
+      const emptyDiv = document.createElement('div');
+      emptyDiv.innerHTML = emptyHTML;
+      commoditiesGrid.appendChild(emptyDiv.firstElementChild);
+      
+      // Add event listener to reset button
+      document.getElementById('resetFilters').addEventListener('click', function() {
+        // Reset search
+        searchInput.value = '';
+        
+        // Reset categories
+        categoryPills.forEach(p => p.classList.remove('active'));
+        document.querySelector('.category-pill[data-filter="all"]').classList.add('active');
+        
+        // Show all cards
+        commodityCards.forEach(card => {
+          card.style.display = 'flex';
+        });
+        
+        // Remove empty state
+        removeEmptyState();
+      });
+    }
+  }
+  
+  // Function to remove empty state
+  function removeEmptyState() {
+    const existingEmptyState = document.querySelector('.empty-state');
+    if (existingEmptyState) {
+      existingEmptyState.remove();
+    }
+  }
+});
+</script>
+{% endblock %}

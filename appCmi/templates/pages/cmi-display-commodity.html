@@ -1,0 +1,121 @@
+{% extends 'base/cmi-index.html' %}
+
+{% load static %}
+{% block title %}
+{{display_commodity.commodity_name|title}} - Commodity
+{% endblock %}
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'style/css/cmi-display-commodity.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="main-content">
+    <div class="container">
+
+        <div class="info-section" data-aos="fade-up">
+            <h3>Sustainable AANR Solutions</h3>
+            <p>
+              The Agriculture, Aquatic, and Natural Resources (AANR) Knowledge Hub provides comprehensive information on various commodities important to the Western Mindanao region. These resources help farmers, researchers, and industry stakeholders make informed decisions and implement best practices.
+            </p>
+          </div>
+        <div class="row">
+            <div class="col-md">
+                <img src="{{display_commodity.commodity_img.url}}" id="commodityImg" alt="{{display_commodity.commodity_name|title}}" />
+            </div>
+            <div class="col-md commodity-info">
+                <h3 class="commodityName">{{display_commodity.commodity_name|title}}</h3>
+                <hr>
+
+                <p class="description">{{display_commodity.description|safe}}</p>
+                <br>
+
+                <hr>
+                <div class="row">
+                    <div class="col-md">
+                        <div class="header">
+                            <span class="related_resources font-weight-bold">Resources Discussion</span>
+                            <a href="#">See more</a>
+                        </div>
+                        <div class="card">
+                            <ul>
+                                <li>
+                                    <a href="#">Sustainable Bamboo Harvesting Techniques for Small-Scale Farmers</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card">
+                            <ul>
+                                <li>
+                                    <a href="#">The Economic Impact of Bamboo Industries in Southeast Asia</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card">
+                            <ul>
+                                <li>
+                                    <a href="#">Bamboo as a Carbon Sequestration Solution: Research Findings</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-md">
+                        <div class="header">
+                            <span class="related_forum font-weight-bold">Forum Post</span>
+                            <a href="#">See more</a>
+                        </div>
+                        <div class="card">
+                            <ul>
+                                <li>
+                                    <a href="#">Best bamboo species for furniture making?</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card">
+                            <ul>
+                                <li>
+                                    <a href="#">How to treat bamboo for long-term outdoor use</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card">
+                            <ul>
+                                <li>
+                                    <a href="#">Pricing trends for raw bamboo in 2025</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block script %}
+<script>
+    // Simple JavaScript to enhance the UI
+    document.addEventListener('DOMContentLoaded', function() {
+        // Add hover effect to commodity image
+        const commodityImg = document.getElementById('commodityImg');
+        
+        // Function to handle related content filtering (placeholder for extension)
+        function filterRelatedContent(type, keyword) {
+            console.log(`Filtering ${type} content by: ${keyword}`);
+            // In a real implementation, this would filter content based on keywords
+        }
+        
+        // Add click event for resource links to track analytics (placeholder)
+        const resourceLinks = document.querySelectorAll('.card a');
+        resourceLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                // For demonstration purposes - this would track clicks in a real application
+                console.log('Resource clicked:', this.innerText);
+            });
+        });
+    });
+</script>
+{% endblock script %}

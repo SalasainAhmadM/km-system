@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        /* Inline CSS */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        .email-container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border: 1px solid #dddddd;
+            border-radius: 5px;
+        }
+
+        .header {
+            background-color: #0C356A;
+            color: #ffffff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .content {
+            padding: 20px;
+        }
+
+        .footer {
+            background-color: #f0f0f0;
+            text-align: center;
+            padding: 10px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="header">
+            <h1>Reset Password</h1>
+        </div>
+        <div class="content">
+            <p>Hello {{user.first_name|capfirst}},</p>
+            <p>We received a request to reset the password for the account associated with this email address.</p>
+            <p>To proceed with the password reset, please click on the following link:</p>
+            <p>
+                <a href="{{ reset_url }}" style="display: inline-block; padding: 10px 20px; text-decoration: none; background-color: #28a745; color: white; border-radius: 5px;">Reset</a>
+            </p>
+            <p>If you did not initiate this password reset request, please ignore this email. No further action is required on your part.</p>
+            
+            <p>Thank you.</p>
+            
+            <p>Sincerely,<br>The Knowledge Management Team</p>
+        </div>
+        <div class="footer">
+            &copy; 2024 Knowledge Management.
+        </div>
+    </div>
+</body>
+</html>

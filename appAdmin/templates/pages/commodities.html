@@ -1,0 +1,822 @@
+{% extends 'base/admin-index.html' %}
+{% load static %}
+{% block title %}
+  Admin Commodities
+{% endblock %}
+{% block stylesheet %}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Ensure the length menu and the dropdown are displayed inline */
+    .dataTables_length {
+      display: flex;
+      align-items: center;
+    }
+    
+    /* Adjust the margin and padding for better alignment */
+    .dataTables_length label {
+      display: flex;
+      align-items: center;
+    }
+    
+    /* Adjust the width and margin of the select box */
+    .dataTables_length select {
+      margin-left: 5px;
+      margin-right: 5px;
+      width: 50px; /* Adjust the width as needed */
+    }
+
+    /* Analytics Card Styling */
+    .analytics-card {
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+      overflow: hidden;
+      height: 100%;
+    }
+
+    .analytics-header {
+      padding: 18px 20px;
+      border-bottom: 1px solid #f1f1f1;
+    }
+
+    .analytics-title {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 600;
+      color: #464E5F;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .analytics-title::before {
+      content: "\f200";
+      font-family: "Font Awesome 5 Free";
+      font-weight: 900;
+      color: #3699FF;
+    }
+
+    .analytics-body {
+      padding: 20px;
+    }
+
+    /* Chart Container */
+    .chart-container {
+      height: 220px;
+    }
+
+    #resourcesChart {
+      max-width: 100%;
+    }
+
+    /* Total Resources */
+    .total-resources {
+      text-align: center;
+    }
+
+    .total-number {
+      font-size: 36px;
+      font-weight: 700;
+      color: #181C32;
+      line-height: 1;
+    }
+
+    .total-label {
+      font-size: 13px;
+      color: #7E8299;
+      margin-top: 5px;
+    }
+
+    /* Resource Breakdown */
+    .resource-stats {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .resource-stat-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid #f1f1f1;
+    }
+
+    .resource-stat-item:last-child {
+      border-bottom: none;
+    }
+
+    .stat-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: #464E5F;
+    }
+
+    .color-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .stat-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .stat-count {
+      font-weight: 600;
+      color: #464E5F;
+      font-size: 13px;
+    }
+
+    .stat-percentage {
+      font-size: 12px;
+      color: #7E8299;
+      background-color: #F3F6F9;
+      padding: 4px 8px;
+      border-radius: 4px;
+    }
+
+    /* Top Resources */
+    .section-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #464E5F;
+      margin-bottom: 15px;
+      position: relative;
+      padding-bottom: 8px;
+    }
+
+    .section-title::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 30px;
+      height: 2px;
+      background-color: #3699FF;
+    }
+
+    .top-resources-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .top-resource-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid #f1f1f1;
+    }
+
+    .top-resource-item:last-child {
+      border-bottom: none;
+    }
+
+    .rank-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .rank-number {
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      background-color: #F3F6F9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 600;
+      color: #3699FF;
+    }
+
+    .rank-details {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .rank-name {
+      font-size: 13px;
+      font-weight: 500;
+      color: #464E5F;
+      line-height: 1.4;
+    }
+
+    .rank-category {
+      font-size: 12px;
+      color: #7E8299;
+    }
+
+    .rank-views {
+      padding: 4px 10px;
+      background-color: rgba(54, 153, 255, 0.1);
+      color: #3699FF;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 1400px) {
+      .chart-container {
+        height: 180px;
+      }
+      
+      .top-resource-item {
+        padding: 10px 0;
+      }
+    }
+
+    @media (max-width: 991px) {
+      .analytics-card {
+        margin-top: 20px;
+      }
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+  <div class="masonry-item w-100">
+    <div class="row gap-20">
+      <div class="col-md-3">
+        <div class="layers bd bgc-white p-20">
+          <div class="layer w-100 mB-10">
+            <h6 class="lh-1"><a href="#" style="color: gray;">Total Commodities</a></h6>
+          </div>
+          <div class="layer w-100">
+            <div class="peers ai-sb fxw-nw">
+              <div class="peer peer-greed">
+                <span id="sparklinedash3"></span>
+              </div>
+              <div class="peer">
+                <span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-purple-50 c-purple-500">
+                  {% if total_commodities %}
+                    {{ total_commodities }}
+                  {% else %}
+                    0
+                  {% endif %}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="masonry-item col-12">
+    <div class="bd bgc-white">
+      <div class="peers fxw-nw@lg+ ai-s">
+        <div class="peer peer-greed w-70p@lg+ w-100@lg- p-20">
+          <div class="layers">
+            <div class="layer w-100 mB-10">
+              <h5 class="lh-1">Admin Commodities</h5>
+            </div>
+            <div class="layer w-100">
+              <ul class="nav nav-tabs">
+                <li class="nav-item">
+                  <a class="nav-link active" id="approvedCommodities-tab" data-toggle="tab" href="#approvedCommodities">Commodities Overview</a>
+                </li>
+              </ul>
+            </div>
+            <div class="layer w-100">
+              <!-- Tab Content -->
+              <div class="tab-content">
+                <br />
+                <!-- Resource Hub Tab -->
+                <div class="tab-pane fade show active" id="approvedCommodities">
+                  <div class="d-flex">
+                    <!-- Left side: Table -->
+                    <div class="flex-grow-1 p-20">
+                      <div class="table-container" style="max-height: 500px; overflow-y: auto;">
+                        <table id="commoditiesTable" class="commodities-table table table-bordered">
+                          <thead style="font-size: 13px; font-weight: bolder;">
+                            <tr>
+                              <th style="width: 8px;">ID</th>
+                              <th>Commodity Name</th>
+                              <th>Resources Type</th>
+                              <th>Total Filter</th>
+                              <th style="width: 100px;">Total Posts (Tagged)</th>
+                              <th>Actions</th>
+                            </tr>
+                          </thead>
+                          <tbody style="font-size: 12px;">
+                            {% if approvedcommodities %}
+                            {% for commodity in approvedcommodities %}
+                              <tr>
+                                <td style="border-bottom: 1px solid #ddd;">{{ commodity.commodity_id }}</td>
+                                <td style="border-bottom: 1px solid #ddd;">{{ commodity.commodity_name|capfirst }}</td>
+                                <td style="border-bottom: 1px solid #ddd;">{{ commodity.resources_type|capfirst }}</td>
+                                <td style="border-bottom: 1px solid #ddd;">
+                                  {% if frequency_sum %}
+                                    {% for freq in frequency_sum %}
+                                      {% if freq.commodity_id == commodity.commodity_id %}
+                                        {{ freq.total_frequency }}
+                                      {% endif %}
+                                    {% endfor %}
+                                  {% else %}
+                                    Not Filtered Yet
+                                  {% endif %}
+                                </td>
+                                <td style="border-bottom: 1px solid #ddd;">
+                                  {% if tagged_counts %}
+                                    {% for tag_count in tagged_counts %}
+                                      {% if tag_count.commodity_id == commodity.commodity_id %}
+                                        {{ tag_count.total_tags }}
+                                      {% endif %}
+                                    {% endfor %}
+                                  {% else %}
+                                    Not Tagged Yet
+                                  {% endif %}
+                                </td>
+                                <td style="border-bottom: 1px solid #ddd; width: 100px;">
+                                  <div style="display: flex; gap: 5px;">
+                                    <button type="button" style="background-color: #FF8F00; color: #FEFBF6;" class="btn btn-sm edit-btn" data-toggle="modal" data-target="#editCommodityModal" data-commodityid="{{ commodity.commodity_id }}" data-commodityname="{{ commodity.commodity_name|upper }}" data-commoditydescription="{{ commodity.description }}" data-resourcestype="{{ commodity.resources_type|capfirst }}">Update</button>
+                                    <button type="button" style="background-color: #0C356A; color: #FEFBF6;" class="btn btn-sm view-btn" data-toggle="modal" data-target="#viewCommodityModal" data-commodityid="{{ commodity.commodity_id }}" data-commodityname="{{ commodity.commodity_name }}" data-commoditydescription="{{ commodity.description }}" data-commodityImg="{{ commodity.commodity_img.url }}" data-resourcestype="{{ commodity.resources_type|capfirst }}" data-lat="{{commodity.latitude}}" data-long="{{commodity.longitude}}">View</button>
+                                    <a data-placement="top" style="background-color: #D71313; color: #FEFBF6;" data-toggle="tooltip" title="delete" data-url="{% url 'appAdmin:delete-commodity' commodity.slug  %}" class="btn btn-sm delete-btn">Delete</a>
+                                </div>
+                                </td>
+                              </tr>
+                            {% endfor %}
+                            {% endif %}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+
+                    <!-- Right side: Analytics -->
+                    <div class="p-20 peer bdL p-20 w-30p@lg+ w-100p@lg-" style="width: 350px;">
+                      <!-- Resource Analytics Component -->
+                      <div class="analytics-card">
+                        <div class="analytics-header">
+                          <h5 class="analytics-title">Resources Distribution</h5>
+                        </div>
+                        <div class="analytics-body">
+                          <!-- Donut Chart -->
+                          <div class="chart-container mb-4">
+                            <div id="resourcesChart"></div>
+                          </div>
+                          
+                          <!-- Legend & Stats -->
+                          <div class="d-flex justify-content-center mb-4">
+                            <div class="total-resources">
+                              <div class="total-number">
+                                <span id="totalCount">167</span>
+                              </div>
+                              <div class="total-label">Total Resources</div>
+                            </div>
+                          </div>
+                          
+                          <!-- Resource Type Breakdown -->
+                          <div class="resource-breakdown mb-4">
+                            <ul class="resource-stats">
+                              <li class="resource-stat-item">
+                                <div class="stat-label">
+                                  <span class="color-dot" style="background-color: #3699FF;"></span>
+                                  <span>Rice</span>
+                                </div>
+                                <div class="stat-info">
+                                  <div class="stat-count">52</div>
+                                  <div class="stat-percentage">31.1%</div>
+                                </div>
+                              </li>
+                              <li class="resource-stat-item">
+                                <div class="stat-label">
+                                  <span class="color-dot" style="background-color: #1BC5BD;"></span>
+                                  <span>Corn</span>
+                                </div>
+                                <div class="stat-info">
+                                  <div class="stat-count">38</div>
+                                  <div class="stat-percentage">22.8%</div>
+                                </div>
+                              </li>
+                              <li class="resource-stat-item">
+                                <div class="stat-label">
+                                  <span class="color-dot" style="background-color: #FFA800;"></span>
+                                  <span>Coconut</span>
+                                </div>
+                                <div class="stat-info">
+                                  <div class="stat-count">33</div>
+                                  <div class="stat-percentage">19.8%</div>
+                                </div>
+                              </li>
+                              <li class="resource-stat-item">
+                                <div class="stat-label">
+                                  <span class="color-dot" style="background-color: #F64E60;"></span>
+                                  <span>Aquaculture</span>
+                                </div>
+                                <div class="stat-info">
+                                  <div class="stat-count">24</div>
+                                  <div class="stat-percentage">14.4%</div>
+                                </div>
+                              </li>
+                              <li class="resource-stat-item">
+                                <div class="stat-label">
+                                  <span class="color-dot" style="background-color: #8950FC;"></span>
+                                  <span>Other</span>
+                                </div>
+                                <div class="stat-info">
+                                  <div class="stat-count">20</div>
+                                  <div class="stat-percentage">12.0%</div>
+                                </div>
+                              </li>
+                            </ul>
+                          </div>
+                          
+                          <!-- Top Resources -->
+                          <div class="top-resources">
+                            <h6 class="section-title">Top Viewed Resources</h6>
+                            <ul class="top-resources-list">
+                              <li class="top-resource-item">
+                                <div class="rank-info">
+                                  <div class="rank-number">1</div>
+                                  <div class="rank-details">
+                                    <div class="rank-name">Rice Farming Techniques</div>
+                                    <div class="rank-category">Rice</div>
+                                  </div>
+                                </div>
+                                <div class="rank-views">105</div>
+                              </li>
+                              <li class="top-resource-item">
+                                <div class="rank-info">
+                                  <div class="rank-number">2</div>
+                                  <div class="rank-details">
+                                    <div class="rank-name">Organic Corn Production</div>
+                                    <div class="rank-category">Corn</div>
+                                  </div>
+                                </div>
+                                <div class="rank-views">93</div>
+                              </li>
+                              <li class="top-resource-item">
+                                <div class="rank-info">
+                                  <div class="rank-number">3</div>
+                                  <div class="rank-details">
+                                    <div class="rank-name">Coconut Pest Management</div>
+                                    <div class="rank-category">Coconut</div>
+                                  </div>
+                                </div>
+                                <div class="rank-views">87</div>
+                              </li>
+                              <li class="top-resource-item">
+                                <div class="rank-info">
+                                  <div class="rank-number">4</div>
+                                  <div class="rank-details">
+                                    <div class="rank-name">Tilapia Farming Guide</div>
+                                    <div class="rank-category">Aquaculture</div>
+                                  </div>
+                                </div>
+                                <div class="rank-views">74</div>
+                              </li>
+                              <li class="top-resource-item">
+                                <div class="rank-info">
+                                  <div class="rank-number">5</div>
+                                  <div class="rank-details">
+                                    <div class="rank-name">Sustainable Farming Methods</div>
+                                    <div class="rank-category">Other</div>
+                                  </div>
+                                </div>
+                                <div class="rank-views">68</div>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% include 'modal/commodity/add-commodity.html' %}
+  {% include 'modal/commodity/edit-commodity.html' %}
+  {% include 'modal/commodity/view-commodity.html' %}
+{% endblock %}
+
+{% block script %}
+  <!-- Include ApexCharts library -->
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+  
+  <script>
+    // Resource Analytics Chart Initialization
+    function initResourcesChart() {
+      // Chart configuration options
+      const options = {
+        series: [52, 38, 33, 24, 20],
+        chart: {
+          type: 'donut',
+          height: 220,
+          fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+          offsetY: 0,
+          animations: {
+            enabled: true,
+            easing: 'easeinout',
+            speed: 800,
+            animateGradually: {
+              enabled: true,
+              delay: 150
+            },
+            dynamicAnimation: {
+              enabled: true,
+              speed: 350
+            }
+          }
+        },
+        colors: ['#3699FF', '#1BC5BD', '#FFA800', '#F64E60', '#8950FC'],
+        labels: ['Rice', 'Corn', 'Coconut', 'Aquaculture', 'Other'],
+        legend: {
+          show: false
+        },
+        dataLabels: {
+          enabled: false
+        },
+        tooltip: {
+          enabled: true,
+          fillSeriesColor: false,
+          theme: 'light',
+          style: {
+            fontSize: '12px'
+          },
+          y: {
+            formatter: function(value) {
+              return value + ' resources';
+            }
+          }
+        },
+        plotOptions: {
+          pie: {
+            donut: {
+              size: '75%',
+              background: 'transparent',
+              labels: {
+                show: true,
+                name: {
+                  show: true,
+                  fontSize: '13px',
+                  fontWeight: 600,
+                  color: '#464E5F',
+                  offsetY: -10
+                },
+                value: {
+                  show: true,
+                  fontSize: '22px',
+                  fontWeight: 700,
+                  color: '#464E5F',
+                  offsetY: 10,
+                  formatter: function (val) {
+                    return val;
+                  }
+                },
+                total: {
+                  show: true,
+                  label: 'Total',
+                  fontSize: '13px',
+                  fontWeight: 600,
+                  color: '#464E5F',
+                  formatter: function (w) {
+                    return w.globals.seriesTotals.reduce((a, b) => a + b, 0);
+                  }
+                }
+              }
+            }
+          }
+        },
+        responsive: [{
+          breakpoint: 1400,
+          options: {
+            chart: {
+              height: 180
+            },
+            plotOptions: {
+              pie: {
+                donut: {
+                  labels: {
+                    value: {
+                      fontSize: '18px'
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }],
+        stroke: {
+          width: 0
+        }
+      };
+
+      // Initialize chart
+      const chart = new ApexCharts(document.querySelector("#resourcesChart"), options);
+      chart.render();
+      
+      // Update total count
+      document.getElementById("totalCount").textContent = options.series.reduce((a, b) => a + b, 0);
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      // Initialize Analytics Chart
+      initResourcesChart();
+      
+      // Attach click event listener to all delete buttons
+      document.querySelectorAll('.delete-btn').forEach(button => {
+        button.addEventListener('click', function (event) {
+          event.preventDefault(); // Prevent default link behavior
+    
+          const deleteUrl = this.getAttribute('data-url'); // Get the URL from the data-url attribute
+    
+          // Show SweetAlert confirmation dialog
+          Swal.fire({
+            title: 'Are you sure?',
+            text: "This action cannot be undone!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'Cancel'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              // Redirect to the delete URL if confirmed
+              window.location.href = deleteUrl;
+            }
+          });
+        });
+      });
+    });
+    
+    
+    //view commodity modal
+    $(document).ready(function () {
+      $('.view-btn').on('click', function () {
+        var commodityId = $(this).data('commodityid')
+        var commodityName = $(this).data('commodityname')
+        var commodityDescription = $(this).data('commoditydescription')
+        var commodityImg = $(this).data('commodityimg')
+        var resourcesType = $(this).data('resourcestype')
+        var lat = $(this).data('lat')
+        var long = $(this).data('long')
+    
+        $('#viewCommodityModal').find('#viewCommodityId').text(commodityId)
+        $('#viewCommodityModal').find('#viewCommodityName').text(commodityName)
+        $('#viewCommodityModal').find('#viewResourcesType').text(resourcesType)
+        $('#viewCommodityModal').find('#viewCommodityDescription').text(commodityDescription)
+        $('#viewCommodityModal').find('#viewCommodityImg').attr('src', commodityImg)
+        $('#viewCommodityModal').find('#viewLat').text(lat)
+        $('#viewCommodityModal').find('#viewLong').text(long)
+      })
+    })
+    
+    //edit commodity modal
+    $(document).ready(function () {
+      // Event listener for the edit button
+      $('.edit-btn').on('click', function () {
+        var commodityId = $(this).data('commodityid');
+        var commodityName = $(this).data('commodityname');
+        var commodityDescription = $(this).data('commoditydescription');
+        var resourcesType = $(this).data('resourcestype');
+    
+        // Populate modal fields with commodity-specific data
+        $('#editCommodityModal').find('#commodity_name').val(commodityName);
+        $('#editCommodityModal').find('#description').val(commodityDescription);
+        $('#editCommodityModal').find('#defaultResources').text(resourcesType);
+    
+        // Dynamically set the form action URL
+        const editUrl = $('#editCommodityModal').data('editUrlTemplate').replace('0', commodityId);
+        $('#editCommodityForm').attr('action', editUrl);
+      });
+    });
+    
+    
+    
+    //add commodity modal
+    function addCommodity() {
+      // Logic to handle adding data goes here
+      console.log('Add Data button clicked')
+      // Add your logic here for adding data
+      Swal.fire({
+        title: 'Do you want to add new commodity?',
+        showCancelButton: true,
+        confirmButtonText: 'Yes',
+        cancelButtonText: 'No',
+        icon: 'question',
+        preConfirm: () => {
+          // Logic to handle "Yes" goes here
+          // For example, redirecting the user
+          console.log('User confirm the operation so redirect!!!')
+          window.location.href = '{% url "appAdmin:map" name="commodity" %}' // Adjust the URL as needed
+        }
+      }).then((result) => {
+        if (result.isDismissed) {
+          // Logic to handle "No" goes here
+          console.log('User cancelled the operation')
+        }
+      })
+    }
+    
+    $(document).ready(function () {
+      let table = $('#commoditiesTable').DataTable({
+        language: {
+          lengthMenu: '_MENU_',
+          search: '',
+          searchPlaceholder: 'Search...'
+        },
+        lengthMenu: [
+          [7, 10, 25, -1],
+          [7, 10, 25, 'All']
+        ],
+        paging: true,
+        lengthChange: true,
+        autoWidth: false,
+        bInfo: true,
+        bSort: true,
+        responsive: true,
+        buttons: [
+          {
+            text: 'CSV',
+            extend: 'csv'
+          },
+          {
+            text: 'PDF',
+            extend: 'pdf'
+          },
+          {
+            text: 'ADD',
+            className: 'btn btn-primary',
+            action: function () {
+              addCommodity()
+            }
+          }
+        ],
+        dom: '<"row"<"col-md-1"l><"col-md-8"B><"col-md-3"f>>' + '<"row"<"col-md-12"tr>>' + '<"row"<"col-md-5"i><"col-md-7"p>>'
+      })
+    })
+    
+    $(document).ready(function () {
+      let table = $('#pendingcommoditiesTable').DataTable({
+        language: {
+          lengthMenu: '_MENU_',
+          search: '',
+          searchPlaceholder: 'Search...'
+        },
+        lengthMenu: [
+          [7, 10, 25, -1],
+          [7, 10, 25, 'All']
+        ],
+        paging: true,
+        lengthChange: true,
+        autoWidth: false,
+        bInfo: true,
+        bSort: true,
+        responsive: true,
+        buttons: [
+          {
+            text: 'CSV',
+            extend: 'csv'
+          },
+          {
+            text: 'PDF',
+            extend: 'pdf'
+          },
+        ],
+        dom: '<"row"<"col-md-1"l><"col-md-8"B><"col-md-3"f>>' + '<"row"<"col-md-12"tr>>' + '<"row"<"col-md-5"i><"col-md-7"p>>'
+      })
+    })
+  
+  </script>
+
+  {% if messages %}
+    {% for message in messages %}
+      {% if message.tags == 'success' %}
+        <script>
+          // Display SweetAlert success message
+          Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: '{{ message }}'
+          })
+        </script>
+      {% else %}
+        <script>
+          // Display SweetAlert success message
+          Swal.fire({
+            icon: 'error',
+            title: 'Error!',
+            text: '{{ message }}'
+          })
+        </script>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+{% endblock %}

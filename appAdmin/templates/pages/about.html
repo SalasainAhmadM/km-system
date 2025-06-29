@@ -1,0 +1,411 @@
+
+
+{% extends 'base/admin-index.html' %} {% load embed_video_tags %} {% load static %}
+{% block title %} Admin About {% endblock %} {% block stylesheet %}
+<link rel="stylesheet" href="{% static 'style/css/admin.about.css' %}" />
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+{% load custom_tags %}
+
+<link
+  href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css"
+  rel="stylesheet"
+/>
+{% endblock %} {% block content %}
+<br />
+<div class="masonry-item col-12">
+  <div class="bd bgc-white">
+    <div class="peers fxw-nw@lg+ ai-s">
+      <div class="peer peer-greed w-70p@lg+ w-100@lg- p-20">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h3>About Projects</h3>
+          <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#addAboutModal"><i class="fa fa-plus"></i>Add New</a>
+
+        </div>
+<!-- CSS -->
+ <style>
+  .about-table thead th {
+    font-size: 13px;
+    font-weight: bolder;
+    background-color: #343a40;
+    color: white;
+    vertical-align: middle;
+    text-align: center;
+  }
+
+  .about-table tbody td {
+    font-size: 12px;
+    vertical-align: middle;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .about-table img {
+    max-width: 50px;
+    max-height: 50px;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .about-table .action-buttons {
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+  }
+
+  .about-table .btn {
+    padding: 4px 8px;
+    font-size: 12px;
+  }
+
+  /* Optional scrollable table container */
+  .table-container {
+    max-height: 500px;
+    overflow-y: auto;
+  }
+
+   .modal .form-group label {
+    font-weight: 600;
+    color: #333;
+  }
+
+  .modal .form-control {
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+    transition: border-color 0.3s;
+    font-size: 14px;
+  }
+
+  .modal .form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.1rem rgba(0, 123, 255, 0.25);
+  }
+
+  .modal .modal-title {
+    font-weight: 600;
+    color: #0C356A;
+  }
+
+  .modal-footer .btn-success {
+    background-color: #198754;
+    border: none;
+  }
+
+  .modal-footer .btn-secondary {
+    background-color: #6c757d;
+    border: none;
+  }
+
+  .modal-footer .btn:hover {
+    opacity: 0.9;
+  }
+</style>
+
+ <div class="table-container">
+  <table class="about-table table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>About ID</th>
+        <th>Project Name</th>
+        <th>Content</th>
+        <th>Project Details</th>
+        <th>Project Rationale</th>
+        <th>Background & Signature</th>
+        <th>Project Objectives</th>
+        <th>Research Activities</th>
+        <th>Project Timeline</th>
+        <th>Date Created</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in about_content %}
+      <tr>
+        <td>{{ item.about_id }}</td>
+        <td>{{ item.project_name }}</td>
+        <td>{{ item.content|safe }}</td>
+        <td>{{ item.project_details|safe }}</td>
+        <td>{{ item.project_rationale_desc|safe }}</td>
+        <td>{{ item.background_signature_desc|safe }}</td>
+        <td>{{ item.project_objectives_desc|safe }}</td>
+        <td>{{ item.research_activities_desc|safe }}</td>
+        <td>{{ item.project_timeline_desc|safe }}</td>
+        <td>{{ item.date_created }}</td>
+        <td>
+          <div class="action-buttons">
+            <a href="{% url 'appAdmin:about-rationale' item.about_id %}" class="btn btn-info" title="View">
+              <i class="fa-solid fa-eye"></i>
+            </a>
+
+            <button type="button" class="btn btn-warning" data-toggle="modal"
+              data-target="#editAboutModal{{ item.about_id }}" title="Edit">
+              <i class="fa-solid fa-pen-to-square"></i>
+            </button>
+
+            <form action="{% url 'appAdmin:about-delete' item.about_id %}" method="post" style="display:inline;" class="delete-about-form">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-danger" title="Delete">
+                <i class="fa-solid fa-trash"></i>
+              </button>
+            </form>
+          </div>
+        </td>
+      </tr>
+
+      <!-- Edit Modal -->
+      <div class="modal fade" id="editAboutModal{{ item.about_id }}" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <form method="post" enctype="multipart/form-data"
+            action="{% url 'appAdmin:about-page-edit' item.about_id %}">
+            {% csrf_token %}
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Edit Project</h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+              </div>
+              <div class="modal-body">
+                {% with edit_form=edit_forms|get_item:item.about_id %}
+                {{ edit_form.as_p }}
+                {% endwith %}
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-success">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      {% empty %}
+      <tr>
+        <td colspan="11" class="text-center text-muted">
+          <i class="fa-solid fa-circle-info"></i> No about project records found.
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+       <!-- Add About Project Modal -->
+        <div class="modal fade" id="addAboutModal" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+            <form method="post" enctype="multipart/form-data" action="{% url 'appAdmin:about-add' %}">
+              {% csrf_token %}
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Add Project</h5>
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                  {{ form.as_p }}
+                </div>
+                <div class="modal-footer">
+                  <button type="submit" class="btn btn-success">Save</button>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+ 
+
+              </td>
+            </tr>
+            
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+  </div>
+</div>
+{% include 'modal/about/upload-video.html' %} {% endblock %} {%block script %}
+<!-- JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+{% if messages %} {% for message in messages %} {% if message.tags == 'success'%}
+<script>
+  // Display SweetAlert success message
+  Swal.fire({
+    icon: "success",
+    title: "Success!",
+    text: "{{ message }}",
+  });
+</script>
+{% endif %} {% endfor %} {% endif %}
+
+<script>
+  $(document).ready(function () {
+    $("#about-page textarea").summernote({
+      height: 300,
+      placeholder: "Write here...",
+      toolbar: [
+        ["style", ["style", "bold", "italic", "underline", "clear"]],
+        ["font", ["strikethrough", "superscript", "subscript"]],
+        ["fontsize", ["fontsize"]],
+        ["color", ["color"]],
+        ["para", ["ul", "ol", "paragraph"]],
+        ["insert", ["link", "picture", "video"]],
+        ["insert", ["hr"]],
+        ["insert", ["table"]],
+        ["misc", ["undo", "redo"]],
+        ["mybutton", ["codeview"]],
+        ["mybutton", ["spellchecker"]],
+        ["mybutton", ["cut", "copy", "paste", "plainpaste", "wordpaste"]],
+        ["mybutton", ["link", "unlink", "anchor"]],
+      ],
+      buttons: {
+        spellchecker: function (context) {
+          var ui = $.summernote.ui;
+          // create button
+          var button = ui.button({
+            contents: '<i class="fa fa-magic"/>',
+            tooltip: "Spell Checker",
+            click: function () {
+              context.invoke("editor.spellCheck");
+            },
+          });
+          return button.render();
+        },
+      },
+      styleTags: ["p", "h1", "h2", "h3", "h4", "h5", "h6"], // Include more styles as needed
+      fontSizes: ["8", "9", "10", "11", "12", "14", "18", "24", "36"], // Add your desired font sizes
+      colors: [
+        [
+          "#000000",
+          "#ffffff",
+          "#e0e0e0",
+          "#b0b0b0",
+          "#808080",
+          "#404040",
+          "#ff0000",
+          "#ff9900",
+          "#ffff00",
+          "#00ff00",
+          "#00ffff",
+          "#0000ff",
+          "#9900ff",
+          "#ff00ff",
+          "#f7f7f7",
+          "#ccc",
+        ],
+      ], // Add your desired color palette
+    });
+  });
+
+  $(document).ready(function () {
+    $("#about-footer textarea").summernote({
+      height: 300,
+      placeholder: "Write here...",
+      toolbar: [
+        ["style", ["style", "bold", "italic", "underline", "clear"]],
+        ["font", ["strikethrough", "superscript", "subscript"]],
+        ["fontsize", ["fontsize"]],
+        ["color", ["color"]],
+        ["para", ["ul", "ol", "paragraph"]],
+        ["insert", ["link", "picture", "video"]],
+        ["insert", ["hr"]],
+        ["insert", ["table"]],
+        ["misc", ["undo", "redo"]],
+        ["mybutton", ["codeview"]],
+        ["mybutton", ["spellchecker"]],
+        ["mybutton", ["cut", "copy", "paste", "plainpaste", "wordpaste"]],
+        ["mybutton", ["link", "unlink", "anchor"]],
+      ],
+      buttons: {
+        spellchecker: function (context) {
+          var ui = $.summernote.ui;
+          // create button
+          var button = ui.button({
+            contents: '<i class="fa fa-magic"/>',
+            tooltip: "Spell Checker",
+            click: function () {
+              context.invoke("editor.spellCheck");
+            },
+          });
+          return button.render();
+        },
+      },
+      styleTags: ["p", "h1", "h2", "h3", "h4", "h5", "h6"], // Include more styles as needed
+      fontSizes: ["8", "9", "10", "11", "12", "14", "18", "24", "36"], // Add your desired font sizes
+      colors: [
+        [
+          "#000000",
+          "#ffffff",
+          "#e0e0e0",
+          "#b0b0b0",
+          "#808080",
+          "#404040",
+          "#ff0000",
+          "#ff9900",
+          "#ffff00",
+          "#00ff00",
+          "#00ffff",
+          "#0000ff",
+          "#9900ff",
+          "#ff00ff",
+          "#f7f7f7",
+          "#ccc",
+        ],
+      ], // Add your desired color palette
+    });
+  });
+
+  document.addEventListener("DOMContentLoaded", function () {
+    var aboutPage = document.getElementById("about-page");
+    var aboutFooter = document.getElementById("about-footer");
+    var videoComponent = document.getElementById("video-component");
+
+    var pageBtn = document.getElementById("about-page-btn");
+    var footerBtn = document.getElementById("about-footer-btn");
+    var videoBtn = document.getElementById("video-btn");
+
+    hideAllTablesExcept(aboutPage);
+
+    pageBtn.addEventListener("click", function () {
+      aboutPage.style.display = "block";
+      hideAllTablesExcept(aboutPage);
+    });
+
+    footerBtn.addEventListener("click", function () {
+      aboutFooter.style.display = "block";
+      hideAllTablesExcept(aboutFooter);
+    });
+
+    videoBtn.addEventListener("click", function () {
+      videoComponent.style.display = "block";
+      hideAllTablesExcept(videoComponent);
+    });
+
+    function hideAllTablesExcept(exceptTable) {
+      var tables = [aboutPage, aboutFooter, videoComponent];
+      tables.forEach(function (table) {
+        if (table !== exceptTable) {
+          table.style.display = "none";
+        }
+      });
+    }
+  });
+
+  document.querySelectorAll('.delete-about-form').forEach(form => {
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    Swal.fire({
+      title: 'Delete this About Project?',
+      text: "This action cannot be undone.",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#aaa',
+      confirmButtonText: 'Yes, delete it!',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        form.submit();
+      }
+    });
+  });
+});
+</script>
+{% endblock %}

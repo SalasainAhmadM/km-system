@@ -1,0 +1,730 @@
+{% extends 'base/admin-index.html' %}
+
+{% load static %}
+{% block title %}
+  Admin Accounts Management
+{% endblock %}
+{% block stylesheet %}
+  <link rel="stylesheet" href="{% static 'style/css/admin.accounts.css' %}" />
+{% endblock %}
+
+{% block content %}
+  <div class="masonry-item col-12">
+    <div class="bd bgc-white">
+      <div class="peers fxw-nw@lg+ ai-s">
+        <div class="peer peer-greed w-70p@lg+ w-100@lg- p-20">
+          <div class="layers container">
+            <div class="layer w-100 mB-10">
+              <h5 class="lh-1">Accounts Table</h5>
+              <div class="row">
+                <div class="col-12">
+                  <form action="#" method="POST" class="form-search">
+                    {% csrf_token %}
+                    <input type="text" id="search_user_id" name="search_user_id" class="form-control" placeholder="Search by User ID" />
+                    <input type="text" id="search_name" name="search_name" class="form-control" placeholder="Search by Name" />
+                    <input type="text" id="search_institution" name="search_institution" class="form-control" placeholder="Search by Institution" />
+                    <button type="button" id="searchButton" class="btn btn-primary">Search</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <br />
+            <div class="layer w-100">
+              <div class="table-container" style="max-height: 500px; overflow-y: auto; width: 100%;">
+                <table id="accountsTable" class="accounts-table table table-bordered" style="width: 100%; min-width: 600px;">
+                  <thead style="font-size: 13px; font-weight: bolder;">
+                    <tr>
+                      <th style="width: 8px;">User ID</th>
+                      <th>Name</th>
+                      <th>Date Joined</th>
+                      <th>Email</th>
+                      <th>Institution</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody style="font-size: 12px;">
+                    {% for user in users %}
+                      <tr style="border-bottom: 1px solid #ddd;">
+                        <td style="border-bottom: 1px solid #ddd; text-align: center;">{{ user.id }}</td>
+                        <td style="border-bottom: 1px solid #ddd;">
+                          {{ user.first_name|capfirst }} {% if user.middle_name %}{{ user.middle_name|capfirst }}{% endif %} {{ user.last_name|capfirst }}
+                        </td>
+                        <td style="border-bottom: 1px solid #ddd;">{{ user.date_joined|date:'Y-m-d' }}</td>
+                        <td style="border-bottom: 1px solid #ddd;">{{ user.email }}</td>
+                        <td style="border-bottom: 1px solid #ddd;">{{ user.institution }}</td>
+                        <td style="border-bottom: 1px solid #ddd;">
+                          <div style="display: flex; justify-content: center; gap: 5px;">
+                            {% if user.is_active %}
+                              <span style="background-color: #698474; color: #fff; padding: 3px 7px 3px 7px; border-radius: 7px;">Activated</span>
+                            {% else %}
+                              <span style="background-color: orangered; color: #fff; padding: 3px 10px 3px 10px; border-radius: 7px;">Pending</span>
+                            {% endif %}
+                          </div>
+                        </td>
+                        <td style="border-bottom: 1px solid #ddd;">
+                          <div style="display: flex; justify-content: center; gap: 5px;">
+                            <button type="button" style="background-color: #FF8F00; color: #FEFBF6;" class="btn btn-sm edit-btn" data-toggle="modal" data-target="#editAccountModal" data-userid="{{ user.id }}" data-firstname="{{ user.first_name|capfirst }}" data-middlename="{% if user.middle_name %}{{ user.middle_name|capfirst }}{% endif %}" data-lastname="{{ user.last_name|capfirst }}" data-datejoined="{{ user.date_joined|date:'Y-m-d' }}" data-email="{{ user.email }}" data-institution="{{ user.institution }}" data-position="{{ user.position|capfirst }}" data-usertype="{{ user.user_type|capfirst }}" data-sex="{% if user.sex %}{{ user.sex|capfirst }}{% endif %}" data-gender="{% if user.gender %}{{ user.gender }}{% endif %}" data-birthdate="{{ user.date_birth|date:'Y-m-d' }}" data-contactnum="{% if user.contact_num %}{{ user.contact_num }}{% endif %}" data-highesteduc="{{ user.highest_educ|capfirst }}s Degree" data-specialization="{% if user.specialization %}{{ user.specialization|capfirst }}{% endif %}">Update</button>
+
+                            <button type="button" style="background-color: #0C356A; color: #FEFBF6;" class="btn btn-sm view-btn" data-toggle="modal" data-target="#viewAccountModal" data-userid="{{ user.id }}" data-firstname="{{ user.first_name|capfirst }}" data-middlename="{% if user.middle_name %}{{ user.middle_name|capfirst }}{% endif %}" data-lastname="{{ user.last_name|capfirst }}" data-datejoined="{{ user.date_joined|date:'Y-m-d' }}" data-email="{{ user.email }}" data-institution="{{ user.institution }}" data-position="{{ user.position|capfirst }}" data-usertype="{{ user.user_type|capfirst }} User" data-sex="{% if user.sex %}{{ user.sex|capfirst }}{% endif %}" data-gender="{% if user.gender %}{{ user.gender }}{% endif %}" data-birthdate="{{ user.date_birth|date:'Y-m-d' }}" data-contactnum="{% if user.contact_num %}{{ user.contact_num }}{% endif %}" data-highesteduc="{{ user.highest_educ|capfirst }}s Degree" data-specialization="{% if user.specialization %}{{ user.specialization|capfirst }}{% endif %}">View</button>
+
+                            <a data-placement="top" style="background-color: #D71313; color: #FEFBF6;" data-toggle="tooltip" title="delete" href="" class="btn btn-sm delete-btn">Delete</a>
+                          </div>
+                        </td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="peer bdL p-20 w-30p@lg+ w-100p@lg-">
+          <div class="layers">
+            <div class="layer w-100">
+              <div class="layers">
+                <div class="layer w-100">
+                  <h5 class="mB-5">Accounts Distribution</h5>
+                </div>
+              </div>
+              <div class="peers pT-20 mT-20 bdT fxw-nw@lg+ jc-sb ta-c gap-10">
+                <div class="peer">
+                  <div id="generalUserChart" class="user-chart-pie" data-percent="{{ gen_user_percent }}">
+                    <span>{{ gen_user_percent }}%</span>
+                  </div>
+                  <h6 class="fsz-sm">General Users ({{ total_gen_user }})</h6>
+                </div>
+                <div class="peer">
+                  <div id="cmiUserChart" class="user-chart-pie" data-percent="{{ cmi_user_percent }}">
+                    <span>{{ cmi_user_percent }}%</span>
+                  </div>
+                  <h6 class="fsz-sm">CMI Users ({{ total_cmi_user }})</h6>
+                </div>
+                <div class="peer">
+                  <div id="secretariatUserChart" class="user-chart-pie" data-percent="{{ sec_user_percent }}">
+                    <span>{{ sec_user_percent }}%</span>
+                  </div>
+                  <h6 class="fsz-sm">Secretariat ({{ total_sec_user }})</h6>
+                </div>
+              </div>
+
+              <div class="peers pT-20 mT-20 bdT fxw-nw@lg+ jc-sb ta-c gap-10">
+                <h5 class="mB-5">Institution Distribution (Display only top 5)</h5>
+              </div>
+
+              {% for institution in top_institutions %}
+                <div class="layer w-100 mT-15">
+                  <small class="fw-600 c-grey-700">{{ institution.institution }}</small>
+                  <span class="pull-right c-grey-600 fsz-sm">{{ institution.percentage }}%</span>
+                  <div class="progress mT-10">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="{{ institution.percentage }}" aria-valuemin="0" aria-valuemax="100" style="width:{{ institution.percentage }}%; background-color: #678171;">
+                      <span class="visually-hidden">{{ institution.percentage }}% Complete</span>
+                    </div>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add User Modal -->
+  <div class="modal fade" id="accountRegistrationModal" tabindex="-1" role="dialog" aria-labelledby="accountRegistrationModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="accountRegistrationModalLabel">Add New User</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form action="" method="POST">
+          {% csrf_token %}
+          <div class="modal-body">
+            <!-- Personal Information Fieldset -->
+            <div class="fieldset">
+              <legend class="legend">Personal Information</legend>
+              <div class="row">
+                <div class="col-md-4 mb-3">
+                  <label for="first_name">First Name</label>
+                  <input type="text" class="form-control" id="first_name" name="first_name" required>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label for="middle_name">Middle Name</label>
+                  <input type="text" class="form-control" id="middle_name" name="middle_name">
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label for="last_name">Last Name</label>
+                  <input type="text" class="form-control" id="last_name" name="last_name" required>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="sex">Biological Sex</label>
+                  <select class="form-control" id="sex" name="sex" required>
+                    <option value="">Select</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                  </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="gender">Gender</label>
+                  <select class="form-control" id="gender" name="gender">
+                    <option value="">Select</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="non-binary">Non-Binary</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="date_birth">Date of Birth</label>
+                  <input type="date" class="form-control" id="date_birth" name="date_birth">
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="contact_num">Contact Number</label>
+                  <input type="text" class="form-control" id="contact_num" name="contact_num">
+                </div>
+              </div>
+            </div>
+            
+            <!-- Account Information Fieldset -->
+            <div class="fieldset">
+              <legend class="legend">Account Information</legend>
+              <div class="row">
+                <div class="col-md-12 mb-3">
+                  <label for="email">Email</label>
+                  <input type="email" class="form-control" id="email" name="email" required>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="user_type">User Type</label>
+                  <select class="form-control" id="user_type" name="user_type" required>
+                    <option value="">Select</option>
+                    <option value="general">General User</option>
+                    <option value="cmi">CMI User</option>
+                    <option value="secretariat">Secretariat</option>
+                  </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="password">Password</label>
+                  <input type="password" class="form-control" id="password" name="password" required>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Professional Information Fieldset -->
+            <div class="fieldset">
+              <legend class="legend">Professional Information</legend>
+              <div class="row">
+                <div class="col-md-12 mb-3">
+                  <label for="institution">Institution</label>
+                  <input type="text" class="form-control" id="institution" name="institution" required>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="position">Position</label>
+                  <input type="text" class="form-control" id="position" name="position">
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="highest_educ">Highest Education</label>
+                  <select class="form-control" id="highest_educ" name="highest_educ">
+                    <option value="">Select</option>
+                    <option value="high_school">High School</option>
+                    <option value="associate">Associate's</option>
+                    <option value="bachelor">Bachelor's</option>
+                    <option value="master">Master's</option>
+                    <option value="doctoral">Doctoral</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 mb-3">
+                  <label for="specialization">Specialization</label>
+                  <input type="text" class="form-control" id="specialization" name="specialization">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  <!-- View User Modal -->
+  <div class="modal fade" id="viewAccountModal" tabindex="-1" role="dialog" aria-labelledby="viewAccountModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="viewAccountModalLabel">User Details</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <!-- User Information -->
+            <div class="fieldset">
+              <legend class="legend">Personal Information</legend>
+              <div class="row">
+                <div class="col-md-4 mb-3">
+                  <label for="first_name">First Name</label>
+                  <input type="text" class="form-control view-modal" id="first_name" readonly>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label for="middle_name">Middle Name</label>
+                  <input type="text" class="form-control view-modal" id="middle_name" readonly>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label for="last_name">Last Name</label>
+                  <input type="text" class="form-control view-modal" id="last_name" readonly>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="sex">Biological Sex</label>
+                  <input type="text" class="form-control view-modal" id="sex" readonly>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="gender">Gender</label>
+                  <input type="text" class="form-control view-modal" id="gender" readonly>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="date_birth">Date of Birth</label>
+                  <input type="text" class="form-control view-modal" id="date_birth" readonly>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="contact_num">Contact Number</label>
+                  <input type="text" class="form-control view-modal" id="contact_num" readonly>
+                </div>
+              </div>
+            </div>
+
+            <!-- Account Information -->
+            <div class="fieldset">
+              <legend class="legend">Account Information</legend>
+              <div class="row">
+                <div class="col-md-12 mb-3">
+                  <label for="email">Email</label>
+                  <input type="email" class="form-control view-modal" id="email" readonly>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="user_type">User Type</label>
+                  <input type="text" class="form-control view-modal" id="user_type" readonly>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="id">User ID</label>
+                  <input type="text" class="form-control view-modal" id="id" readonly>
+                </div>
+              </div>
+            </div>
+
+            <!-- Professional Information -->
+            <div class="fieldset">
+              <legend class="legend">Professional Information</legend>
+              <div class="row">
+                <div class="col-md-12 mb-3">
+                  <label for="institution">Institution</label>
+                  <input type="text" class="form-control view-modal" id="institution" readonly>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="position">Position</label>
+                  <input type="text" class="form-control view-modal" id="position" readonly>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="highest_educ">Highest Education</label>
+                  <input type="text" class="form-control view-modal" id="highest_educ" readonly>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 mb-3">
+                  <label for="specialization">Specialization</label>
+                  <input type="text" class="form-control view-modal" id="specialization" readonly>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit User Modal -->
+  <div class="modal fade" id="editAccountModal" tabindex="-1" role="dialog" aria-labelledby="editAccountModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editAccountModalLabel">Edit User</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form id="editAccountForm" method="POST">
+          {% csrf_token %}
+          <div class="modal-body">
+            <!-- Personal Information -->
+            <div class="fieldset">
+              <legend class="legend">Personal Information</legend>
+              <div class="row">
+                <div class="col-md-4 mb-3">
+                  <label for="first_name">First Name</label>
+                  <input type="text" class="form-control" id="first_name" name="first_name" required>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label for="middle_name">Middle Name</label>
+                  <input type="text" class="form-control" id="middle_name" name="middle_name">
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label for="last_name">Last Name</label>
+                  <input type="text" class="form-control" id="last_name" name="last_name" required>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="sex">Biological Sex</label>
+                  <select class="form-control" id="sex" name="sex">
+                    <option value="">Select</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                  </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="gender">Gender</label>
+                  <select class="form-control" id="gender" name="gender">
+                    <option value="">Select</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="non-binary">Non-Binary</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="date_birth">Date of Birth</label>
+                  <input type="date" class="form-control" id="date_birth" name="date_birth">
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="contact_num">Contact Number</label>
+                  <input type="text" class="form-control" id="contact_num" name="contact_num">
+                </div>
+              </div>
+            </div>
+
+            <!-- Account Information -->
+            <div class="fieldset">
+              <legend class="legend">Account Information</legend>
+              <div class="row">
+                <div class="col-md-12 mb-3">
+                  <label for="email">Email</label>
+                  <input type="email" class="form-control" id="email" name="email" required>
+                  <input type="hidden" id="id" name="id">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 mb-3">
+                  <label for="user_type">User Type</label>
+                  <select class="form-control" id="user_type" name="user_type" required>
+                    <option value="">Select</option>
+                    <option value="general">General User</option>
+                    <option value="cmi">CMI User</option>
+                    <option value="secretariat">Secretariat</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Professional Information -->
+            <div class="fieldset">
+              <legend class="legend">Professional Information</legend>
+              <div class="row">
+                <div class="col-md-12 mb-3">
+                  <label for="institution">Institution</label>
+                  <input type="text" class="form-control" id="institution" name="institution" required>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="position">Position</label>
+                  <input type="text" class="form-control" id="position" name="position">
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="highest_educ">Highest Education</label>
+                  <select class="form-control" id="highest_educ" name="highest_educ">
+                    <option value="">Select</option>
+                    <option value="high_school">High School</option>
+                    <option value="associate">Associate's</option>
+                    <option value="bachelor">Bachelor's</option>
+                    <option value="master">Master's</option>
+                    <option value="doctoral">Doctoral</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 mb-3">
+                  <label for="specialization">Specialization</label>
+                  <input type="text" class="form-control" id="specialization" name="specialization">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block script %}
+  <!-- Include easy-pie-chart library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/easy-pie-chart/2.1.6/jquery.easypiechart.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Initialize the pie charts using jQuery
+      $('.user-chart-pie').each(function() {
+        const $this = $(this);
+        const percent = $this.data('percent');
+        const barColor = $this.attr('id') === 'generalUserChart' ? '#f44336' : 
+                         $this.attr('id') === 'cmiUserChart' ? '#2196f3' : '#ff9800';
+                         
+        $this.easyPieChart({
+          size: 80,
+          barColor: barColor,
+          scaleColor: false,
+          trackColor: '#e5e5e5',
+          lineWidth: 5,
+          lineCap: 'round',
+          animate: 1000
+        });
+      });
+      
+      // Function to handle user deletion confirmation
+      $('.delete-btn').on('click', function(event) {
+        event.preventDefault(); // Prevent the default link behavior
+        
+        const deleteUrl = $(this).attr('href');
+        
+        Swal.fire({
+          title: 'Are you sure?',
+          text: 'Do you really want to delete this user? This action cannot be undone.',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // If confirmed, proceed with the deletion
+            window.location.href = deleteUrl;
+          }
+        });
+      });
+      
+      // Initialize the DataTable
+      const accountsTable = $('#accountsTable').DataTable({
+        language: {
+          lengthMenu: 'Show _MENU_ entries',
+          search: '',
+          searchPlaceholder: 'Search...'
+        },
+        lengthMenu: [
+          [7, 10, 25, -1],
+          [7, 10, 25, 'All']
+        ],
+        paging: true,
+        lengthChange: true,
+        autoWidth: false,
+        bInfo: true,
+        bSort: true,
+        responsive: true,
+        buttons: [
+          {
+            text: 'CSV',
+            extend: 'csv',
+            className: 'btn-sm'
+          },
+          {
+            text: 'PDF',
+            extend: 'pdf',
+            className: 'btn-sm'
+          },
+          {
+            text: 'ADD',
+            className: 'btn btn-primary btn-sm',
+            action: function () {
+              $('#accountRegistrationModal').modal('show');
+            }
+          }
+        ],
+        dom:
+          '<"row"<"col-md-3"l><"col-md-9 text-right"B>>' +
+          '<"row"<"col-md-12"tr>>' +
+          '<"row"<"col-md-5"i><"col-md-7"p>>'
+      });
+      
+      // Ensure proper styling for DataTable elements
+      $('.dataTables_length').addClass('float-left d-inline-block').css('width', 'auto');
+      $('.dt-buttons').addClass('float-right d-inline-block');
+      
+      // Custom search functionality
+      $('#searchButton').on('click', function() {
+        filterTable();
+      });
+      
+      // Also filter when user types in any of the search fields
+      $('#search_user_id, #search_name, #search_institution').on('keyup', function() {
+        filterTable();
+      });
+      
+      // Function to handle table filtering
+      function filterTable() {
+        const userId = $('#search_user_id').val().toLowerCase();
+        const name = $('#search_name').val().toLowerCase();
+        const institution = $('#search_institution').val().toLowerCase();
+        
+        // Use DataTables API for more efficient searching
+        accountsTable.search('').draw(); // Clear any existing search
+        
+        // Apply custom filtering
+        $.fn.dataTable.ext.search.push(function(settings, data, dataIndex) {
+          const rowUserId = data[0].toLowerCase();
+          const rowName = data[1].toLowerCase();
+          const rowInstitution = data[4].toLowerCase();
+          
+          const userIdMatch = userId === '' || rowUserId.includes(userId);
+          const nameMatch = name === '' || rowName.includes(name);
+          const institutionMatch = institution === '' || rowInstitution.includes(institution);
+          
+          return userIdMatch && nameMatch && institutionMatch;
+        });
+        
+        accountsTable.draw();
+        
+        // Remove the custom filter after drawing
+        $.fn.dataTable.ext.search.pop();
+      }
+      
+      // Handle view modal data population
+      $('.view-btn').on('click', function() {
+        const userId = $(this).data('userid');
+        const firstName = $(this).data('firstname');
+        const middleName = $(this).data('middlename');
+        const lastName = $(this).data('lastname');
+        const dateJoined = $(this).data('datejoined');
+        const userEmail = $(this).data('email');
+        const institution = $(this).data('institution');
+        const position = $(this).data('position');
+        const userType = $(this).data('usertype');
+        const sex = $(this).data('sex');
+        const gender = $(this).data('gender');
+        const dateBirth = $(this).data('birthdate');
+        const contactNum = $(this).data('contactnum');
+        const highestEduc = $(this).data('highesteduc');
+        const specialization = $(this).data('specialization');
+        
+        const modal = $('#viewAccountModal');
+        modal.find('#id').val(userId);
+        modal.find('#first_name').val(firstName);
+        modal.find('#middle_name').val(middleName);
+        modal.find('#last_name').val(lastName);
+        modal.find('#email').val(userEmail);
+        modal.find('#institution').val(institution);
+        modal.find('#position').val(position);
+        modal.find('#user_type').val(userType);
+        modal.find('#sex').val(sex);
+        modal.find('#gender').val(gender);
+        modal.find('#date_birth').val(dateBirth);
+        modal.find('#contact_num').val(contactNum);
+        modal.find('#highest_educ').val(highestEduc);
+        modal.find('#specialization').val(specialization);
+      });
+      
+      // Handle edit modal data population and form action
+      $('.edit-btn').on('click', function() {
+        const userId = $(this).data('userid');
+        const firstName = $(this).data('firstname');
+        const middleName = $(this).data('middlename');
+        const lastName = $(this).data('lastname');
+        const dateJoined = $(this).data('datejoined');
+        const userEmail = $(this).data('email');
+        const institution = $(this).data('institution');
+        const position = $(this).data('position');
+        const userType = $(this).data('usertype');
+        const sex = $(this).data('sex');
+        const gender = $(this).data('gender');
+        const dateBirth = $(this).data('birthdate');
+        const contactNum = $(this).data('contactnum');
+        const highestEduc = $(this).data('highesteduc');
+        const specialization = $(this).data('specialization');
+        
+        const modal = $('#editAccountModal');
+        modal.find('#id').val(userId);
+        modal.find('#first_name').val(firstName);
+        modal.find('#middle_name').val(middleName);
+        modal.find('#last_name').val(lastName);
+        modal.find('#email').val(userEmail);
+        modal.find('#institution').val(institution);
+        modal.find('#position').val(position);
+        
+        // For select elements, we need to select the correct option
+        modal.find('#user_type').val(userType.toLowerCase());
+        modal.find('#sex').val(sex ? sex.toLowerCase() : '');
+        modal.find('#gender').val(gender ? gender.toLowerCase() : '');
+        
+        modal.find('#date_birth').val(dateBirth);
+        modal.find('#contact_num').val(contactNum);
+        
+        // Extract just the education level from "X's Degree"
+        const educLevel = highestEduc ? highestEduc.split(' ')[0].toLowerCase() : '';
+        modal.find('#highest_educ').val(educLevel);
+        
+        modal.find('#specialization').val(specialization);
+        
+        // Set the form action URL
+        $('#editAccountForm').attr('action', formAction);
+      });
+      
+      // Display SweetAlert messages if provided from the server
+      {% if messages %}
+        {% for message in messages %}
+          {% if message.tags == 'success' %}
+            Swal.fire({
+              icon: 'success',
+              title: 'Success!',
+              text: '{{ message }}'
+            });
+          {% else %}
+            Swal.fire({
+              icon: 'error',
+              title: 'Error!',
+              text: '{{ message }}'
+            });
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    });
+  </script>
+{% endblock %}
