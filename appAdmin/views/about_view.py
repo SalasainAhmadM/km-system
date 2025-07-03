@@ -11,6 +11,16 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 # from appAdmin.forms import AboutForm
 
+@user_access_required("admin")
+def admin_main_about_page(request):
+    videos = UploadVideo.objects.last()
+    footer_content = AboutFooter.objects.all()
+    context = {
+            "footer_content": footer_content,
+            "videos": videos,
+        }
+
+    return render(request, "pages/main-about.html")
 
 @user_access_required("admin")
 def admin_about_page(request):

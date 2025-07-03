@@ -440,13 +440,13 @@ class Tag(models.Model):
 class About(models.Model):
     about_id = models.AutoField(primary_key=True)
     project_name = models.CharField(max_length=255, null=True, blank=True)
-    content = models.TextField()
+    # content = models.TextField()
     project_details = models.TextField(null=True, blank=True)
     project_rationale_desc = models.TextField(null=True, blank=True)
-    background_signature_desc = models.TextField(null=True, blank=True)
-    project_objectives_desc = models.TextField(null=True, blank=True)
-    research_activities_desc = models.TextField(null=True, blank=True)
-    project_timeline_desc = models.TextField(null=True, blank=True)
+    # background_signature_desc = models.TextField(null=True, blank=True)
+    # project_objectives_desc = models.TextField(null=True, blank=True)
+    # research_activities_desc = models.TextField(null=True, blank=True)
+    # project_timeline_desc = models.TextField(null=True, blank=True)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
 
     date_created = models.DateTimeField(auto_now_add=True, null=True)
@@ -457,7 +457,7 @@ class About(models.Model):
 class AboutRationale(models.Model):
     rationale_id = models.AutoField(primary_key=True)
     about = models.ForeignKey(About, on_delete=models.CASCADE)
-    icon = models.CharField(max_length=255)
+    # icon = models.CharField(max_length=255)
     title = models.CharField(max_length=255)
     detail = models.TextField()
 
@@ -471,9 +471,9 @@ class AboutRationale(models.Model):
 class AboutObjective(models.Model):
     objective_id = models.AutoField(primary_key=True)
     about = models.ForeignKey(About, on_delete=models.CASCADE)
-    icon = models.CharField(max_length=255)
+    # icon = models.CharField(max_length=255)
     title = models.CharField(max_length=255)
-    detail = models.TextField()
+    # detail = models.TextField()
 
     class Meta:
         db_table = "tbl_about_objective"
@@ -511,7 +511,7 @@ class AboutActivity(models.Model):
 class AboutTimeline(models.Model):
     timeline_id = models.AutoField(primary_key=True)
     about = models.ForeignKey(About, on_delete=models.CASCADE)
-    header = models.CharField(max_length=255)
+    # header = models.CharField(max_length=255)
     title = models.CharField(max_length=255)
     description = models.TextField()
 
@@ -527,6 +527,9 @@ class AboutTeamMember(models.Model):
     about = models.ForeignKey(About, on_delete=models.CASCADE)
     profile_image = models.ImageField(upload_to='team_profiles/', blank=True, null=True)
     name = models.CharField(max_length=255)
+    # f_name = models.CharField(max_length=255)
+    # m_name = models.CharField(max_length=255)
+    # l_name = models.CharField(max_length=255)
     role = models.CharField(max_length=255)
     description = models.TextField()
     email = models.CharField(max_length=255)

@@ -48,6 +48,7 @@ urlpatterns = (
 
         path("about/page/edit/<int:about_id>/", about_view.admin_about_page_edit, name="about-page-edit"),
 
+        path("main-about/", about_view.admin_main_about_page, name="main-about-page"),
         path("about/", about_view.admin_about_page, name="about-page"),
         path("about/add/", about_view.admin_about_add, name="about-add"),
         path("about/edit/<int:about_id>/", about_view.admin_about_edit, name="about-edit"),

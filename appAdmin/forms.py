@@ -556,26 +556,28 @@ class AboutForm(forms.ModelForm, CommonFormStyle):
         fields = '__all__'
         widgets = {
             'project_name': forms.TextInput(attrs={**CommonFormStyle.common_input_attrs, 'placeholder': 'Enter project name...'}),
-            'content': forms.Textarea(attrs={**CommonFormStyle.common_textarea_attrs, 'placeholder': 'Enter content...'}),
+            # 'content': forms.Textarea(attrs={**CommonFormStyle.common_textarea_attrs, 'placeholder': 'Enter content...'}),
             'project_details': forms.Textarea(attrs={**CommonFormStyle.common_textarea_attrs, 'placeholder': 'Enter project details...'}),
             'project_rationale_desc': forms.Textarea(attrs={**CommonFormStyle.common_textarea_attrs, 'placeholder': 'Enter rationale...'}),
-            'background_signature_desc': forms.Textarea(attrs={**CommonFormStyle.common_textarea_attrs, 'placeholder': 'Enter background and signature...'}),
-            'project_objectives_desc': forms.Textarea(attrs={**CommonFormStyle.common_textarea_attrs, 'placeholder': 'Enter objectives...'}),
-            'research_activities_desc': forms.Textarea(attrs={**CommonFormStyle.common_textarea_attrs, 'placeholder': 'Enter research activities...'}),
-            'project_timeline_desc': forms.Textarea(attrs={**CommonFormStyle.common_textarea_attrs, 'placeholder': 'Enter timeline description...'}),
+            # 'background_signature_desc': forms.Textarea(attrs={**CommonFormStyle.common_textarea_attrs, 'placeholder': 'Enter background and signature...'}),
+            # 'project_objectives_desc': forms.Textarea(attrs={**CommonFormStyle.common_textarea_attrs, 'placeholder': 'Enter objectives...'}),
+            # 'research_activities_desc': forms.Textarea(attrs={**CommonFormStyle.common_textarea_attrs, 'placeholder': 'Enter research activities...'}),
+            # 'project_timeline_desc': forms.Textarea(attrs={**CommonFormStyle.common_textarea_attrs, 'placeholder': 'Enter timeline description...'}),
         }
 
 
 # ✅ About Rationale Form
 class AboutRationaleForm(forms.ModelForm, CommonFormStyle):
-    icon = forms.ChoiceField(
-        choices=ICON_CHOICES,
-        widget=forms.Select(attrs={**CommonFormStyle.common_input_attrs})
-    )
+    # icon = forms.ChoiceField(
+    #     choices=ICON_CHOICES,
+    #     widget=forms.Select(attrs={**CommonFormStyle.common_input_attrs})
+    # )
 
     class Meta:
         model = AboutRationale
-        fields = ['about', 'icon', 'title', 'detail']
+        fields = ['about', 
+        # 'icon', 
+        'title', 'detail']
         widgets = {
             'about': forms.HiddenInput(),
             'title': forms.TextInput(attrs={**CommonFormStyle.common_input_attrs, 'placeholder': 'Enter title...'}),
@@ -584,18 +586,23 @@ class AboutRationaleForm(forms.ModelForm, CommonFormStyle):
 
 # ✅ About Objective Form
 class AboutObjectiveForm(forms.ModelForm, CommonFormStyle):
-    icon = forms.ChoiceField(
-        choices=ICON_CHOICES,
-        widget=forms.Select(attrs={**CommonFormStyle.common_input_attrs})
-    )
+    # icon = forms.ChoiceField(
+    #     choices=ICON_CHOICES,
+    #     widget=forms.Select(attrs={**CommonFormStyle.common_input_attrs})
+    # )
 
     class Meta:
         model = AboutObjective
-        fields = ['about', 'icon', 'title', 'detail']
+        fields = [
+            'about', 
+            # 'icon', 
+            'title'
+            # , 'detail'
+            ]
         widgets = {
             'about': forms.HiddenInput(),
             'title': forms.TextInput(attrs={**CommonFormStyle.common_input_attrs, 'placeholder': 'Enter title...'}),
-            'detail': forms.Textarea(attrs={**CommonFormStyle.common_textarea_attrs, 'placeholder': 'Enter detail...'}),
+            # 'detail': forms.Textarea(attrs={**CommonFormStyle.common_textarea_attrs, 'placeholder': 'Enter detail...'}),
         }
 
 
@@ -634,10 +641,12 @@ class AboutTimelineForm(forms.ModelForm, CommonFormStyle):
 
     class Meta:
         model = AboutTimeline
-        fields = ['about', 'header', 'title', 'description']
+        fields = ['about', 
+        # 'header', 
+        'title', 'description']
         widgets = {
             'about': forms.HiddenInput(),
-            'header': forms.TextInput(attrs={**CommonFormStyle.common_input_attrs, 'placeholder': 'Enter header...'}),
+            # 'header': forms.TextInput(attrs={**CommonFormStyle.common_input_attrs, 'placeholder': 'Enter header...'}),
             'title': forms.TextInput(attrs={**CommonFormStyle.common_input_attrs, 'placeholder': 'Enter title...'}),
             'description': forms.Textarea(attrs={**CommonFormStyle.common_textarea_attrs, 'placeholder': 'Enter description...'}),
         }
@@ -656,6 +665,11 @@ class AboutTeamMemberForm(forms.ModelForm):
             'about': forms.HiddenInput(),
             'profile_image': CustomClearableFileInput(attrs={'class': 'form-control'}),
             'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter name...'}),
+
+            # 'f_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter first name...'}),
+            # 'm_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter middle name...'}),
+            # 'l_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter last name...'}),
+
             'role': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter role...'}),
             'description': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Enter description...'}),
             'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Enter email...'}),

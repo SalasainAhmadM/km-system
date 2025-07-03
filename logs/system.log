@@ -5588,3 +5588,459 @@ AttributeError: Cannot find 'aboutteamsocial_set' on AboutTeamMember object, 'ab
 [2025-06-30 02:02:52] Not Found: /static/f691f37e57f04c152e23.woff
 [2025-06-30 02:02:52] Not Found: /static/eda8b94308c6f538f04a.ttf
 [2025-06-30 02:02:52] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-03 21:53:54] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-03 21:53:54] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-03 21:53:54] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-03 21:53:54] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-03 21:53:55] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-03 21:54:49] Not Found: /static/style/css/admin.about.css
+[2025-07-03 21:54:49] Not Found: /static/style/css/admin.about.css
+[2025-07-03 21:54:50] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-03 21:54:50] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-03 21:54:50] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-03 21:54:50] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-03 21:54:50] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-03 21:55:08] Not Found: /static/style/css/admin.about.css
+[2025-07-03 21:55:09] Not Found: /static/style/css/admin.about.css
+[2025-07-03 21:55:09] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-03 21:55:09] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-03 21:55:09] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-03 21:55:09] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-03 21:55:09] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-03 21:55:11] Not Found: /static/style/css/admin.about.css
+[2025-07-03 21:55:12] Not Found: /static/style/css/admin.about.css
+[2025-07-03 21:55:12] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-03 21:55:12] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-03 21:55:12] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-03 21:55:12] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-03 21:55:12] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-03 21:55:13] Not Found: /static/style/css/admin.about.css
+[2025-07-03 21:55:13] Not Found: /static/style/css/admin.about.css
+[2025-07-03 21:55:14] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-03 21:55:14] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-03 21:55:14] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-03 21:55:14] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-03 21:55:14] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-03 21:55:15] Not Found: /static/style/css/admin.about.css
+[2025-07-03 21:55:15] Not Found: /static/style/css/admin.about.css
+[2025-07-03 21:55:16] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-03 21:55:16] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-03 21:55:16] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-03 21:55:16] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-03 21:55:16] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-03 21:55:17] Not Found: /static/style/css/admin.about.css
+[2025-07-03 21:55:17] Not Found: /static/style/css/admin.about.css
+[2025-07-03 21:55:18] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-03 21:55:18] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-03 21:55:18] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-03 21:55:18] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-03 21:55:18] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-03 21:55:19] Not Found: /static/style/css/admin.about.css
+[2025-07-03 21:55:20] Not Found: /static/style/css/admin.about.css
+[2025-07-03 21:55:21] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-03 21:55:21] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-03 21:55:21] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-03 21:55:21] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-03 21:55:21] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-03 21:56:16] Not Found: /static/style/css/admin.about.css
+[2025-07-03 21:56:16] Not Found: /static/style/css/admin.about.css
+[2025-07-03 21:56:17] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-03 21:56:17] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-03 21:56:17] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-03 21:56:17] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-03 21:56:17] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-03 21:56:20] Not Found: /static/style/css/admin.about.css
+[2025-07-03 21:56:20] Not Found: /static/style/css/admin.about.css
+[2025-07-03 21:56:21] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-03 21:56:21] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-03 21:56:21] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-03 21:56:21] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-03 21:56:21] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-03 22:03:07] Not Found: /static/style/css/admin.about.css
+[2025-07-03 22:03:07] Not Found: /static/style/css/admin.about.css
+[2025-07-03 22:03:07] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-03 22:03:07] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-03 22:03:08] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-03 22:03:08] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-03 22:03:08] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-03 22:08:28] Not Found: /static/style/css/admin.about.css
+[2025-07-03 22:08:28] Not Found: /static/style/css/admin.about.css
+[2025-07-03 22:08:29] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-03 22:08:29] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-03 22:08:29] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-03 22:08:29] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-03 22:08:29] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-03 22:09:47] Not Found: /static/style/css/admin.about.css
+[2025-07-03 22:09:47] Not Found: /static/style/css/admin.about.css
+[2025-07-03 22:09:47] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-03 22:09:47] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-03 22:09:47] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-03 22:09:47] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-03 22:09:47] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-03 22:13:01] Not Found: /static/style/css/admin.about.css
+[2025-07-03 22:13:01] Not Found: /static/style/css/admin.about.css
+[2025-07-03 22:13:02] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-03 22:13:02] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-03 22:13:02] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-03 22:13:02] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-03 22:13:02] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-03 22:15:18] Not Found: /static/style/css/admin.about.css
+[2025-07-03 22:15:19] Not Found: /static/style/css/admin.about.css
+[2025-07-03 22:15:19] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-03 22:15:19] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-03 22:15:19] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-03 22:15:19] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-03 22:15:19] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-03 22:15:35] Not Found: /static/style/css/admin.about.css
+[2025-07-03 22:15:35] Not Found: /static/style/css/admin.about.css
+[2025-07-03 22:15:36] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-03 22:15:36] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-03 22:15:36] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-03 22:15:36] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-03 22:15:36] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-03 22:15:43] Not Found: /static/style/css/admin.about.css
+[2025-07-03 22:15:43] Not Found: /static/style/css/admin.about.css
+[2025-07-03 22:15:44] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-03 22:15:44] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-03 22:15:44] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-03 22:15:44] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-03 22:15:44] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-03 22:15:50] Internal Server Error: /admin/about/add/
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "/usr/local/lib/python3.10/site-packages/django/db/backends/mysql/base.py", line 75, in execute
+    return self.cursor.execute(query, args)
+  File "/usr/local/lib/python3.10/site-packages/MySQLdb/cursors.py", line 179, in execute
+    res = self._query(mogrified_query)
+  File "/usr/local/lib/python3.10/site-packages/MySQLdb/cursors.py", line 330, in _query
+    db.query(q)
+  File "/usr/local/lib/python3.10/site-packages/MySQLdb/connections.py", line 257, in query
+    _mysql.connection.query(self, query)
+MySQLdb.IntegrityError: (1364, "Field 'content' doesn't have a default value")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/app/utils/user_control.py", line 45, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "/app/appAdmin/views/about_view.py", line 40, in admin_about_add
+    form.save()
+  File "/usr/local/lib/python3.10/site-packages/django/forms/models.py", line 542, in save
+    self.instance.save()
+  File "/usr/local/lib/python3.10/site-packages/django/db/models/base.py", line 814, in save
+    self.save_base(
+  File "/usr/local/lib/python3.10/site-packages/django/db/models/base.py", line 877, in save_base
+    updated = self._save_table(
+  File "/usr/local/lib/python3.10/site-packages/django/db/models/base.py", line 1020, in _save_table
+    results = self._do_insert(
+  File "/usr/local/lib/python3.10/site-packages/django/db/models/base.py", line 1061, in _do_insert
+    return manager._insert(
+  File "/usr/local/lib/python3.10/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/db/models/query.py", line 1805, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+  File "/usr/local/lib/python3.10/site-packages/django/db/models/sql/compiler.py", line 1822, in execute_sql
+    cursor.execute(sql, params)
+  File "/usr/local/lib/python3.10/site-packages/django/db/backends/utils.py", line 102, in execute
+    return super().execute(sql, params)
+  File "/usr/local/lib/python3.10/site-packages/django/db/backends/utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+  File "/usr/local/lib/python3.10/site-packages/django/db/backends/utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/usr/local/lib/python3.10/site-packages/django/db/backends/utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+  File "/usr/local/lib/python3.10/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/usr/local/lib/python3.10/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "/usr/local/lib/python3.10/site-packages/django/db/backends/mysql/base.py", line 75, in execute
+    return self.cursor.execute(query, args)
+  File "/usr/local/lib/python3.10/site-packages/MySQLdb/cursors.py", line 179, in execute
+    res = self._query(mogrified_query)
+  File "/usr/local/lib/python3.10/site-packages/MySQLdb/cursors.py", line 330, in _query
+    db.query(q)
+  File "/usr/local/lib/python3.10/site-packages/MySQLdb/connections.py", line 257, in query
+    _mysql.connection.query(self, query)
+django.db.utils.IntegrityError: (1364, "Field 'content' doesn't have a default value")
+[2025-07-03 22:15:51] Not Found: /favicon.ico
+[2025-07-03 22:20:09] Not Found: /static/style/css/admin.about.css
+[2025-07-03 22:20:09] Not Found: /static/style/css/admin.about.css
+[2025-07-03 22:20:09] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-03 22:20:09] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-03 22:20:10] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-03 22:20:10] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-03 22:20:10] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-03 22:20:17] Not Found: /static/style/css/admin.about.css
+[2025-07-03 22:20:17] Not Found: /static/style/css/admin.about.css
+[2025-07-03 22:20:17] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-03 22:20:17] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-03 22:20:17] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-03 22:20:17] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-03 22:20:17] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-03 22:50:58] Not Found: /static/style/css/admin.about.css
+[2025-07-03 22:50:58] Not Found: /static/style/css/admin.about.css
+[2025-07-03 22:50:59] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-03 22:50:59] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-03 22:50:59] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-03 22:50:59] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-03 22:51:00] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-03 22:51:07] Not Found: /static/style/css/admin.about.css
+[2025-07-03 22:51:07] Not Found: /static/style/css/admin.about.css
+[2025-07-03 22:51:08] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-03 22:51:08] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-03 22:51:08] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-03 22:51:08] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-03 22:51:08] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-03 22:51:14] Not Found: /static/style/css/admin.about.css
+[2025-07-03 22:51:14] Not Found: /static/style/css/admin.about.css
+[2025-07-03 22:51:14] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-03 22:51:14] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-03 22:51:14] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-03 22:51:14] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-03 22:51:14] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-03 22:51:17] Not Found: /static/style/css/admin.about.css
+[2025-07-03 22:51:18] Not Found: /static/style/css/admin.about.css
+[2025-07-03 22:51:18] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-03 22:51:18] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-03 22:51:18] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-03 22:51:18] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-03 22:51:18] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-03 22:52:33] Not Found: /static/style/css/admin.about.css
+[2025-07-03 22:52:33] Not Found: /static/style/css/admin.about.css
+[2025-07-03 22:52:34] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-03 22:52:34] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-03 22:52:34] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-03 22:52:34] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-03 22:52:34] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-03 22:53:16] Not Found: /static/style/css/admin.about.css
+[2025-07-03 22:53:16] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-03 22:53:16] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-03 22:53:16] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-03 22:53:16] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-03 22:53:16] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-03 22:53:18] Not Found: /static/style/css/admin.about.css
+[2025-07-03 22:53:18] Not Found: /static/style/css/admin.about.css
+[2025-07-03 22:53:18] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-03 22:53:18] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-03 22:53:18] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-03 22:53:18] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-03 22:53:18] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-03 22:53:20] Not Found: /static/style/css/admin.about.css
+[2025-07-03 22:53:20] Not Found: /static/style/css/admin.about.css
+[2025-07-03 22:53:22] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-03 22:53:22] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-03 22:53:22] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-03 22:53:22] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-03 22:53:22] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-03 22:57:57] Not Found: /static/style/css/admin.about.css
+[2025-07-03 22:57:57] Not Found: /static/style/css/admin.about.css
+[2025-07-03 22:57:58] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-03 22:57:58] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-03 22:57:58] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-03 22:57:58] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-03 22:57:58] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-03 23:00:14] Not Found: /static/style/css/admin.about.css
+[2025-07-03 23:00:14] Not Found: /static/style/css/admin.about.css
+[2025-07-03 23:00:14] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-03 23:00:14] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-03 23:00:14] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-03 23:00:14] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-03 23:00:14] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-03 23:00:17] Not Found: /static/style/css/admin.about.css
+[2025-07-03 23:00:17] Not Found: /static/style/css/admin.about.css
+[2025-07-03 23:00:18] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-03 23:00:18] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-03 23:00:18] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-03 23:00:18] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-03 23:00:18] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-03 23:00:20] Not Found: /static/style/css/admin.about.css
+[2025-07-03 23:00:20] Not Found: /static/style/css/admin.about.css
+[2025-07-03 23:00:20] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-03 23:00:20] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-03 23:00:20] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-03 23:00:20] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-03 23:00:20] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-03 23:00:59] Not Found: /static/style/css/admin.about.css
+[2025-07-03 23:00:59] Not Found: /static/style/css/admin.about.css
+[2025-07-03 23:00:59] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-03 23:00:59] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-03 23:00:59] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-03 23:00:59] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-03 23:01:00] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-03 23:05:40] Not Found: /static/style/css/admin.about.css
+[2025-07-03 23:05:41] Not Found: /static/style/css/admin.about.css
+[2025-07-03 23:05:42] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-03 23:05:42] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-03 23:05:42] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-03 23:05:42] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-03 23:05:42] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-03 23:07:03] Not Found: /static/style/css/admin.about.css
+[2025-07-03 23:07:03] Not Found: /static/style/css/admin.about.css
+[2025-07-03 23:07:03] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-03 23:07:03] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-03 23:07:03] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-03 23:07:04] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-03 23:07:04] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-03 23:54:35] Internal Server Error: /admin/about-team/5/
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/app/utils/user_control.py", line 45, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "/app/appAdmin/views/about_view.py", line 528, in about_team
+    return render(request, "pages/about-team.html", context)
+  File "/usr/local/lib/python3.10/site-packages/django/shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/usr/local/lib/python3.10/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader_tags.py", line 208, in render
+    return template.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 177, in render
+    return self._render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/usr/local/lib/python3.10/site-packages/django/urls/base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/urls/resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'main-about-page' not found. 'main-about-page' is not a valid view function or pattern name.
+[2025-07-03 23:59:31] Not Found: /static/style/css/admin.about.css
+[2025-07-03 23:59:31] Not Found: /static/style/css/admin.about.css
+[2025-07-03 23:59:32] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-03 23:59:32] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-03 23:59:32] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-03 23:59:32] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-03 23:59:32] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-03 23:59:39] Internal Server Error: /admin/main-about/
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/app/utils/user_control.py", line 45, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "/app/appAdmin/views/about_view.py", line 16, in admin_main_about_page
+    return render(request, "pages/main_about.html")
+  File "/usr/local/lib/python3.10/site-packages/django/shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: pages/main_about.html
+[2025-07-04 00:00:19] Internal Server Error: /admin/main-about/
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/app/utils/user_control.py", line 45, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "/app/appAdmin/views/about_view.py", line 16, in admin_main_about_page
+    return render(request, "pages/main_about.html")
+  File "/usr/local/lib/python3.10/site-packages/django/shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: pages/main_about.html
+[2025-07-04 00:00:22] Not Found: /static/style/css/admin.about.css
+[2025-07-04 00:00:23] Not Found: /static/style/css/admin.about.css
+[2025-07-04 00:00:23] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-04 00:00:23] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-04 00:00:23] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-04 00:00:23] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-04 00:00:23] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-04 00:02:00] Not Found: /static/style/css/admin.about.css
+[2025-07-04 00:02:00] Not Found: /static/style/css/admin.about.css
+[2025-07-04 00:02:00] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-04 00:02:00] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-04 00:02:00] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-04 00:02:00] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-04 00:02:00] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-04 00:02:31] Not Found: /admin/main-about/org.jpg
+[2025-07-04 00:02:51] Not Found: /admin/main-about/org.jpg
+[2025-07-04 00:07:23] Not Found: /static/style/css/admin.about.css
+[2025-07-04 00:07:24] Not Found: /static/style/css/admin.about.css
+[2025-07-04 00:07:24] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-04 00:07:24] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-04 00:07:24] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-04 00:07:24] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-04 00:07:24] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-04 00:07:27] Not Found: /static/style/css/admin.about.css
+[2025-07-04 00:07:27] Not Found: /static/style/css/admin.about.css
+[2025-07-04 00:07:28] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-04 00:07:28] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-04 00:07:28] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-04 00:07:28] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-04 00:07:28] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-04 00:14:09] Not Found: /static/style/css/admin.about.css
+[2025-07-04 00:14:09] Not Found: /static/style/css/admin.about.css
+[2025-07-04 00:14:10] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-04 00:14:10] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-04 00:14:10] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-04 00:14:10] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-04 00:14:10] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-04 00:14:59] Internal Server Error: /admin/about/
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/app/utils/user_control.py", line 45, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "/app/appAdmin/views/about_view.py", line 37, in admin_about_page
+    "footer_content": footer_content,
+NameError: name 'footer_content' is not defined
+[2025-07-04 00:16:34] Not Found: /static/style/css/admin.about.css
+[2025-07-04 00:16:34] Not Found: /static/style/css/admin.about.css
+[2025-07-04 00:16:35] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-04 00:16:35] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-04 00:16:35] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-04 00:16:35] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-04 00:16:35] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-04 00:16:46] Not Found: /static/style/css/admin.about.css
+[2025-07-04 00:16:46] Not Found: /static/style/css/admin.about.css
+[2025-07-04 00:16:47] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-04 00:16:47] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-04 00:16:47] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-04 00:16:47] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-04 00:16:47] Not Found: /static/1e59d2330b4c6deb84b3.ttf

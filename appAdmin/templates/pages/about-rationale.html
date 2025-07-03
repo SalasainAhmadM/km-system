@@ -44,12 +44,12 @@
               Objective
             </a>
 
-            <a href="{% url 'appAdmin:about-activity' about.about_id %}"
+            <!-- <a href="{% url 'appAdmin:about-activity' about.about_id %}"
               class="nav-link btn btn-sm {% if request.resolver_match.url_name == 'about-activity' %}btn-primary active{% else %}btn-outline-primary{% endif %} mx-1"
               role="tab">
               <i class="fas fa-tasks me-1"></i>
               Activities
-            </a>
+            </a> -->
 
             <a href="{% url 'appAdmin:about-timeline' about.about_id %}"
               class="nav-link btn btn-sm {% if request.resolver_match.url_name == 'about-timeline' %}btn-primary active{% else %}btn-outline-primary{% endif %} mx-1"
@@ -167,7 +167,7 @@
               <thead>
                 <tr>
                   <th>ID</th>
-                  <th>Icon</th>
+                  <!-- <th>Icon</th> -->
                   <th>Title</th>
                   <th>Details</th>
                   <th>Actions</th>
@@ -177,13 +177,13 @@
                 {% for item in rationale_items %}
                 <tr>
                   <td>{{ item.rationale_id }}</td>
-                  <td class="text-center">
+                  <!-- <td class="text-center">
                     {% if item.icon %}
                     <i class="{{ item.icon }}"></i>
                     {% else %}
                     <i class="fa-solid fa-image"></i>
                     {% endif %}
-                  </td>
+                  </td> -->
                   <td>{{ item.title }}</td>
                   <td>{{ item.detail|safe }}</td>
                   <td>
