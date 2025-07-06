@@ -1,199 +1,229 @@
-{% extends 'base/cmi-index.html' %}
-
 {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About | AANR Knowledge Hub</title>
+  <link rel="icon" href="{% static 'assets/images/logo.png' %}" type="image/x-icon" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+  <link rel="icon" href="{% static 'assets/images/logo.png' %}" type="image/x-icon" />
+  <link rel="stylesheet" href="{% static 'style/style.css' %}">
+</head>
+<body>
 
-{% block title %}
-  AANR Knowledge Hub | Home
-{% endblock %}
-
-{% block stylesheet %}
-<link rel="stylesheet" href="{% static 'style/css/home.css' %}">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
-{% endblock %}
-
-{% block content %}
-  <div class="main-content">
-    <!-- Hero Section -->
-    <section class="hero-section">
-      <img src="{% static 'assets/images/welcome-image.jpg' %}" alt="AANR Knowledge Hub" class="hero-bg">
-      <div class="hero-overlay"></div>
-      <div class="hero-content" data-aos="fade-up">
-        <h1 class="hero-title">AANR Knowledge Hub</h1>
-        <p class="hero-subtitle">Empowering communities through knowledge sharing and technological advancement in Agriculture, Aquatic, and Natural Resources sectors.</p>
-        <div class="search-box">
-          <form action="{% url 'appCmi:cmi-search' %}" method="get">
-            <input type="text" name="q" placeholder="Search for resources, articles, technologies..." class="search-input">
-            <button type="submit" class="search-button">Get Started <i class="fas fa-arrow-right"></i></button>
-          </form>
-        </div>
+  <nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container">
+      <a class="navbar-brand" href="#">RAISE Program</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+          <li class="nav-item"><a class="nav-link active" href="#">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Projects</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+        </ul>
       </div>
-    </section>
+    </div>
+  </nav>
 
-    <!-- Quote Section -->
-    <section class="quote-section">
-      <div class="quote-container" data-aos="fade-up">
-        <p class="quote-text">
-          "Harnessing knowledge to sustain Agriculture, Aquatic, and Natural Resources—
-          empowering communities, preserving nature, and driving innovation for a resilient future."
-        </p>
-      </div>
-    </section>
-
-    <!-- Features Section -->
-    <section class="features-section">
-      <h2 class="section-title" data-aos="fade-up">Knowledge Hub Features</h2>
-      <p class="section-subtitle" data-aos="fade-up">Discover the powerful tools and resources available to help you advance your work in the AANR sector</p>
-      
-      <div class="features-container">
-        <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
-          <div class="feature-icon">
-            <i class="fas fa-book"></i>
-          </div>
-          <div class="feature-content">
-            <h3 class="feature-title">Knowledge Resource</h3>
-            <p class="feature-description">Access a comprehensive collection of research papers, case studies, and technical guides on AANR technologies.</p>
-            <a href="{% url 'appCmi:all-knowledge-resources' %}" class="feature-link">Browse Resources <i class="fas fa-arrow-right"></i></a>
+  <!-- Carousel Start -->
+  <div id="raiseCarousel" class="carousel slide" data-ride="carousel" data-interval="5000">
+    <div class="carousel-inner">
+      {% for img in images %}
+        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+          <img src="{{ img.image.url }}" class="d-block w-100" alt="{{ img.title }}">
+          <div class="carousel-caption">
+            <h1>{{ img.title }}</h1>
+            <p>{{ img.description }}</p>
           </div>
         </div>
-
-        <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
-          <div class="feature-icon">
-            <i class="fas fa-comments"></i>
-          </div>
-          <div class="feature-content">
-            <h3 class="feature-title">Community Forum</h3>
-            <p class="feature-description">Connect with experts and practitioners to discuss challenges, share insights, and collaborate on solutions.</p>
-            <a href="{% url 'appCmi:cmi-forum' %}" class="feature-link">Join Discussion <i class="fas fa-arrow-right"></i></a>
+      {% empty %}
+        <div class="carousel-item active">
+          <img src="https://via.placeholder.com/1400x600?text=No+Image+Available" class="d-block w-100" alt="No image">
+          <div class="carousel-caption">
+            <h1>No Images</h1>
+            <p>Please add images from the admin panel.</p>
           </div>
         </div>
+      {% endfor %}
+    </div>
 
-        <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
-          <div class="feature-icon">
-            <i class="fas fa-seedling"></i>
-          </div>
-          <div class="feature-content">
-            <h3 class="feature-title">Commodities</h3>
-            <p class="feature-description">Stay updated with the latest market trends, commodity prices, and economic analyses for informed decision-making.</p>
-            <a href="{% url 'appCmi:all-commodities' %}" class="feature-link">View Commodities <i class="fas fa-arrow-right"></i></a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Stats Section -->
-    <section class="stats-section">
-      <h2 class="section-title" data-aos="fade-up">Our Impact</h2>
-      <p class="section-subtitle" data-aos="fade-up">See how our community is making a difference</p>
-      
-      <div class="stats-container">
-        <div class="stat-item" data-aos="fade-up" data-aos-delay="100">
-          <div class="stat-icon">
-            <i class="fas fa-file-alt"></i>
-          </div>
-          <div class="stat-number counter-animation" data-count="5000">0</div>
-          <div class="stat-label">Resources Available</div>
-        </div>
-
-        <div class="stat-item" data-aos="fade-up" data-aos-delay="200">
-          <div class="stat-icon">
-            <i class="fas fa-users"></i>
-          </div>
-          <div class="stat-number counter-animation" data-count="10000">0</div>
-          <div class="stat-label">Community Members</div>
-        </div>
-
-        <div class="stat-item" data-aos="fade-up" data-aos-delay="300">
-          <div class="stat-icon">
-            <i class="fas fa-download"></i>
-          </div>
-          <div class="stat-number counter-animation" data-count="25000">0</div>
-          <div class="stat-label">Resource Downloads</div>
-        </div>
-
-        <div class="stat-item" data-aos="fade-up" data-aos-delay="400">
-          <div class="stat-icon">
-            <i class="fas fa-globe-asia"></i>
-          </div>
-          <div class="stat-number counter-animation" data-count="75">0</div>
-          <div class="stat-label">Countries Reached</div>
-        </div>
-      </div>
-    </section>
+    <a class="carousel-control-prev" href="#raiseCarousel" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#raiseCarousel" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
   </div>
-{% endblock %}
+  <!-- Carousel End -->
 
-{% block script %}
-  {% if messages %}
-    {% for message in messages %}
-      {% if message.tags == 'success' %}
-        <script>
-          // Display SweetAlert success message
-          Swal.fire({
-            icon: 'success',
-            title: 'Success!',
-            text: '{{ message }}'
-          })
-        </script>
-        {% else %}
-        <script>
-          // Display SweetAlert success message
-          Swal.fire({
-            icon: 'error',
-            title: 'Error!',
-            text: '{{ message }}'
-          })
-        </script>
-      {% endif %}
-    {% endfor %}
-  {% endif %}
+  <div class="section" id="rationale">
+    <div class="container" style = "border:5px solid #4c956c; padding:20px; text-align:center;">
+      <h2 class="section-title" data-aos="fade-up">Project Rationale</h2>
+      <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">{{ main.project_rationale_desc|safe }}</p>
+   
+    </div>
+  </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-  <script src="{% static 'style/js/home.js' %}"></script>
-  <script>
-    // Initialize AOS (Animate On Scroll)
-    document.addEventListener('DOMContentLoaded', function() {
-      AOS.init({
-        duration: 800,
-        easing: 'ease-in-out',
-        once: true
-      });
-
-      // Counter Animation
-      const counters = document.querySelectorAll('.counter-animation');
+  <div class="section" id="objectives" style="background-color:  #2c6e49;">
+    <div class="" style = " text-align: center;" >
+      <h2 class="section-title" data-aos="fade-up" style = "color:white;">Project Objectives</h2>
+      <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100" style = "color:white;">{{ main.project_objectives_desc|safe }}</p>
       
-      counters.forEach(counter => {
-        const target = parseInt(counter.getAttribute('data-count'));
-        const duration = 2000; // 2 seconds
-        const step = Math.ceil(target / (duration / 16)); // 60fps
-        let current = 0;
+      <div class="objectives-container">
+        <button class="slider-nav slider-prev" onclick="scrollObjectives(-1)">
+          <i class="fas fa-chevron-left"></i>
+        </button>
         
-        const updateCounter = () => {
-          current += step;
-          if (current > target) {
-            current = target;
-          }
-          counter.textContent = current.toLocaleString();
-          
-          if (current < target) {
-            requestAnimationFrame(updateCounter);
-          }
-        };
+        <div class="objectives-slider" id="objectivesSlider">
+          {% for obj in objectives %}
+          <div class="objective-card">
+            <!-- Front Side -->
+            <div class="objective-card-front">
+              <div style="border:2px solid white; padding:10px;">
+                <!-- <i class="fas fa-store" style="font-size:36px; color: white; margin-right: 10px;"></i> -->
+                <h3>{{ obj.title }}</h3>
+                <ul>
+                  {% for bullet in obj.title_bullets.all %}
+                    <li>{{ bullet.text }}</li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </div>
+
+            <!-- Back Side -->
+            <div class="objective-card-back">
+              <h3>{{ obj.target|default:"No Target Title" }}</h3>
+              <ul>
+                {% for bullet in obj.target_bullets.all %}
+                  <li>{{ bullet.text }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+
         
-        // Start animation when element is in viewport
-        const observer = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              updateCounter();
-              observer.unobserve(entry.target);
-            }
-          });
-        }, { threshold: 0.5 });
+        <button class="slider-nav slider-next" onclick="scrollObjectives(1)">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="structure">
+    <div class="container">
+      <h2 class="section-title" data-aos="fade-up">Organizational Structure</h2>
+      <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Our streamlined structure ensures efficient implementation across all project components.</p>
+      
+      {% if main.org_struct_image %}
+        <img src="{{ main.org_struct_image.url }}" alt="Org Structure" class="img-fluid">
+      {% else %}
+        <img src="{% static 'assets/images/org.png' %}" alt="Default Org Structure" class="img-fluid">
+      {% endif %}
+      
+      <div class="text-center mt-5" data-aos="fade-up">
+        <p>The organizational structure consists of four main components working in synergy:</p>
+        <div class="d-flex flex-wrap justify-content-center gap-4 mt-4">
+          {% if about_list %}
+            {% for about in about_list %}
+          <div class="bg-white p-3 rounded shadow-sm" style="max-width: 250px;">
+            <h5 class="">{{ about.project_name }}</h5>
+            <p class="mb-0">{{ about.project_details }}</p>
+          </div>
+          {% endfor %}
+          {% else %}
+            <p>No project information available.</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="projects" style = "text-align:center; border-top:2px solid #2c6e49; ">
+    <div class="" >
+      <h2 class="section-title" data-aos="fade-up">RAISE Projects</h2>
+      <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">{{ main.raise_project_desc|safe }}</p>
+      
+      <div class="projects-container">
+        <button class="slider-nav slider-prev" onclick="scrollProjects(-1)">
+          <i class="fas fa-chevron-left"></i>
+        </button>
         
-        observer.observe(counter);
-      });
+        <div class="projects-slider" id="projectsSlider">
+          {% if about_list %}
+            {% for about in about_list %}
+              <div class="project-card" data-aos="fade-up" data-aos-delay="200">
+                {% if about.image %}
+                  <img src="{{ about.image.url }}" alt="{{ about.project_name }}" class="img-fluid mb-3" style="max-height: 100px; object-fit: contain;">
+                {% else %}
+                  <i class="fas fa-business-time"></i>
+                {% endif %}
+                <h4>{{ about.project_name }}</h4>
+                <h4>{{ about.project_details }}</h4>
+                   <a href="{% url 'appCmi:project' about.about_id %}" class="btn-see-more">See Details</a>
+              </div>
+            {% endfor %}
+          {% else %}
+            <p>No project information available.</p>
+          {% endif %}
+       </div>
+        
+        <button class="slider-nav slider-next" onclick="scrollProjects(1)">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script>
+    // Initialize animations
+    AOS.init({
+      duration: 800,
+      easing: 'ease-in-out',
+      once: true,
+      offset: 100
     });
 
-    
+    // Navbar scroll effect
+    $(window).scroll(function() {
+      if ($(this).scrollTop() > 50) {
+        $('.navbar').addClass('scrolled');
+      } else {
+        $('.navbar').removeClass('scrolled');
+      }
+    });
+
+    // Objectives slider navigation
+    function scrollObjectives(direction) {
+      const slider = document.getElementById('objectivesSlider');
+      const scrollAmount = 380; // Width of card + gap
+      slider.scrollBy({
+        left: direction * scrollAmount,
+        behavior: 'smooth'
+      });
+    }
+
+    // Projects slider navigation
+    function scrollProjects(direction) {
+      const slider = document.getElementById('projectsSlider');
+      const scrollAmount = 310; // Width of card + gap
+      slider.scrollBy({
+        left: direction * scrollAmount,
+        behavior: 'smooth'
+      });
+    }
   </script>
-{% endblock %}
+</body>
+</html>

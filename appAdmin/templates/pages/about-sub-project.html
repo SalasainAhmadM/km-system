@@ -3,7 +3,7 @@
 {% load static %}
 {% load custom_tags %}
 
-{% block title %}{{ about.project_name }} Rationale{% endblock %}
+{% block title %}{{ about.project_name }} Sub Projects{% endblock %}
 
 {% block stylesheet %}
 <link rel="stylesheet" href="{% static 'style/css/admin.about.css' %}">
@@ -44,13 +44,6 @@
               Objective
             </a>
 
-            <!-- <a href="{% url 'appAdmin:about-activity' about.about_id %}"
-              class="nav-link btn btn-sm {% if request.resolver_match.url_name == 'about-activity' %}btn-primary active{% else %}btn-outline-primary{% endif %} mx-1"
-              role="tab">
-              <i class="fas fa-tasks me-1"></i>
-              Activities
-            </a> -->
-
             <a href="{% url 'appAdmin:about-timeline' about.about_id %}"
               class="nav-link btn btn-sm {% if request.resolver_match.url_name == 'about-timeline' %}btn-primary active{% else %}btn-outline-primary{% endif %} mx-1"
               role="tab">
@@ -58,13 +51,7 @@
               Timeline
             </a>
 
-            <a href="{% url 'appAdmin:about-team' about.about_id %}"
-              class="nav-link btn btn-sm {% if request.resolver_match.url_name == 'about-team' %}btn-primary active{% else %}btn-outline-primary{% endif %} mx-1"
-              role="tab">
-              <i class="fas fa-users me-1"></i>
-              Team
-            </a>
-             <a href="{% url 'appAdmin:about-sub-project' about.about_id %}"
+            <a href="{% url 'appAdmin:about-sub-project' about.about_id %}"
               class="nav-link btn btn-sm {% if request.resolver_match.url_name == 'about-sub-project' %}btn-primary active{% else %}btn-outline-primary{% endif %} mx-1"
               role="tab">
               <i class="fas fa-project-diagram me-1"></i>
@@ -72,9 +59,7 @@
             </a>
           </div>
         </div>
-
       </div>
-
 
 
         <style>
@@ -129,6 +114,7 @@
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
             border: 1px solid #e9ecef;
           }
+          
           .btn-back-gray {
             display: inline-flex;
             align-items: center;
@@ -158,12 +144,30 @@
             text-decoration: none;
             outline: none;
           }
+
+          .project-description {
+            max-width: 200px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+
+          .project-description:hover {
+            white-space: normal;
+            overflow: visible;
+            text-overflow: clip;
+            background: #f8f9fa;
+            padding: 5px; 
+            border-radius: 3px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 1;
+          }
         </style>
-<!-- Objectives Table -->
         <div class="table-wrapper">
           <div class="d-flex justify-content-between align-items-center mb-3">
-          <h4>{{ about.project_name }} - Rationale</h4>
-            <button style="color: white;" class="btn btn-primary" data-toggle="modal" data-target="#addRationaleModal">
+          <h4>{{ about.project_name }}  - Sub Projects</h4>
+            <button style="color: white;" class="btn btn-primary" data-toggle="modal" data-target="#addSubProjectModal">
               <i class="fa fa-plus"></i> Add New
             </button>
         </div>
@@ -172,57 +176,76 @@
               <thead>
                 <tr>
                   <th>ID</th>
-                  <!-- <th>Icon</th> -->
-                  <th>Title</th>
-                  <th>Details</th>
+                  <th>Image</th>
+                  <th>Project Name</th>
+                  <th>Project Details</th>
+                  <th>Rationale</th>
+                  <th>Date Created</th>
                   <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
-                {% for item in rationale_items %}
+                {% for item in sub_project_items %}
                 <tr>
-                  <td>{{ item.rationale_id }}</td>
-                  <!-- <td class="text-center">
-                    {% if item.icon %}
-                    <i class="{{ item.icon }}"></i>
+                  <td>{{ item.sub_id }}</td>
+                  <td class="text-center">
+                    {% if item.image %}
+                      <img src="{{ item.image.url }}" alt="Project Image" width="50" height="50" style="border-radius: 8px; object-fit: cover;">
                     {% else %}
-                    <i class="fa-solid fa-image"></i>
+                      <i class="fa-solid fa-image text-muted"></i>
                     {% endif %}
-                  </td> -->
-                  <td>{{ item.title }}</td>
-                  <td>{{ item.detail|safe }}</td>
+                  </td>
+                  <td>{{ item.project_name|default:"N/A" }}</td>
+                  <td>
+                    <div class="project-description" title="{{ item.project_details }}">
+                      {{ item.project_details|default:"N/A"|truncatechars:50 }}
+                    </div>
+                  </td>
+                  <td>
+                    <div class="project-description" title="{{ item.project_rationale_desc }}">
+                      {{ item.project_rationale_desc|default:"N/A"|truncatechars:50 }}
+                    </div>
+                  </td>
+                  <td>
+                    {% if item.date_created %}
+                      {{ item.date_created|date:"M d, Y" }}
+                    {% else %}
+                      N/A
+                    {% endif %}
+                  </td>
                   <td>
                     <div class="action-buttons">
+                       <a href="{% url 'appAdmin:about-sub-rationale' item.sub_id %}" class="btn btn-info" title="View">
+                      <i class="fa-solid fa-eye"></i>
+                    </a>
                       <button type="button" class="btn btn-warning" data-toggle="modal"
-                        data-target="#editRationaleModal{{ item.rationale_id }}" title="Edit">
+                        data-target="#editSubProjectModal{{ item.sub_id }}" title="Edit">
                         <i class="fa-solid fa-pen-to-square"></i>
                       </button>
 
-                      <form action="{% url 'appAdmin:about-rationale-delete' item.rationale_id %}" method="post"
-                        style="display:inline;" class="delete-rationale-form">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-danger"
-                          title="Delete">
-                          <i class="fa-solid fa-trash"></i>
-                        </button>
+                      <form action="{% url 'appAdmin:about-sub-project-delete' item.sub_id %}" method="post" class="delete-sub-project-form">
+                          {% csrf_token %}
+                          <button type="submit" class="btn btn-danger" title="Delete">
+                              <i class="fa-solid fa-trash"></i>
+                          </button>
                       </form>
                     </div>
                   </td>
                 </tr>
 
                 <!-- Edit Modal -->
-                <div class="modal fade" id="editRationaleModal{{ item.rationale_id }}" tabindex="-1" role="dialog">
-                  <div class="modal-dialog" role="document">
-                    <form method="post" enctype="multipart/form-data" action="{% url 'appAdmin:about-rationale-edit' item.rationale_id %}">
-
+                <div class="modal fade" id="editSubProjectModal{{ item.sub_id }}" tabindex="-1" role="dialog">
+                  <div class="modal-dialog modal-lg" role="document">
+                    <form method="post" enctype="multipart/form-data"
+                      action="{% url 'appAdmin:about-sub-project-edit' item.sub_id %}">
                       {% csrf_token %}
                       <div class="modal-content">
                         <div class="modal-header">
-                          <h5 class="modal-title">Edit Rationale</h5>
+                          <h5 class="modal-title">Edit Sub Project</h5>
                           <button type="button" class="close" data-dismiss="modal">&times;</button>
                         </div>
                         <div class="modal-body">
-                          {% with edit_form=edit_forms|get_item:item.rationale_id %}
+                          {% with edit_form=edit_forms|get_item:item.sub_id %}
                           {{ edit_form.as_p }}
                           {% endwith %}
                         </div>
@@ -236,8 +259,8 @@
                 </div>
                 {% empty %}
                 <tr>
-                  <td colspan="5" class="text-center text-muted">
-                    <i class="fa-solid fa-circle-info"></i> No rationale records found.
+                  <td colspan="7" class="text-center text-muted">
+                    <i class="fa-solid fa-circle-info"></i> No sub projects found.
                   </td>
                 </tr>
                 {% endfor %}
@@ -245,15 +268,14 @@
             </table>
           </div>
 
-
         <!-- Add Modal -->
-        <div class="modal fade" id="addRationaleModal" tabindex="-1" role="dialog">
-          <div class="modal-dialog" role="document">
-            <form method="post" enctype="multipart/form-data" action="{% url 'appAdmin:about-rationale-add' about.about_id %}">
+        <div class="modal fade" id="addSubProjectModal" tabindex="-1" role="dialog">
+          <div class="modal-dialog modal-lg" role="document">
+            <form method="post" enctype="multipart/form-data" action="{% url 'appAdmin:about-sub-project-add' about.about_id %}">
               {% csrf_token %}
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title">Add Rationale</h5>
+                  <h5 class="modal-title">Add Sub Project</h5>
                   <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
@@ -288,25 +310,25 @@
     </script>
   {% endfor %}
 {% endif %}
+
 <script>
-  document.querySelectorAll('.delete-rationale-form').forEach(form => {
-  form.addEventListener('submit', function(e) {
-    e.preventDefault();
-    Swal.fire({
-      title: 'Delete this rationale?',
-      text: "This action cannot be undone.",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#d33',
-      cancelButtonColor: '#aaa',
-      confirmButtonText: 'Yes, delete it!',
-      reverseButtons: true
-    }).then((result) => {
-      if (result.isConfirmed) {
-        form.submit();
-      }
+  document.querySelectorAll('.delete-sub-project-form').forEach(form => {
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      Swal.fire({
+        title: 'Delete this sub project?',
+        text: 'This action cannot be undone.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#aaa',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          form.submit();
+        }
+      });
     });
   });
-});
 </script>
 {% endblock %}

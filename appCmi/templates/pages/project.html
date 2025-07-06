@@ -1,0 +1,607 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ featured_about.project_name|default:"Project" }} | AANR Knowledge Hub</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="{% static 'assets/images/logo.png' %}" type="image/x-icon" />
+  <link rel="stylesheet" href="{% static 'style/project.css' %}">
+</head>
+
+<style>
+   /* Timeline Section Styles */
+.timeline-container {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px 0;
+}
+
+.timeline-line {
+  position: absolute;
+  width: 4px;
+  background: linear-gradient(to bottom, var(--primary), var(--secondary));
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 2px;
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 50px;
+  width: 100%;
+}
+
+.timeline-item.left {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: calc(50% + 30px);
+}
+
+.timeline-item.right {
+  display: flex;
+  justify-content: flex-start;
+  padding-left: calc(50% + 30px);
+}
+
+.timeline-marker {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 50px;
+  background: var(--primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.2rem;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  z-index: 2;
+}
+
+.timeline-content {
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+  position: relative;
+  max-width: 500px;
+  border: 2px solid var(--secondary);
+}
+
+.timeline-item.left .timeline-content {
+  margin-right: 0;
+}
+
+.timeline-item.right .timeline-content {
+  margin-left: 0;
+}
+
+.timeline-item.left .timeline-content:before {
+  content: '';
+  position: absolute;
+  top: 30px;
+  right: -12px;
+  width: 0;
+  height: 0;
+  border-left: 12px solid var(--secondary);
+  border-top: 12px solid transparent;
+  border-bottom: 12px solid transparent;
+}
+
+.timeline-item.right .timeline-content:before {
+  content: '';
+  position: absolute;
+  top: 30px;
+  left: -12px;
+  width: 0;
+  height: 0;
+  border-right: 12px solid var(--secondary);
+  border-top: 12px solid transparent;
+  border-bottom: 12px solid transparent;
+}
+
+.timeline-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.timeline-header h4 {
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 1.4rem;
+  margin: 0;
+  flex: 1;
+}
+
+.timeline-date {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--secondary);
+  font-weight: 600;
+  font-size: 1rem;
+  white-space: nowrap;
+}
+
+.timeline-date i {
+  font-size: 1.1rem;
+}
+
+.timeline-description {
+  margin-bottom: 20px;
+}
+
+.timeline-description p {
+  color: var(--text-color);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.timeline-bullets {
+  margin-top: 20px;
+}
+
+.timeline-bullets h6 {
+  color: var(--primary);
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.timeline-bullets ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.timeline-bullets li {
+  color: var(--text-color);
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+.timeline-images {
+  margin-top: 20px;
+}
+
+.timeline-image-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+}
+
+.timeline-image-item {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.timeline-img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.timeline-img:hover {
+  transform: scale(1.05);
+}
+
+.no-timeline {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-light);
+}
+
+.no-timeline i {
+  color: var(--secondary);
+  margin-bottom: 20px;
+}
+
+.debug-timeline {
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 30px;
+}
+
+.debug-info {
+  color: #6c757d;
+  font-family: monospace;
+  font-size: 0.9rem;
+  margin-bottom: 5px;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .timeline-line {
+    left: 30px;
+  }
+  
+  .timeline-item.left,
+  .timeline-item.right {
+    padding-left: 70px;
+    padding-right: 20px;
+  }
+  
+  .timeline-marker {
+    left: 30px;
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+  
+  .timeline-content {
+    max-width: 100%;
+  }
+  
+  .timeline-item.left .timeline-content:before,
+  .timeline-item.right .timeline-content:before {
+    content: '';
+    position: absolute;
+    top: 30px;
+    left: -12px;
+    right: auto;
+    border-right: 12px solid var(--secondary);
+    border-left: none;
+    border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent;
+  }
+  
+  .timeline-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .timeline-date {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .timeline-content {
+    padding: 20px;
+  }
+  
+  .timeline-header h4 {
+    font-size: 1.2rem;
+  }
+  
+  .timeline-bullets ul {
+    padding-left: 15px;
+  }
+}
+</style>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container">
+      <a class="navbar-brand" href="#">
+        <i class="fas fa-seedling"></i> RAISE Program
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+          <li class="nav-item"><a class="nav-link active" href="index.php">About US</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Projects</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Resources</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Slider -->
+  <div class="hero-slider">
+    <div class="hero-slides">
+      <div class="hero-slide active">
+        {% if featured_about.image %}
+          <img src="{{ featured_about.image.url }}" alt="{{ featured_about.project_name }}">
+        {% else %}
+          <img src="https://via.placeholder.com/1400x600?text=No+Image+Available" alt="Placeholder Image">
+        {% endif %}
+        <div class="hero-content">
+          <h1>PROJECT {{ featured_about.about_id }}: RAISE</h1>
+          <h1>{{ featured_about.project_name|default:"No Title Available" }}</h1>
+          <p>{{ featured_about.project_details|default:"No description available." }}</p>
+          <div class="hero-actions">
+            <a href="{% url 'appCmi:home' %}" class="btn btn-outline-light">
+              <i class="fas fa-arrow-left me-2"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="section" id="rationale">
+    <div class="container">
+      <div style="border:5px solid var(--primary);">
+        <h2 class="section-title">Project Rationale</h2>
+        <div class="row justify-content-center">
+          <div class="col-lg-8 text-center">
+            <p class="lead">{{ featured_about.project_rationale_desc|default:"No Title Available" }}</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row mt-5">
+        {% if rationales %}
+          {% for rationale in rationales %}
+            <div class="col-md-4">
+              <div class="card h-100">
+                <div class="card-body text-center">
+                  <h5 class="card-title">{{ rationale.title }}</h5>
+                  <p class="card-text">{{ rationale.detail }}</p>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        {% else %}
+          <p class="text-center">No rationale information available.</p>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="objectives" style="background-color: var(--primary-dark); padding:50px;">
+    <div class="container" style="color:white;">
+      <h2 class="section-title" style="color:white; margin-bottom:0;">Project Objectives</h2>
+      <div class="objectives-container">
+        <button class="slider-arrow left" onclick="scrollObjectives(-1)"><i class="fas fa-chevron-left"></i></button>
+        <div class="objectives-slider">
+          {% if objectives %}
+            {% for objective in objectives %}
+              <div class="objective-card">
+                <h4>{{ objective.title }}</h4>
+                {% if objective.details.all %}
+                  <ul>
+                    {% for detail in objective.details.all %}
+                      <li>{{ detail.detail }}</li>
+                    {% endfor %}
+                  </ul>
+                {% else %}
+                  <p>No details available for this objective.</p>
+                {% endif %}
+              </div>
+            {% endfor %}
+          {% else %}
+            <p class="text-center">No objectives found for this project.</p>
+          {% endif %}
+        </div>
+        <button class="slider-arrow right" onclick="scrollObjectives(1)"><i class="fas fa-chevron-right"></i></button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="team">
+    <div class="container project-team">
+      <h2 class="section-title">Project Team Structure</h2>
+      
+      <div class="row">
+        {% if team_members %}
+          {% for member in team_members %}
+            <div class="col-md-6 col-lg-4">
+              <div class="team-card">
+                <div class="team-header">
+                  {% if member.profile_image %}
+                    <img src="{{ member.profile_image.url }}" alt="{{ member.first_name }} {{ member.last_name }}" class="team-avatar">
+                  {% else %}
+                    <img src="https://via.placeholder.com/150" alt="Default Avatar" class="team-avatar">
+                  {% endif %}
+                  <div class="team-info">
+                    <h4>{{ member.first_name }} {{ member.mid_name|default:'' }} {{ member.last_name }}</h4>
+                    <p class="role">{{ member.role }}</p>
+                    <p class="specialization">{{ member.description }}</p>
+                  </div>
+                </div>
+                <div class="team-details">
+                  {% if member.email %}
+                    <div class="team-detail">
+                      <i class="fas fa-envelope"></i>
+                      <span>{{ member.email }}</span>
+                    </div>
+                  {% endif %}
+                  <div class="team-socials">
+                    {% for social in member.socials.all %}
+                      <a href="{{ social.link }}" target="_blank">
+                        <i class="{{ social.platform }}"></i>
+                      </a>
+                    {% endfor %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        {% else %}
+          <p class="text-center">No team members available for this project.</p>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="border:2px solid #4E9F3D" id="subprojects">
+    <div class="container">
+      <h2 class="section-title">Key Sub-Projects</h2>
+      <div class="subprojects-container">
+        <button class="slider-arrow left" onclick="scrollSubprojects(-1)"><i class="fas fa-chevron-left"></i></button>
+        
+        <div class="subprojects-slider">
+          {% if subprojects %}
+            {% for sub in subprojects %}
+              <div class="subproject-card">
+                <div style="padding: 20px;">
+                  <div style="display: flex; align-items: center; gap: 10px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="#4CAF50">
+                      <path d="M12 2c-4.97 0-9 4.03-9 9 0 4.97 4.03 9 9 9 4.97 0 9-4.03 9-9 0-4.97-4.03-9-9-9zm0 16c-3.86 0-7-3.14-7-7s3.14-7 7-7 7 3.14 7 7-3.14 7-7 7zm1-11h-2v4H8v2h4v4h2v-4h4v-2h-4V7z"/>
+                    </svg>
+                    <h4>{{ sub.project_name|default:"Untitled Subproject" }}</h4>
+                  </div>
+                  <a href="/cmis/project-sub/{{ sub.sub_id }}/" class="subproject-btn">See Details</a>
+                </div>
+              </div>
+            {% endfor %}
+          {% else %}
+            <p class="text-center">No subprojects available for this project.</p>
+          {% endif %}
+        </div>
+        <button class="slider-arrow right" onclick="scrollSubprojects(1)"><i class="fas fa-chevron-right"></i></button>
+      </div>
+    </div>
+  </section>
+
+   <!-- Timeline Section -->
+<section class="section" id="timeline">
+  <div class="container">
+    <h2 class="section-title">Project Timeline</h2>
+
+    <div class="timeline-container">
+      <div class="timeline-line"></div>
+
+      {% if timeline_items %}
+        {% for timeline in timeline_items %}
+          <div class="timeline-item {% cycle 'left' 'right' %}">
+            <div class="timeline-marker">
+              <i class="fas fa-calendar-alt"></i>
+            </div>
+            <div class="timeline-content">
+              <div class="timeline-header">
+                <h4>{{ timeline.title|default:"Untitled Timeline Item" }}</h4>
+                <div class="timeline-date">
+                  <i class="fas fa-clock"></i>
+                  <span>
+                    {% if timeline.date_start %}
+                      {{ timeline.date_start|date:"F j, Y" }}
+                      {% if timeline.date_end %} - {{ timeline.date_end|date:"F j, Y" }}{% endif %}
+                    {% else %}
+                      Date not specified
+                    {% endif %}
+                  </span>
+                </div>
+              </div>
+
+              <div class="timeline-description">
+                <p>{{ timeline.description|default:"No description available." }}</p>
+              </div>
+
+              {% if timeline.bullets.all %}
+                <div class="timeline-bullets">
+                  <h6>Key Points:</h6>
+                  <ul>
+                    {% for bullet in timeline.bullets.all %}
+                      <li>{{ bullet.details }}</li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              {% endif %}
+
+              {% if timeline.images.all %}
+                <div class="timeline-images">
+                  <div class="timeline-image-grid">
+                    {% for image in timeline.images.all %}
+                      <div class="timeline-image-item">
+                        <img src="{{ image.image.url }}" alt="Timeline Image" class="timeline-img">
+                      </div>
+                    {% endfor %}
+                  </div>
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <div class="no-timeline">
+          <i class="fas fa-calendar-times fa-3x mb-3"></i>
+          <p>No timeline information available for this project.</p>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+
+  <footer class="py-4 bg-dark text-white">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <p class="mb-0">&copy; 2025 RAISE Program - Project ABH. All rights reserved.</p>
+        </div>
+        <div class="col-md-6 text-md-end">
+          <a href="#" class="text-white me-3"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="text-white me-3"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" class="text-white"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Hero Slider functionality
+    let currentHeroSlide = 0;
+    const heroSlides = document.querySelectorAll('.hero-slide');
+    const heroDots = document.querySelectorAll('.hero-dot');
+    
+    function showHeroSlide(n) {
+      heroSlides.forEach(slide => slide.classList.remove('active'));
+      heroDots.forEach(dot => dot.classList.remove('active'));
+      
+      currentHeroSlide = (n + heroSlides.length) % heroSlides.length;
+      heroSlides[currentHeroSlide].classList.add('active');
+      heroDots[currentHeroSlide].classList.add('active');
+    }
+    
+    function moveHeroSlide(n) {
+      showHeroSlide(currentHeroSlide + n);
+    }
+    
+    function goToHeroSlide(n) {
+      showHeroSlide(n);
+    }
+    
+    // Auto-rotate hero slider every 5 seconds
+    setInterval(() => {
+      moveHeroSlide(1);
+    }, 5000);
+
+    // Objectives slider functionality
+    function scrollObjectives(direction) {
+      const slider = document.querySelector('.objectives-slider');
+      const scrollAmount = slider.clientWidth;
+      slider.scrollBy({
+        left: direction * scrollAmount,
+        behavior: 'smooth'
+      });
+    }
+    
+    // Subprojects slider functionality
+    function scrollSubprojects(direction) {
+      const slider = document.querySelector('.subprojects-slider');
+      const scrollAmount = 320; // Width of card + gap
+      slider.scrollBy({
+        left: direction * scrollAmount,
+        behavior: 'smooth'
+      });
+    }
+  </script>
+</body>
+</html>

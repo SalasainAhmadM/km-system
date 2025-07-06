@@ -3,7 +3,7 @@
 {% load static %}
 {% load custom_tags %}
 
-{% block title %}{{ about.project_name }} Objective{% endblock %}
+{% block title %}{{ sub_project.project_name }} Sub Project Objective{% endblock %}
 
 {% block stylesheet %}
 <link rel="stylesheet" href="{% static 'style/css/admin.about.css' %}">
@@ -151,57 +151,51 @@
           <!-- Left Section -->
           <div class="d-flex align-items-center">
             <!-- Back Button -->
-            <a href="{% url 'appAdmin:about-page' %}" class="btn-back-gray">
+            <a href="{% url 'appAdmin:about-sub-project' about.about_id %}" class="btn-back-gray">
               <i class="fa fa-arrow-left"></i>
-              <span>Back</span>
+              <span>Back to Sub Projects</span>
             </a>
 
             <!-- Navigation Tabs -->
             <div class="nav nav-pills nav-fill bg-light rounded p-1" role="tablist">
-              <a href="{% url 'appAdmin:about-rationale' about.about_id %}"
-                class="nav-link btn btn-sm {% if request.resolver_match.url_name == 'about-rationale' %}btn-primary active{% else %}btn-outline-primary{% endif %} mx-1"
+              <a href="{% url 'appAdmin:about-sub-rationale' sub_project.sub_id %}"
+                class="nav-link btn btn-sm btn-outline-primary mx-1"
                 role="tab">
                 <i class="fas fa-lightbulb me-1"></i>
                 Rationale
               </a>
 
-              <a href="{% url 'appAdmin:about-objective' about.about_id %}"
-                class="nav-link btn btn-sm {% if request.resolver_match.url_name == 'about-objective' %}btn-primary active{% else %}btn-outline-primary{% endif %} mx-1"
+              <a href="{% url 'appAdmin:about-sub-objective' sub_project.sub_id %}"
+                class="nav-link btn btn-sm btn-primary active mx-1"
                 role="tab">
                 <i class="fas fa-bullseye me-1"></i>
                 Objective
               </a>
 
-              <a href="{% url 'appAdmin:about-timeline' about.about_id %}"
-                class="nav-link btn btn-sm {% if request.resolver_match.url_name == 'about-timeline' %}btn-primary active{% else %}btn-outline-primary{% endif %} mx-1"
+              <a href="{% url 'appAdmin:about-sub-timeline' sub_project.sub_id %}"
+                class="nav-link btn btn-sm btn-outline-primary mx-1"
                 role="tab">
                 <i class="fas fa-calendar-alt me-1"></i>
                 Timeline
               </a>
 
-              <a href="{% url 'appAdmin:about-team' about.about_id %}"
-                class="nav-link btn btn-sm {% if request.resolver_match.url_name == 'about-team' %}btn-primary active{% else %}btn-outline-primary{% endif %} mx-1"
+              <a href="{% url 'appAdmin:about-sub-team' sub_project.sub_id %}"
+                class="nav-link btn btn-sm btn-outline-primary mx-1"
                 role="tab">
                 <i class="fas fa-users me-1"></i>
                 Team
               </a>
-              <a href="{% url 'appAdmin:about-sub-project' about.about_id %}"
-              class="nav-link btn btn-sm {% if request.resolver_match.url_name == 'about-sub-project' %}btn-primary active{% else %}btn-outline-primary{% endif %} mx-1"
-              role="tab">
-              <i class="fas fa-project-diagram me-1"></i>
-              Sub Projects
-            </a>
             </div>
           </div>
         </div>
         <!-- Objectives Table -->
         <div class="table-wrapper">
           <div class="d-flex justify-content-between align-items-center mb-3">
-          <h4>{{ about.project_name }}Objectives</h4>
+            <h4>{{ sub_project.title }} Objectives</h4>
             <button style="color: white;" class="btn btn-primary" data-toggle="modal" data-target="#addObjectiveModal">
               <i class="fa fa-plus"></i> Add New
             </button>
-        </div>
+          </div>
           <div class="table-container">
             <table class="about-table table table-bordered table-striped">
               <thead>
@@ -232,8 +226,8 @@
                         data-target="#editObjectiveModal{{ item.objective_id }}" title="Edit">
                         <i class="fa-solid fa-pen-to-square"></i>
                       </button>
-                      <form action="{% url 'appAdmin:about-objective-delete' item.objective_id %}" method="post"
-                        style="display:inline;" class="delete-objective-form">
+                      <form action="{% url 'appAdmin:about-objective-sub-delete' item.objective_id %}" method="post"
+                        style="display:inline;" class="delete-sub-objective-form">
                         {% csrf_token %}
                         <button type="submit" class="btn btn-danger" title="Delete">
                           <i class="fa-solid fa-trash"></i>
@@ -257,7 +251,7 @@
         <!-- Add Objective Modal -->
         <div class="modal fade" id="addObjectiveModal" tabindex="-1" role="dialog">
           <div class="modal-dialog" role="document">
-            <form method="post" enctype="multipart/form-data" action="{% url 'appAdmin:about-objective-add' about.about_id %}">
+            <form method="post" enctype="multipart/form-data" action="{% url 'appAdmin:about-objective-sub-add' sub_project.sub_id %}">
               {% csrf_token %}
               <div class="modal-content">
                 <div class="modal-header">
@@ -274,7 +268,7 @@
                     <label>Details</label>
                     <div id="addDetailsContainer">
                       <div class="detail-input-group">
-                        {{ objective_form.detail_0 }}
+                        <input type="text" name="detail_0" class="form-control detail-input" placeholder="Enter detail 1...">
                         <button type="button" class="btn btn-danger remove-detail-btn" style="display: none;">
                           <i class="fa fa-trash"></i>
                         </button>
@@ -298,7 +292,7 @@
         {% for item in objective_items %}
         <div class="modal fade" id="editObjectiveModal{{ item.objective_id }}" tabindex="-1" role="dialog">
           <div class="modal-dialog" role="document">
-            <form method="post" enctype="multipart/form-data" action="{% url 'appAdmin:about-objective-edit' item.objective_id %}">
+            <form method="post" enctype="multipart/form-data" action="{% url 'appAdmin:about-objective-sub-edit' item.objective_id %}">
               {% csrf_token %}
               <div class="modal-content">
                 <div class="modal-header">
@@ -309,7 +303,7 @@
                   <div class="form-group">
                     <label for="title">Objective Title</label>
                     <input type="text" name="title" class="form-control" value="{{ item.title }}" placeholder="Enter objective title..." required>
-                    <input type="hidden" name="about" value="{{ about.about_id }}">
+                    <input type="hidden" name="about" value="{{ item.about.sub_id }}">
                   </div>
                   <div class="form-group">
                     <label>Details</label>
@@ -433,7 +427,7 @@
   });
 
   // Delete confirmation
-  document.querySelectorAll('.delete-objective-form').forEach(form => {
+  document.querySelectorAll('.delete-sub-objective-form').forEach(form => {
     form.addEventListener('submit', function(e) {
       e.preventDefault();
       Swal.fire({

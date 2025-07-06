@@ -12,19 +12,7 @@
   href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css"
   rel="stylesheet"
 />
-{% endblock %} {% block content %}
-<br />
-<div class="masonry-item col-12">
-  <div class="bd bgc-white">
-    <div class="peers fxw-nw@lg+ ai-s">
-      <div class="peer peer-greed w-70p@lg+ w-100@lg- p-20">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-          <h3>About Projects</h3>
-          <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#addAboutModal"><i class="fa fa-plus"></i>Add New</a>
-
-        </div>
-<!-- CSS -->
- <style>
+<style>
   .about-table thead th {
     font-size: 13px;
     font-weight: bolder;
@@ -58,13 +46,12 @@
     font-size: 12px;
   }
 
-  /* Optional scrollable table container */
   .table-container {
     max-height: 500px;
     overflow-y: auto;
   }
 
-   .modal .form-group label {
+  .modal .form-group label {
     font-weight: 600;
     color: #333;
   }
@@ -100,97 +87,141 @@
     opacity: 0.9;
   }
 </style>
-
- <div class="table-container">
-  <table class="about-table table table-bordered table-striped">
-    <thead>
-      <tr>
-        <th>About ID</th>
-        <th>Project Name</th>
-        <!-- <th>Content</th> -->
-        <th>Project Details</th>
-        <th>Project Rationale</th>
-        <!-- <th>Background & Signature</th>
-        <th>Project Objectives</th>
-        <th>Research Activities</th> -->
-        <!-- <th>Project Timeline</th> -->
-        <th>Date Created</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for item in about_content %}
-      <tr>
-        <td>{{ item.about_id }}</td>
-        <td>{{ item.project_name }}</td>
-        <!-- <td>{{ item.content|safe }}</td> -->
-        <td>{{ item.project_details|safe }}</td>
-        <td>{{ item.project_rationale_desc|safe }}</td>
-        <!-- <td>{{ item.background_signature_desc|safe }}</td>
-        <td>{{ item.project_objectives_desc|safe }}</td>
-        <td>{{ item.research_activities_desc|safe }}</td>
-        <td>{{ item.project_timeline_desc|safe }}</td> -->
-        <td>{{ item.date_created }}</td>
-        <td>
-          <div class="action-buttons">
-            <a href="{% url 'appAdmin:about-rationale' item.about_id %}" class="btn btn-info" title="View">
-              <i class="fa-solid fa-eye"></i>
-            </a>
-
-            <button type="button" class="btn btn-warning" data-toggle="modal"
-              data-target="#editAboutModal{{ item.about_id }}" title="Edit">
-              <i class="fa-solid fa-pen-to-square"></i>
-            </button>
-
-            <form action="{% url 'appAdmin:about-delete' item.about_id %}" method="post" style="display:inline;" class="delete-about-form">
-              {% csrf_token %}
-              <button type="submit" class="btn btn-danger" title="Delete">
-                <i class="fa-solid fa-trash"></i>
-              </button>
-            </form>
-          </div>
-        </td>
-      </tr>
-
-      <!-- Edit Modal -->
-      <div class="modal fade" id="editAboutModal{{ item.about_id }}" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-          <form method="post" enctype="multipart/form-data"
-            action="{% url 'appAdmin:about-page-edit' item.about_id %}">
-            {% csrf_token %}
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title">Edit Project</h5>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-              </div>
-              <div class="modal-body">
-                {% with edit_form=edit_forms|get_item:item.about_id %}
-                {{ edit_form.as_p }}
-                {% endwith %}
-              </div>
-              <div class="modal-footer">
-                <button type="submit" class="btn btn-success">Save changes</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-              </div>
-            </div>
-          </form>
+{% endblock %} {% block content %}
+<br />
+<div class="masonry-item col-12">
+  <div class="bd bgc-white">
+    <div class="peers fxw-nw@lg+ ai-s">
+      <div class="peer peer-greed w-70p@lg+ w-100@lg- p-20">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h3>About Projects</h3>
+          <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#addAboutModal">
+            <i class="fa fa-plus"></i> Add New
+          </a>
         </div>
-      </div>
 
-      {% empty %}
-      <tr>
-        <td colspan="11" class="text-center text-muted">
-          <i class="fa-solid fa-circle-info"></i> No about project records found.
-        </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-</div>
+        {% load custom_filters %}
 
-       <!-- Add About Project Modal -->
+        <div class="table-container">
+          <table class="about-table table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th>About ID</th>
+                <th>Project Name</th>
+                <th>Image</th>
+                <th>Project Details</th>
+                <th>Project Rationale</th>
+                <th>Date Created</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for item in about_content %}
+              <tr>
+                <td>{{ item.about_id }}</td>
+                <td>{{ item.project_name }}</td>
+                <td class="text-center">
+                  {% if item.image %}
+                    <img src="{{ item.image.url }}" alt="Profile" width="50" height="50">
+                  {% else %}
+                    <i class="fa-solid fa-image"></i>
+                  {% endif %}
+                </td>
+                <td>{{ item.project_details|safe }}</td>
+                <td>{{ item.project_rationale_desc|safe }}</td>
+                <td>{{ item.date_created }}</td>
+                <td>
+                  <div class="action-buttons">
+                    <a href="{% url 'appAdmin:about-rationale' item.about_id %}" class="btn btn-info" title="View">
+                      <i class="fa-solid fa-eye"></i>
+                    </a>
+                    <button type="button" class="btn btn-warning" data-toggle="modal"
+                      data-target="#editAboutModal{{ item.about_id }}" title="Edit">
+                      <i class="fa-solid fa-pen-to-square"></i>
+                    </button>
+                    <form action="{% url 'appAdmin:about-delete' item.about_id %}" method="post" 
+                          style="display:inline;" class="delete-about-form">
+                      {% csrf_token %}
+                      <button type="submit" class="btn btn-danger" title="Delete">
+                        <i class="fa-solid fa-trash"></i>
+                      </button>
+                    </form>
+                  </div>
+                </td>
+              </tr>
+              <!-- Edit Modal -->
+              <div class="modal fade" id="editAboutModal{{ item.about_id }}" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                  <form method="post" enctype="multipart/form-data" 
+                        action="{% url 'appAdmin:about-edit' item.about_id %}">
+                    {% csrf_token %}
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title">Edit Project - {{ item.project_name }}</h5>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      </div>
+                      <div class="modal-body">
+                        {% with form=edit_forms|get_item:item.about_id %}
+                          <div class="form-group">
+                            <label for="project_name_{{ item.about_id }}">Project Name</label>
+                            {{ form.project_name }}
+                            {% if form.project_name.errors %}
+                              <div class="text-danger">{{ form.project_name.errors }}</div>
+                            {% endif %}
+                          </div>
+
+                          <div class="form-group">
+                            <label for="image_{{ item.about_id }}">Project Image</label><br/>
+                            {% if item.image %}
+                              <img src="{{ item.image.url }}" alt="Current Image" width="80" height="80" class="mb-2" style="object-fit: cover; border-radius: 6px;">
+                            {% endif %}
+                            {{ form.image }}
+                            {% if form.image.errors %}
+                              <div class="text-danger">{{ form.image.errors }}</div>
+                            {% endif %}
+                          </div>
+
+                          <div class="form-group">
+                            <label for="project_details_{{ item.about_id }}">Project Details</label>
+                            {{ form.project_details }}
+                            {% if form.project_details.errors %}
+                              <div class="text-danger">{{ form.project_details.errors }}</div>
+                            {% endif %}
+                          </div>
+
+                          <div class="form-group">
+                            <label for="project_rationale_desc_{{ item.about_id }}">Project Rationale</label>
+                            {{ form.project_rationale_desc }}
+                            {% if form.project_rationale_desc.errors %}
+                              <div class="text-danger">{{ form.project_rationale_desc.errors }}</div>
+                            {% endif %}
+                          </div>
+                        {% endwith %}
+                      </div>
+                      <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Update</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+
+
+              {% empty %}
+              <tr>
+                <td colspan="7" class="text-center text-muted">
+                  <i class="fa-solid fa-circle-info"></i> No about project records found.
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Add Modal -->
         <div class="modal fade" id="addAboutModal" tabindex="-1" role="dialog">
-          <div class="modal-dialog" role="document">
+          <div class="modal-dialog modal-lg" role="document">
             <form method="post" enctype="multipart/form-data" action="{% url 'appAdmin:about-add' %}">
               {% csrf_token %}
               <div class="modal-content">
@@ -199,7 +230,37 @@
                   <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
-                  {{ form.as_p }}
+                  <div class="form-group">
+                    <label for="{{ form.project_name.id_for_label }}">Project Name</label>
+                    {{ form.project_name }}
+                    {% if form.project_name.errors %}
+                      <div class="text-danger">{{ form.project_name.errors }}</div>
+                    {% endif %}
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="{{ form.image.id_for_label }}">Project Image</label>
+                    {{ form.image }}
+                    {% if form.image.errors %}
+                      <div class="text-danger">{{ form.image.errors }}</div>
+                    {% endif %}
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="{{ form.project_details.id_for_label }}">Project Details</label>
+                    {{ form.project_details }}
+                    {% if form.project_details.errors %}
+                      <div class="text-danger">{{ form.project_details.errors }}</div>
+                    {% endif %}
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="{{ form.project_rationale_desc.id_for_label }}">Project Rationale</label>
+                    {{ form.project_rationale_desc }}
+                    {% if form.project_rationale_desc.errors %}
+                      <div class="text-danger">{{ form.project_rationale_desc.errors }}</div>
+                    {% endif %}
+                  </div>
                 </div>
                 <div class="modal-footer">
                   <button type="submit" class="btn btn-success">Save</button>
@@ -209,13 +270,6 @@
             </form>
           </div>
         </div>
- 
-
-              </td>
-            </tr>
-            
-          </tbody>
-        </table>
 
       </div>
     </div>
@@ -236,6 +290,12 @@
 {% endif %} {% endfor %} {% endif %}
 
 <script>
+  $(document).ready(function() {
+    $('.edit-about-form').on('submit', function() {
+      console.log('Edit form submitted');
+    });
+  });
+
   $(document).ready(function () {
     $("#about-page textarea").summernote({
       height: 300,

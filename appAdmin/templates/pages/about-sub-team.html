@@ -23,53 +23,40 @@
         <!-- Left Section -->
         <div class="d-flex align-items-center">
           <!-- Back Button -->
-          <a href="{% url 'appAdmin:about-page' %}" class="btn-back-gray">
-            <i class="fa fa-arrow-left"></i>
-            <span>Back</span>
-          </a>
-
-          <!-- Navigation Tabs -->
-          <div class="nav nav-pills nav-fill bg-light rounded p-1" role="tablist">
-            <a href="{% url 'appAdmin:about-rationale' about.about_id %}"
-              class="nav-link btn btn-sm {% if request.resolver_match.url_name == 'about-rationale' %}btn-primary active{% else %}btn-outline-primary{% endif %} mx-1"
-              role="tab">
-              <i class="fas fa-lightbulb me-1"></i>
-              Rationale
+            <a href="{% url 'appAdmin:about-sub-project' about.about_id %}" class="btn-back-gray">
+              <i class="fa fa-arrow-left"></i>
+              <span>Back to Sub Projects</span>
             </a>
 
-            <a href="{% url 'appAdmin:about-objective' about.about_id %}"
-              class="nav-link btn btn-sm {% if request.resolver_match.url_name == 'about-objective' %}btn-primary active{% else %}btn-outline-primary{% endif %} mx-1"
-              role="tab">
-              <i class="fas fa-bullseye me-1"></i>
-              Objective
-            </a>
+            <!-- Navigation Tabs -->
+            <div class="nav nav-pills nav-fill bg-light rounded p-1" role="tablist">
+              <a href="{% url 'appAdmin:about-sub-rationale' about.sub_id %}"
+                class="nav-link btn btn-sm btn-outline-primary mx-1"
+                role="tab">
+                <i class="fas fa-lightbulb me-1"></i>
+                Rationale
+              </a>
 
-            <!-- <a href="{% url 'appAdmin:about-activity' about.about_id %}"
-              class="nav-link btn btn-sm {% if request.resolver_match.url_name == 'about-activity' %}btn-primary active{% else %}btn-outline-primary{% endif %} mx-1"
-              role="tab">
-              <i class="fas fa-tasks me-1"></i>
-              Activities
-            </a> -->
+              <a href="{% url 'appAdmin:about-sub-objective' about.sub_id %}"
+                class="nav-link btn btn-sm btn-outline-primary mx-1"
+                role="tab">
+                <i class="fas fa-bullseye me-1"></i>
+                Objective
+              </a>
 
-            <a href="{% url 'appAdmin:about-timeline' about.about_id %}"
-              class="nav-link btn btn-sm {% if request.resolver_match.url_name == 'about-timeline' %}btn-primary active{% else %}btn-outline-primary{% endif %} mx-1"
-              role="tab">
-              <i class="fas fa-calendar-alt me-1"></i>
-              Timeline
-            </a>
+              <a href="{% url 'appAdmin:about-sub-timeline' about.sub_id %}"
+                class="nav-link btn btn-sm btn-outline-primary mx-1"
+                role="tab">
+                <i class="fas fa-calendar-alt me-1"></i>
+                Timeline
+              </a>
 
-            <a href="{% url 'appAdmin:about-team' about.about_id %}"
-              class="nav-link btn btn-sm {% if request.resolver_match.url_name == 'about-team' %}btn-primary active{% else %}btn-outline-primary{% endif %} mx-1"
-              role="tab">
-              <i class="fas fa-users me-1"></i>
-              Team
-            </a>
-            <a href="{% url 'appAdmin:about-sub-project' about.about_id %}"
-              class="nav-link btn btn-sm {% if request.resolver_match.url_name == 'about-sub-project' %}btn-primary active{% else %}btn-outline-primary{% endif %} mx-1"
-              role="tab">
-              <i class="fas fa-project-diagram me-1"></i>
-              Sub Projects
-            </a>
+              <a href="{% url 'appAdmin:about-sub-team' about.sub_id %}"
+                class="nav-link btn btn-sm btn-primary active mx-1"
+                role="tab">
+                <i class="fas fa-users me-1"></i>
+                Team
+              </a>
           </div>
         </div>
       </div>
@@ -208,62 +195,66 @@
           }
 
           .social-item {
-  display: flex;
-  align-items: center;
-  margin-bottom: 8px;
-  padding: 5px 8px;
-  background: #f8f9fa;
-  border-radius: 4px;
-  border: 1px solid #e9ecef;
-}
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            padding: 5px 8px;
+            background: #f8f9fa;
+            border-radius: 4px;
+            border: 1px solid #e9ecef;
+          }
 
-.social-item:hover {
-  background: #e9ecef;
-}
+          .social-item:hover {
+            background: #e9ecef;
+          }
 
-.social-controls {
-  display: flex;
-  gap: 3px;
-  margin-left: auto;
-}
+          .social-controls {
+            display: flex;
+            gap: 3px;
+            margin-left: auto;
+          }
 
-.social-controls .btn {
-  padding: 2px 5px;
-  font-size: 10px;
-  border-radius: 3px;
-}
+          .social-controls .btn {
+            padding: 2px 5px;
+            font-size: 10px;
+            border-radius: 3px;
+          }
 
-.social-link-text {
-  font-size: 11px;
-  color: #495057;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 120px;
-}
-.add-item-btn {
-  width: 100%;
-  padding: 5px;
-  font-size: 10px;
-  border: 1px dashed #007bff;
-  background: transparent;
-  color: #007bff;
-  border-radius: 3px;
-  margin-top: 8px;
-}
-.add-item-btn:hover {
-  background: #007bff;
-  color: white;
-}
+          .social-link-text {
+            font-size: 11px;
+            color: #495057;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 120px;
+          }
+          
+          .add-item-btn {
+            width: 100%;
+            padding: 5px;
+            font-size: 10px;
+            border: 1px dashed #007bff;
+            background: transparent;
+            color: #007bff;
+            border-radius: 3px;
+            margin-top: 8px;
+          }
+          
+          .add-item-btn:hover {
+            background: #007bff;
+            color: white;
+          }
 
         </style>
+        
         <div class="table-wrapper">
           <div class="d-flex justify-content-between align-items-center mb-3">
-          <h4>{{ about.project_name }}  - Team</h4>
+            <h4>{{ about.project_name }} - Team</h4>
             <button style="color: white;" class="btn btn-primary" data-toggle="modal" data-target="#addTeamModal">
               <i class="fa fa-plus"></i> Add New
             </button>
-        </div>
+          </div>
+          
           <div class="table-container">
             <table class="about-table table table-bordered table-striped">
               <thead>
@@ -296,41 +287,81 @@
                   <td>{{ item.role }}</td>
                   <td>{{ item.description }}</td>
                   <td>
-                     <div class="bullets-container">
-                  {% for social in item.socials.all %}
-                    <div class="social-item">
-                      <a href="{{ social.link }}" target="_blank" class="social-link-text">
-                        <i class="fa fa-link"></i> {{ social.link }}
-                      </a>
-                      <div class="social-controls">
-                        <form action="{% url 'appAdmin:about-team-social-delete' social.social_id %}" method="post" class="delete-social-form">
-                          {% csrf_token %}
-                          <button type="submit" class="btn btn-danger">
-                            <i class="fa fa-trash"></i>
-                          </button>
-                        </form>
-                      </div>
+                    <div class="bullets-container">
+                      {% for social in item.socials.all %}
+                        <div class="social-item">
+                          <a href="{{ social.link }}" target="_blank" class="social-link-text">
+                            <i class="fa fa-link"></i> {{ social.link }}
+                          </a>
+                          <div class="social-controls">
+                            <form action="{% url 'appAdmin:about-team-social-sub-delete' social.social_id %}" method="post" class="delete-social-form">
+                              {% csrf_token %}
+                              <button type="submit" class="btn btn-danger">
+                                <i class="fa fa-trash"></i>
+                              </button>
+                            </form>
+                          </div>
+                        </div>
+                      {% empty %}
+                        <span class="text-muted">No socials</span>
+                      {% endfor %}
                     </div>
-                  {% empty %}
-                    <span class="text-muted">No socials</span>
-                  {% endfor %}
-                </div>
-                <!-- Add Social Button -->
-                <button class="add-item-btn" data-toggle="modal" data-target="#addSocialModal{{ item.member_id }}">
-                  <i class="fa fa-plus"></i> Add Social
-                </button>
-                  <!-- Add Social -->
-                 {% for item in team_items %}
-                  
+                    <!-- Add Social Button -->
+                    <button class="add-item-btn" data-toggle="modal" data-target="#addSocialModal{{ item.member_id }}">
+                      <i class="fa fa-plus"></i> Add Social
+                    </button>
+                  </td>
 
-                  <!-- Add Social Modal -->
-                <div class="modal fade" id="addSocialModal{{ item.member_id }}" tabindex="-1" role="dialog">
+                  <td>
+                    <div class="action-buttons">
+                      <button type="button" class="btn btn-warning" data-toggle="modal"
+                        data-target="#editTeamModal{{ item.member_id }}" title="Edit">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                      </button>
+
+                      <form action="{% url 'appAdmin:about-team-sub-delete' item.member_id %}" method="post" class="delete-team-form">
+                          {% csrf_token %}
+                          <button type="submit" class="btn btn-danger" title="Delete">
+                              <i class="fa-solid fa-trash"></i>
+                          </button>
+                      </form>
+                    </div>
+                  </td>
+                </tr>
+
+                <!-- Edit Modal -->
+                <div class="modal fade" id="editTeamModal{{ item.member_id }}" tabindex="-1" role="dialog">
                   <div class="modal-dialog" role="document">
-                    <form method="post" action="{% url 'appAdmin:about-team-social-add' item.member_id %}">
+                    <form method="post" enctype="multipart/form-data"
+                      action="{% url 'appAdmin:about-team-sub-edit' item.member_id %}">
                       {% csrf_token %}
                       <div class="modal-content">
                         <div class="modal-header">
-                          <h5 class="modal-title">Add Social for {{ item.name }}</h5>
+                          <h5 class="modal-title">Edit Team</h5>
+                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                          {% with edit_form=edit_forms|get_item:item.member_id %}
+                          {{ edit_form.as_p }}
+                          {% endwith %}
+                        </div>
+                        <div class="modal-footer">
+                          <button type="submit" class="btn btn-success">Save changes</button>
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+
+                <!-- Add Social Modal -->
+                <div class="modal fade" id="addSocialModal{{ item.member_id }}" tabindex="-1" role="dialog">
+                  <div class="modal-dialog" role="document">
+                    <form method="post" action="{% url 'appAdmin:about-team-social-sub-add' item.member_id %}">
+                      {% csrf_token %}
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title">Add Social for {{ item.first_name }} {{ item.last_name }}</h5>
                           <button type="button" class="close" data-dismiss="modal">&times;</button>
                         </div>
                         <div class="modal-body">
@@ -355,57 +386,10 @@
                     </form>
                   </div>
                 </div>
-
-                {% endfor %}
-
-
-                </td>
-
-                  <td>
-                    <div class="action-buttons">
-                      <button type="button" class="btn btn-warning" data-toggle="modal"
-                        data-target="#editTeamModal{{ item.member_id }}" title="Edit">
-                        <i class="fa-solid fa-pen-to-square"></i>
-                      </button>
-
-                      <form action="{% url 'appAdmin:about-team-delete' item.member_id %}" method="post" class="delete-team-form">
-                          {% csrf_token %}
-                          <button type="submit" class="btn btn-danger" title="Delete">
-                              <i class="fa-solid fa-trash"></i>
-                          </button>
-                      </form>
-
-                    </div>
-                  </td>
-                </tr>
-
-                <!-- Edit Modal -->
-                <div class="modal fade" id="editTeamModal{{ item.member_id }}" tabindex="-1" role="dialog">
-                  <div class="modal-dialog" role="document">
-                    <form method="post" enctype="multipart/form-data"
-                      action="{% url 'appAdmin:about-team-edit' item.member_id %}">
-                      {% csrf_token %}
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title">Edit Team</h5>
-                          <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        </div>
-                        <div class="modal-body">
-                          {% with edit_form=edit_forms|get_item:item.member_id %}
-                          {{ edit_form.as_p }}
-                          {% endwith %}
-                        </div>
-                        <div class="modal-footer">
-                          <button type="submit" class="btn btn-success">Save changes</button>
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
-                </div>
+                
                 {% empty %}
                 <tr>
-                  <td colspan="7" class="text-center text-muted">
+                  <td colspan="8" class="text-center text-muted">
                     <i class="fa-solid fa-circle-info"></i> No team records found.
                   </td>
                 </tr>
@@ -414,29 +398,29 @@
             </table>
           </div>
 
-
-        <!-- Add Modal -->
-        <div class="modal fade" id="addTeamModal" tabindex="-1" role="dialog">
-          <div class="modal-dialog" role="document">
-            <form method="post" enctype="multipart/form-data" action="{% url 'appAdmin:about-team-add' about.about_id %}">
-              {% csrf_token %}
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title">Add Team</h5>
-                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <!-- Add Modal -->
+          <div class="modal fade" id="addTeamModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+              <form method="post" enctype="multipart/form-data" action="{% url 'appAdmin:about-team-sub-add' about.sub_id %}">
+                {% csrf_token %}
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Add Team</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  </div>
+                  <div class="modal-body">
+                    {{ form.as_p }}
+                  </div>
+                  <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                  </div>
                 </div>
-                <div class="modal-body">
-                  {{ form.as_p }}
-                </div>
-                <div class="modal-footer">
-                  <button type="submit" class="btn btn-success">Save</button>
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                </div>
-              </div>
-            </form>
+              </form>
+            </div>
           </div>
-        </div>
 
+        </div>
       </div>
     </div>
   </div>
@@ -457,6 +441,7 @@
     </script>
   {% endfor %}
 {% endif %}
+
 <script>
 document.querySelectorAll('.delete-team-form').forEach(form => {
   form.addEventListener('submit', function(e) {
@@ -478,7 +463,7 @@ document.querySelectorAll('.delete-team-form').forEach(form => {
   });
 });
 
-  document.querySelectorAll('.delete-social-form').forEach(form => {
+document.querySelectorAll('.delete-social-form').forEach(form => {
   form.addEventListener('submit', function(e) {
     e.preventDefault();
     Swal.fire({

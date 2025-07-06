@@ -3,7 +3,7 @@
 {% load static %}
 {% load custom_tags %}
 
-{% block title %}{{ about.project_name }} Timeline{% endblock %}
+{% block title %}{{ sub_project.project_name }} Timeline{% endblock %}
 
 {% block stylesheet %}
 <link rel="stylesheet" href="{% static 'style/css/admin.about.css' %}">
@@ -19,56 +19,265 @@
   <div class="bd bgc-white">
     <div class="peers fxw-nw@lg+ ai-s">
       <div class="peer peer-greed w-70p@lg+ w-100@lg- p-20">
+        
+        <!-- Header Section with Back Button and Navigation -->
         <div class="d-flex justify-content-between align-items-center mb-3">
-        <!-- Left Section -->
-        <div class="d-flex align-items-center">
-          <!-- Back Button -->
-          <a href="{% url 'appAdmin:about-page' %}" class="btn-back-gray">
-            <i class="fa fa-arrow-left"></i>
-            <span>Back</span>
-          </a>
-
-          <!-- Navigation Tabs -->
-          <div class="nav nav-pills nav-fill bg-light rounded p-1" role="tablist">
-            <a href="{% url 'appAdmin:about-rationale' about.about_id %}"
-              class="nav-link btn btn-sm {% if request.resolver_match.url_name == 'about-rationale' %}btn-primary active{% else %}btn-outline-primary{% endif %} mx-1"
-              role="tab">
-              <i class="fas fa-lightbulb me-1"></i>
-              Rationale
+          <!-- Left Section -->
+          <div class="d-flex align-items-center">
+            <!-- Back Button -->
+            <a href="{% url 'appAdmin:about-sub-project' about.about_id %}" class="btn-back-gray">
+              <i class="fa fa-arrow-left"></i>
+              <span>Back to Sub Projects</span>
             </a>
 
-            <a href="{% url 'appAdmin:about-objective' about.about_id %}"
-              class="nav-link btn btn-sm {% if request.resolver_match.url_name == 'about-objective' %}btn-primary active{% else %}btn-outline-primary{% endif %} mx-1"
-              role="tab">
-              <i class="fas fa-bullseye me-1"></i>
-              Objective
-            </a>
+            <!-- Navigation Tabs -->
+            <div class="nav nav-pills nav-fill bg-light rounded p-1" role="tablist">
+              <a href="{% url 'appAdmin:about-sub-rationale' about.sub_id %}"
+                class="nav-link btn btn-sm btn-outline-primary mx-1"
+                role="tab">
+                <i class="fas fa-lightbulb me-1"></i>
+                Rationale
+              </a>
 
-            <a href="{% url 'appAdmin:about-timeline' about.about_id %}"
-              class="nav-link btn btn-sm {% if request.resolver_match.url_name == 'about-timeline' %}btn-primary active{% else %}btn-outline-primary{% endif %} mx-1"
-              role="tab">
-              <i class="fas fa-calendar-alt me-1"></i>
-              Timeline
-            </a>
+              <a href="{% url 'appAdmin:about-sub-objective' about.sub_id %}"
+                class="nav-link btn btn-sm btn-outline-primary mx-1"
+                role="tab">
+                <i class="fas fa-bullseye me-1"></i>
+                Objective
+              </a>
 
-            <a href="{% url 'appAdmin:about-team' about.about_id %}"
-              class="nav-link btn btn-sm {% if request.resolver_match.url_name == 'about-team' %}btn-primary active{% else %}btn-outline-primary{% endif %} mx-1"
-              role="tab">
-              <i class="fas fa-users me-1"></i>
-              Team
-            </a>
+              <a href="{% url 'appAdmin:about-sub-timeline' about.sub_id %}"
+                class="nav-link btn btn-sm btn-primary active mx-1"
+                role="tab">
+                <i class="fas fa-calendar-alt me-1"></i>
+                Timeline
+              </a>
 
-            <a href="{% url 'appAdmin:about-sub-project' about.about_id %}"
-              class="nav-link btn btn-sm {% if request.resolver_match.url_name == 'about-sub-project' %}btn-primary active{% else %}btn-outline-primary{% endif %} mx-1"
-              role="tab">
-              <i class="fas fa-project-diagram me-1"></i>
-              Sub Projects
-            </a>
+              <a href="{% url 'appAdmin:about-sub-team' about.sub_id %}"
+                class="nav-link btn btn-sm btn-outline-primary mx-1"
+                role="tab">
+                <i class="fas fa-users me-1"></i>
+                Team
+              </a>
+            </div>
           </div>
         </div>
 
-    
-      </div>
+        <!-- Table Header Section -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h4>{{ sub_about.project_name }} - Timeline</h4>
+          <button style="color: white;" class="btn btn-primary" data-toggle="modal" data-target="#addTimelineModal">
+            <i class="fa fa-plus"></i> Add New
+          </button>
+        </div>
+
+        <!-- Table Section -->
+        <div class="table-container">
+          <table class="about-table table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th style="width: 50px;">ID</th>
+                <th style="width: 120px;">Title</th>
+                <th style="width: 150px;">Description</th>
+                <th style="width: 100px;">Date Start</th>
+                <th style="width: 100px;">Date End</th>
+                <th class="timeline-cell">Bullets</th>
+                <th class="timeline-cell">Images</th>
+                <th style="width: 100px;">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for item in timeline_items %}
+              <tr>
+                <td>{{ item.timeline_id }}</td>
+                <td>{{ item.title }}</td>
+                <td>{{ item.description|safe }}</td>
+                <td>{{ item.date_start }}</td>
+                <td>{{ item.date_end }}</td>
+                
+                <!-- Bullets Column -->
+                <td class="timeline-cell">
+                  <div class="bullets-container" data-timeline-id="{{ item.timeline_id }}">
+                    {% for bullet in item.bullets.all %}
+                    <div class="bullet-item" data-bullet-id="{{ bullet.id }}">
+                      <div class="bullet-controls">
+                        <button class="btn btn-warning btn-edit-bullet" title="Edit">
+                          <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-danger btn-delete-bullet" title="Delete">
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </div>
+                      <div class="bullet-text">{{ bullet.details }}</div>
+                    </div>
+                    {% endfor %}
+                  </div>
+                  <button class="btn add-item-btn btn-add-bullet" data-timeline-id="{{ item.timeline_id }}">
+                    <i class="fas fa-plus"></i> Add Bullet
+                  </button>
+                </td>
+                
+                <!-- Images Column -->
+                <td class="timeline-cell">
+                  <div class="images-container" data-timeline-id="{{ item.timeline_id }}">
+                    {% for image in item.images.all %}
+                    <div class="image-item" data-image-id="{{ image.id }}">
+                      <div class="image-controls">
+                        <button class="btn btn-warning btn-edit-image" title="Edit">
+                          <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-danger btn-delete-image" title="Delete">
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </div>
+                      {% if image.image %}
+                      <img src="{{ image.image.url }}" alt="{{ image.caption }}" class="image-thumbnail">
+                      {% endif %}
+                      <div class="image-caption">{{ item.title }} image</div>
+                    </div>
+                    {% endfor %}
+                  </div>
+                  <button class="btn add-item-btn btn-add-image" data-timeline-id="{{ item.timeline_id }}">
+                    <i class="fas fa-plus"></i> Add Image
+                  </button>
+                </td>
+                
+                <!-- Actions Column -->
+                <td>
+                  <div class="action-buttons">
+                    <button type="button" class="btn btn-warning" data-toggle="modal"
+                      data-target="#editTimelineModal{{ item.timeline_id }}" title="Edit">
+                      <i class="fa-solid fa-pen-to-square"></i>
+                    </button>
+
+                    <form action="{% url 'appAdmin:about-sub-timeline-delete' item.timeline_id %}" method="post"
+                      style="display:inline;" class="delete-about-form">
+                      {% csrf_token %}
+                      <button type="submit" class="btn btn-danger" title="Delete">
+                        <i class="fa-solid fa-trash"></i>
+                      </button>
+                    </form>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Edit Timeline Modal -->
+              <div class="modal fade" id="editTimelineModal{{ item.timeline_id }}" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                  <form method="post" enctype="multipart/form-data"
+                    action="{% url 'appAdmin:about-sub-timeline-edit' item.timeline_id %}">
+                    {% csrf_token %}
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title">Edit Timeline</h5>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      </div>
+                      <div class="modal-body">
+                        {% with edit_form=edit_forms|get_item:item.timeline_id %}
+                        {{ edit_form.as_p }}
+                        {% endwith %}
+                      </div>
+                      <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Save changes</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+              {% empty %}
+              <tr>
+                <td colspan="8" class="text-center text-muted">
+                  <i class="fa-solid fa-circle-info"></i> No timeline records found.
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Add Timeline Modal -->
+        <div class="modal fade" id="addTimelineModal" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+            <form method="post" enctype="multipart/form-data" action="{% url 'appAdmin:about-sub-timeline-add' about.sub_id %}">
+              {% csrf_token %}
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Add Timeline</h5>
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                  {{ form.as_p }}
+                </div>
+                <div class="modal-footer">
+                  <button type="submit" class="btn btn-success">Save</button>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Add/Edit Bullet Modal -->
+        <div class="modal fade" id="bulletModal" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="bulletModalTitle">Add Bullet</h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+              </div>
+              <div class="modal-body">
+                <form id="bulletForm">
+                  {% csrf_token %}
+                  <div class="form-group">
+                    <label for="bulletText">Bullet Text:</label>
+                    <textarea class="form-control" id="bulletText" name="bullet_text" rows="3" required></textarea>
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-success" id="saveBulletBtn">Save</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Add/Edit Image Modal -->
+        <div class="modal fade" id="imageModal" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="imageModalTitle">Add Image</h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+              </div>
+              <div class="modal-body">
+                <form id="imageForm" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  <div class="form-group">
+                    <label for="imageFile">Image File:</label>
+                    <input type="file" class="form-control-file" id="imageFile" name="image_file" accept="image/*">
+                    <small class="form-text text-muted">Upload new image (leave empty when editing to keep current image)</small>
+                  </div>
+                  <div class="form-group">
+                    <!-- <label for="imageCaption">Caption:</label> -->
+                    <input style="display: none;" type="text" class="form-control" id="imageCaption" name="image_caption" placeholder="Enter image caption">
+                  </div>
+                  <div id="currentImagePreview" style="display: none;">
+                    <label>Current Image:</label>
+                    <div>
+                      <img id="currentImage" src="" alt="Current Image" style="max-width: 200px; max-height: 150px;">
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-success" id="saveImageBtn">Save</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
 
         <style>
           .about-table thead th {
@@ -222,219 +431,6 @@
             max-width: 250px;
           }
         </style>
-        <div class="table-wrapper">
-          <div class="d-flex justify-content-between align-items-center mb-3">
-          <h4>{{ about.project_name }}  - Timeline</h4>
-            <button style="color: white;" class="btn btn-primary" data-toggle="modal" data-target="#addTimelineModal">
-              <i class="fa fa-plus"></i> Add New
-            </button>
-        </div>
-        <div class="table-container">
-          <table class="about-table table table-bordered table-striped">
-            <thead>
-              <tr>
-                <th style="width: 50px;">ID</th>
-                <th style="width: 120px;">Title</th>
-                <th style="width: 150px;">Description</th>
-                <th style="width: 100px;">Date Start</th>
-                <th style="width: 100px;">Date End</th>
-                <th class="timeline-cell">Bullets</th>
-                <th class="timeline-cell">Images</th>
-                <th style="width: 100px;">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for item in timeline_items %}
-              <tr>
-                <td>{{ item.timeline_id }}</td>
-                <td>{{ item.title }}</td>
-                <td>{{ item.description|safe }}</td>
-                <td>{{ item.date_start }}</td>
-                <td>{{ item.date_end }}</td>
-                
-                <!-- Bullets Column -->
-                <td class="timeline-cell">
-                  <div class="bullets-container" data-timeline-id="{{ item.timeline_id }}">
-                    {% for bullet in item.bullets.all %}
-                    <div class="bullet-item" data-bullet-id="{{ bullet.id }}">
-                      <div class="bullet-controls">
-                        <button class="btn btn-warning btn-edit-bullet" title="Edit">
-                          <i class="fas fa-edit"></i>
-                        </button>
-                        <button class="btn btn-danger btn-delete-bullet" title="Delete">
-                          <i class="fas fa-trash"></i>
-                        </button>
-                      </div>
-                      <div class="bullet-text">{{ bullet.details }}</div>
-                    </div>
-                    {% endfor %}
-                  </div>
-                  <button class="btn add-item-btn btn-add-bullet" data-timeline-id="{{ item.timeline_id }}">
-                    <i class="fas fa-plus"></i> Add Bullet
-                  </button>
-                </td>
-                
-                <!-- Images Column -->
-                <td class="timeline-cell">
-                  <div class="images-container" data-timeline-id="{{ item.timeline_id }}">
-                    {% for image in item.images.all %}
-                    <div class="image-item" data-image-id="{{ image.id }}">
-                      <div class="image-controls">
-                        <button class="btn btn-warning btn-edit-image" title="Edit">
-                          <i class="fas fa-edit"></i>
-                        </button>
-                        <button class="btn btn-danger btn-delete-image" title="Delete">
-                          <i class="fas fa-trash"></i>
-                        </button>
-                      </div>
-                      {% if image.image %}
-                      <img src="{{ image.image.url }}" alt="{{ image.caption }}" class="image-thumbnail">
-                      {% endif %}
-                      <div class="image-caption">{{ item.title }} image</div>
-                    </div>
-                    {% endfor %}
-                  </div>
-                  <button class="btn add-item-btn btn-add-image" data-timeline-id="{{ item.timeline_id }}">
-                    <i class="fas fa-plus"></i> Add Image
-                  </button>
-                </td>
-                
-                <!-- Actions Column -->
-                <td>
-                  <div class="action-buttons">
-                    <button type="button" class="btn btn-warning" data-toggle="modal"
-                      data-target="#editTimelineModal{{ item.timeline_id }}" title="Edit">
-                      <i class="fa-solid fa-pen-to-square"></i>
-                    </button>
-
-                    <form action="{% url 'appAdmin:about-timeline-delete' item.timeline_id %}" method="post"
-                      style="display:inline;" class="delete-about-form">
-                      {% csrf_token %}
-                      <button type="submit" class="btn btn-danger" title="Delete">
-                        <i class="fa-solid fa-trash"></i>
-                      </button>
-                    </form>
-                  </div>
-                </td>
-              </tr>
-
-              <!-- Edit Timeline Modal -->
-              <div class="modal fade" id="editTimelineModal{{ item.timeline_id }}" tabindex="-1" role="dialog">
-                <div class="modal-dialog" role="document">
-                  <form method="post" enctype="multipart/form-data"
-                    action="{% url 'appAdmin:about-timeline-edit' item.timeline_id %}">
-                    {% csrf_token %}
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title">Edit Timeline</h5>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                      </div>
-                      <div class="modal-body">
-                        {% with edit_form=edit_forms|get_item:item.timeline_id %}
-                        {{ edit_form.as_p }}
-                        {% endwith %}
-                      </div>
-                      <div class="modal-footer">
-                        <button type="submit" class="btn btn-success">Save changes</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                      </div>
-                    </div>
-                  </form>
-                </div>
-              </div>
-              {% empty %}
-              <tr>
-                <td colspan="8" class="text-center text-muted">
-                  <i class="fa-solid fa-circle-info"></i> No timeline records found.
-                </td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
-
-        <!-- Add Timeline Modal -->
-        <div class="modal fade" id="addTimelineModal" tabindex="-1" role="dialog">
-          <div class="modal-dialog" role="document">
-            <form method="post" enctype="multipart/form-data" action="{% url 'appAdmin:about-timeline-add' about.about_id %}">
-              {% csrf_token %}
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title">Add Timeline</h5>
-                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body">
-                  {{ form.as_p }}
-                </div>
-                <div class="modal-footer">
-                  <button type="submit" class="btn btn-success">Save</button>
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-
-        <!-- Add/Edit Bullet Modal -->
-        <div class="modal fade" id="bulletModal" tabindex="-1" role="dialog">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="bulletModalTitle">Add Bullet</h5>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-              </div>
-              <div class="modal-body">
-                <form id="bulletForm">
-                  {% csrf_token %}
-                  <div class="form-group">
-                    <label for="bulletText">Bullet Text:</label>
-                    <textarea class="form-control" id="bulletText" name="bullet_text" rows="3" required></textarea>
-                  </div>
-                </form>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-success" id="saveBulletBtn">Save</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Add/Edit Image Modal -->
-        <div class="modal fade" id="imageModal" tabindex="-1" role="dialog">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="imageModalTitle">Add Image</h5>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-              </div>
-              <div class="modal-body">
-                <form id="imageForm" enctype="multipart/form-data">
-                  {% csrf_token %}
-                  <div class="form-group">
-                    <label for="imageFile">Image File:</label>
-                    <input type="file" class="form-control-file" id="imageFile" name="image_file" accept="image/*">
-                    <small class="form-text text-muted">Upload new image (leave empty when editing to keep current image)</small>
-                  </div>
-                  <div class="form-group">
-                    <!-- <label for="imageCaption">Caption:</label> -->
-                    <input style="display: none;" type="text" class="form-control" id="imageCaption" name="image_caption" placeholder="Enter image caption">
-                  </div>
-                  <div id="currentImagePreview" style="display: none;">
-                    <label>Current Image:</label>
-                    <div>
-                      <img id="currentImage" src="" alt="Current Image" style="max-width: 200px; max-height: 150px;">
-                    </div>
-                  </div>
-                </form>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-success" id="saveImageBtn">Save</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-              </div>
-            </div>
-          </div>
-        </div>
 
       </div>
     </div>
@@ -596,8 +592,8 @@ $(document).ready(function() {
         }
 
         const url = currentAction === 'add' 
-            ? `/admin/about-timeline/${currentTimelineId}/bullets/add/`
-            : `/admin/about-timeline/${currentTimelineId}/bullets/edit/`;
+            ? `/admin/about-sub-timeline/${currentTimelineId}/bullets/add/`
+            : `/admin/about-sub-timeline/${currentTimelineId}/bullets/edit/`;
 
         $('#saveBulletBtn').prop('disabled', true).text('Saving...');
 
@@ -650,8 +646,8 @@ $(document).ready(function() {
         }
 
         const url = currentAction === 'add' 
-            ? `/admin/about-timeline/${currentTimelineId}/images/add/`
-            : `/admin/about-timeline/${currentTimelineId}/images/edit/`;
+            ? `/admin/about-sub-timeline/${currentTimelineId}/images/add/`
+            : `/admin/about-sub-timeline/${currentTimelineId}/images/edit/`;
 
         $('#saveImageBtn').prop('disabled', true).text('Saving...');
 
@@ -684,7 +680,7 @@ $(document).ready(function() {
     // Delete Bullet Function
     function deleteBullet(bulletId, bulletItem) {
         $.ajax({
-            url: `/admin/about-timeline/bullet/${bulletId}/delete/`,
+            url: `/admin/about-sub-timeline/bullet/${bulletId}/delete/`,
             type: 'POST',
             data: {
                 'csrfmiddlewaretoken': $('[name=csrfmiddlewaretoken]').val()
@@ -708,7 +704,7 @@ $(document).ready(function() {
     // Delete Image Function
     function deleteImage(imageId, imageItem) {
         $.ajax({
-            url: `/admin/about-timeline/image/${imageId}/delete/`,
+            url: `/admin/about-sub-timeline/image/${imageId}/delete/`,
             type: 'POST',
             data: {
                 'csrfmiddlewaretoken': $('[name=csrfmiddlewaretoken]').val()
@@ -765,4 +761,4 @@ $(document).ready(function() {
     });
 });
 </script>
-{% endblock %} 
+{% endblock %}

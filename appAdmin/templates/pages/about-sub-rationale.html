@@ -3,7 +3,7 @@
 {% load static %}
 {% load custom_tags %}
 
-{% block title %}{{ about.project_name }} Rationale{% endblock %}
+{% block title %}{{ sub_project.project_name }} Rationale{% endblock %}
 
 {% block stylesheet %}
 <link rel="stylesheet" href="{% static 'style/css/admin.about.css' %}">
@@ -20,62 +20,46 @@
     <div class="peers fxw-nw@lg+ ai-s">
       <div class="peer peer-greed w-70p@lg+ w-100@lg- p-20">
         <div class="d-flex justify-content-between align-items-center mb-3">
-        <!-- Left Section -->
-        <div class="d-flex align-items-center">
-          <!-- Back Button -->
-          <a href="{% url 'appAdmin:about-page' %}" class="btn-back-gray">
-            <i class="fa fa-arrow-left"></i>
-            <span>Back</span>
-          </a>
-
-          <!-- Navigation Tabs -->
-          <div class="nav nav-pills nav-fill bg-light rounded p-1" role="tablist">
-            <a href="{% url 'appAdmin:about-rationale' about.about_id %}"
-              class="nav-link btn btn-sm {% if request.resolver_match.url_name == 'about-rationale' %}btn-primary active{% else %}btn-outline-primary{% endif %} mx-1"
-              role="tab">
-              <i class="fas fa-lightbulb me-1"></i>
-              Rationale
+          <!-- Left Section -->
+          <div class="d-flex align-items-center">
+            <!-- Back Button -->
+            <a href="{% url 'appAdmin:about-sub-project' about.about_id %}" class="btn-back-gray">
+              <i class="fa fa-arrow-left"></i>
+              <span>Back to Sub Projects</span>
             </a>
 
-            <a href="{% url 'appAdmin:about-objective' about.about_id %}"
-              class="nav-link btn btn-sm {% if request.resolver_match.url_name == 'about-objective' %}btn-primary active{% else %}btn-outline-primary{% endif %} mx-1"
-              role="tab">
-              <i class="fas fa-bullseye me-1"></i>
-              Objective
-            </a>
+            <!-- Navigation Tabs -->
+            <div class="nav nav-pills nav-fill bg-light rounded p-1" role="tablist">
+              <a href="{% url 'appAdmin:about-sub-rationale' sub_project.sub_id %}"
+                class="nav-link btn btn-sm btn-primary active mx-1"
+                role="tab">
+                <i class="fas fa-lightbulb me-1"></i>
+                Rationale
+              </a>
 
-            <!-- <a href="{% url 'appAdmin:about-activity' about.about_id %}"
-              class="nav-link btn btn-sm {% if request.resolver_match.url_name == 'about-activity' %}btn-primary active{% else %}btn-outline-primary{% endif %} mx-1"
-              role="tab">
-              <i class="fas fa-tasks me-1"></i>
-              Activities
-            </a> -->
+              <a href="{% url 'appAdmin:about-sub-objective' sub_project.sub_id %}"
+                class="nav-link btn btn-sm btn-outline-primary mx-1"
+                role="tab">
+                <i class="fas fa-bullseye me-1"></i>
+                Objective
+              </a>
 
-            <a href="{% url 'appAdmin:about-timeline' about.about_id %}"
-              class="nav-link btn btn-sm {% if request.resolver_match.url_name == 'about-timeline' %}btn-primary active{% else %}btn-outline-primary{% endif %} mx-1"
-              role="tab">
-              <i class="fas fa-calendar-alt me-1"></i>
-              Timeline
-            </a>
+              <a href="{% url 'appAdmin:about-sub-timeline' sub_project.sub_id %}"
+                class="nav-link btn btn-sm btn-outline-primary mx-1"
+                role="tab">
+                <i class="fas fa-calendar-alt me-1"></i>
+                Timeline
+              </a>
 
-            <a href="{% url 'appAdmin:about-team' about.about_id %}"
-              class="nav-link btn btn-sm {% if request.resolver_match.url_name == 'about-team' %}btn-primary active{% else %}btn-outline-primary{% endif %} mx-1"
-              role="tab">
-              <i class="fas fa-users me-1"></i>
-              Team
-            </a>
-             <a href="{% url 'appAdmin:about-sub-project' about.about_id %}"
-              class="nav-link btn btn-sm {% if request.resolver_match.url_name == 'about-sub-project' %}btn-primary active{% else %}btn-outline-primary{% endif %} mx-1"
-              role="tab">
-              <i class="fas fa-project-diagram me-1"></i>
-              Sub Projects
-            </a>
+              <a href="{% url 'appAdmin:about-sub-team' sub_project.sub_id %}"
+                class="nav-link btn btn-sm btn-outline-primary mx-1"
+                role="tab">
+                <i class="fas fa-users me-1"></i>
+                Team
+              </a>
+            </div>
           </div>
         </div>
-
-      </div>
-
-
 
         <style>
           .about-table thead th {
@@ -129,6 +113,7 @@
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
             border: 1px solid #e9ecef;
           }
+          
           .btn-back-gray {
             display: inline-flex;
             align-items: center;
@@ -159,20 +144,21 @@
             outline: none;
           }
         </style>
-<!-- Objectives Table -->
+
+        <!-- Rationale Table -->
         <div class="table-wrapper">
           <div class="d-flex justify-content-between align-items-center mb-3">
-          <h4>{{ about.project_name }} - Rationale</h4>
+            <h4>{{ sub_project.project_name }} - Rationale</h4>
             <button style="color: white;" class="btn btn-primary" data-toggle="modal" data-target="#addRationaleModal">
               <i class="fa fa-plus"></i> Add New
             </button>
-        </div>
+          </div>
+          
           <div class="table-container">
             <table class="about-table table table-bordered table-striped">
               <thead>
                 <tr>
                   <th>ID</th>
-                  <!-- <th>Icon</th> -->
                   <th>Title</th>
                   <th>Details</th>
                   <th>Actions</th>
@@ -182,13 +168,6 @@
                 {% for item in rationale_items %}
                 <tr>
                   <td>{{ item.rationale_id }}</td>
-                  <!-- <td class="text-center">
-                    {% if item.icon %}
-                    <i class="{{ item.icon }}"></i>
-                    {% else %}
-                    <i class="fa-solid fa-image"></i>
-                    {% endif %}
-                  </td> -->
                   <td>{{ item.title }}</td>
                   <td>{{ item.detail|safe }}</td>
                   <td>
@@ -198,11 +177,10 @@
                         <i class="fa-solid fa-pen-to-square"></i>
                       </button>
 
-                      <form action="{% url 'appAdmin:about-rationale-delete' item.rationale_id %}" method="post"
+                      <form action="{% url 'appAdmin:about-rationale-sub-delete' item.rationale_id %}" method="post"
                         style="display:inline;" class="delete-rationale-form">
                         {% csrf_token %}
-                        <button type="submit" class="btn btn-danger"
-                          title="Delete">
+                        <button type="submit" class="btn btn-danger" title="Delete">
                           <i class="fa-solid fa-trash"></i>
                         </button>
                       </form>
@@ -213,8 +191,7 @@
                 <!-- Edit Modal -->
                 <div class="modal fade" id="editRationaleModal{{ item.rationale_id }}" tabindex="-1" role="dialog">
                   <div class="modal-dialog" role="document">
-                    <form method="post" enctype="multipart/form-data" action="{% url 'appAdmin:about-rationale-edit' item.rationale_id %}">
-
+                    <form method="post" enctype="multipart/form-data" action="{% url 'appAdmin:about-rationale-sub-edit' item.rationale_id %}">
                       {% csrf_token %}
                       <div class="modal-content">
                         <div class="modal-header">
@@ -236,7 +213,7 @@
                 </div>
                 {% empty %}
                 <tr>
-                  <td colspan="5" class="text-center text-muted">
+                  <td colspan="4" class="text-center text-muted">
                     <i class="fa-solid fa-circle-info"></i> No rationale records found.
                   </td>
                 </tr>
@@ -245,29 +222,29 @@
             </table>
           </div>
 
-
-        <!-- Add Modal -->
-        <div class="modal fade" id="addRationaleModal" tabindex="-1" role="dialog">
-          <div class="modal-dialog" role="document">
-            <form method="post" enctype="multipart/form-data" action="{% url 'appAdmin:about-rationale-add' about.about_id %}">
-              {% csrf_token %}
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title">Add Rationale</h5>
-                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <!-- Add Modal -->
+          <div class="modal fade" id="addRationaleModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+              <form method="post" enctype="multipart/form-data" action="{% url 'appAdmin:about-rationale-sub-add' sub_project.sub_id %}">
+                {% csrf_token %}
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Add Rationale</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  </div>
+                  <div class="modal-body">
+                    {{ form.as_p }}
+                  </div>
+                  <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                  </div>
                 </div>
-                <div class="modal-body">
-                  {{ form.as_p }}
-                </div>
-                <div class="modal-footer">
-                  <button type="submit" class="btn btn-success">Save</button>
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                </div>
-              </div>
-            </form>
+              </form>
+            </div>
           </div>
-        </div>
 
+        </div>
       </div>
     </div>
   </div>
@@ -288,25 +265,26 @@
     </script>
   {% endfor %}
 {% endif %}
+
 <script>
   document.querySelectorAll('.delete-rationale-form').forEach(form => {
-  form.addEventListener('submit', function(e) {
-    e.preventDefault();
-    Swal.fire({
-      title: 'Delete this rationale?',
-      text: "This action cannot be undone.",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#d33',
-      cancelButtonColor: '#aaa',
-      confirmButtonText: 'Yes, delete it!',
-      reverseButtons: true
-    }).then((result) => {
-      if (result.isConfirmed) {
-        form.submit();
-      }
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      Swal.fire({
+        title: 'Delete this rationale?',
+        text: "This action cannot be undone.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#aaa',
+        confirmButtonText: 'Yes, delete it!',
+        reverseButtons: true
+      }).then((result) => {
+        if (result.isConfirmed) {
+          form.submit();
+        }
+      });
     });
   });
-});
 </script>
 {% endblock %}
