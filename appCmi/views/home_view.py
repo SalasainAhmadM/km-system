@@ -1,5 +1,11 @@
 from django.shortcuts import render, get_object_or_404
 from appAdmin.models import About, MainProgram, MainProgramImage, MainProgramObjective,AboutRationale,AboutObjective,AboutTeamMember,AboutSubProject,AboutTimeline
+from appAdmin.models import (
+    About, AboutRationale, AboutObjective, AboutObjectiveDetail,
+    AboutTeamMember, AboutSubProject, AboutTimeline, AboutTimelineBullet,
+    AboutTimelineImage, AboutSubProjectObjective, AboutSubProjectRationale,
+    AboutSubProjectTeamMember, AboutSubProjectTimeline
+    )
 from utils.get_models import get_active_models
 from utils.user_control import user_access_required
 from utils.search_function import find_similar_resources
@@ -57,4 +63,18 @@ def project_view(request, about_id):
 
     return render(request, 'pages/project.html', context)
 
+@user_access_required(["admin", "cmi"], error_type=404)
+def project_sub_view(request, sub_id):
+    subproject = get_object_or_404(AboutSubProject, pk=sub_id)
+
+    context = {
+        'featured_about': subproject,
+        'project': subproject,
+        'rationales': AboutSubProjectRationale.objects.filter(about=subproject),
+        'objectives': AboutSubProjectObjective.objects.filter(about=subproject).prefetch_related('details'),
+        'team_members': AboutSubProjectTeamMember.objects.filter(about=subproject).prefetch_related('socials'),
+        'timeline_items': AboutSubProjectTimeline.objects.filter(about=subproject).prefetch_related('bullets', 'images'),
+    }
+
+    return render(request, 'pages/project-sub.html', context)
 

@@ -68,6 +68,7 @@ services:
       PMA_HOST: db
       PMA_USER: docker_user
       PMA_PASSWORD: docker_password
+
 volumes:
   mysql_data:
   static_volume:

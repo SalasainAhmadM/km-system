@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{{ featured_about.project_name|default:"Sub Project" }} | AANR Knowledge Hub</title>
+  <title>{{ featured_about.project_name|default:"Project" }} | AANR Knowledge Hub</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,322 +15,7 @@
 </head>
 
 <style>
-:root {
-  --primary: #2E7D32;
-  --secondary: #4CAF50;
-  --primary-dark: #1B5E20;
-  --card-bg: #ffffff;
-  --text-color: #333333;
-  --text-light: #666666;
-}
-
-body {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #f8f9fa;
-}
-
-.navbar {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-  padding: 1rem 0;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-}
-
-.navbar-brand {
-  color: white !important;
-  font-weight: 700;
-  font-size: 1.5rem;
-}
-
-.navbar-brand i {
-  margin-right: 10px;
-}
-
-.nav-link {
-  color: rgba(255,255,255,0.9) !important;
-  font-weight: 500;
-  transition: color 0.3s ease;
-}
-
-.nav-link:hover,
-.nav-link.active {
-  color: white !important;
-}
-
-.hero-slider {
-  position: relative;
-  height: 70vh;
-  overflow: hidden;
-}
-
-.hero-slide {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  transition: opacity 0.5s ease-in-out;
-}
-
-.hero-slide.active {
-  opacity: 1;
-}
-
-.hero-slide img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.hero-content {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  color: white;
-  z-index: 2;
-  max-width: 800px;
-  padding: 0 20px;
-}
-
-.hero-content::before {
-  content: '';
-  position: absolute;
-  top: -20px;
-  left: -20px;
-  right: -20px;
-  bottom: -20px;
-  background: rgba(0,0,0,0.5);
-  border-radius: 15px;
-  z-index: -1;
-}
-
-.hero-content h1 {
-  font-size: 3rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-}
-
-.hero-content p {
-  font-size: 1.2rem;
-  margin-bottom: 2rem;
-  line-height: 1.6;
-}
-
-.btn-outline-light {
-  padding: 12px 30px;
-  border: 2px solid white;
-  color: white;
-  font-weight: 600;
-  transition: all 0.3s ease;
-}
-
-.btn-outline-light:hover {
-  background: white;
-  color: var(--primary);
-}
-
-.section {
-  padding: 80px 0;
-}
-
-.section-title {
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: var(--primary);
-  text-align: center;
-  margin-bottom: 3rem;
-  position: relative;
-}
-
-.section-title::after {
-  content: '';
-  position: absolute;
-  bottom: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80px;
-  height: 4px;
-  background: linear-gradient(to right, var(--primary), var(--secondary));
-  border-radius: 2px;
-}
-
-.card {
-  border: none;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-  border-radius: 15px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  overflow: hidden;
-}
-
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 40px rgba(0,0,0,0.15);
-}
-
-.card-title {
-  color: var(--primary);
-  font-weight: 600;
-  font-size: 1.3rem;
-}
-
-.objectives-container {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-
-.objectives-slider {
-  display: flex;
-  overflow-x: auto;
-  gap: 30px;
-  padding: 20px 0;
-  scroll-behavior: smooth;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-.objectives-slider::-webkit-scrollbar {
-  display: none;
-}
-
-.objective-card {
-  min-width: 350px;
-  background: var(--card-bg);
-  padding: 30px;
-  border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-  border: 2px solid var(--secondary);
-}
-
-.objective-card h4 {
-  color: var(--primary);
-  font-weight: 600;
-  margin-bottom: 20px;
-}
-
-.objective-card ul {
-  list-style: none;
-  padding: 0;
-}
-
-.objective-card li {
-  padding: 8px 0;
-  border-bottom: 1px solid #eee;
-  position: relative;
-  padding-left: 20px;
-}
-
-.objective-card li:before {
-  content: '✓';
-  position: absolute;
-  left: 0;
-  color: var(--secondary);
-  font-weight: bold;
-}
-
-.slider-arrow {
-  background: var(--secondary);
-  color: white;
-  border: none;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 1.2rem;
-}
-
-.slider-arrow:hover {
-  background: var(--primary);
-  transform: scale(1.1);
-}
-
-.team-card {
-  background: var(--card-bg);
-  border-radius: 15px;
-  overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-  transition: transform 0.3s ease;
-  margin-bottom: 30px;
-}
-
-.team-card:hover {
-  transform: translateY(-5px);
-}
-
-.team-header {
-  padding: 30px;
-  text-align: center;
-  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-  color: white;
-}
-
-.team-avatar {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  margin-bottom: 15px;
-  border: 4px solid white;
-}
-
-.team-info h4 {
-  margin: 0 0 10px 0;
-  font-weight: 600;
-}
-
-.role {
-  font-size: 1.1rem;
-  font-weight: 500;
-  margin-bottom: 5px;
-}
-
-.specialization {
-  font-size: 0.9rem;
-  opacity: 0.9;
-}
-
-.team-details {
-  padding: 20px 30px;
-}
-
-.team-detail {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 10px;
-}
-
-.team-detail i {
-  color: var(--secondary);
-  width: 20px;
-}
-
-.team-socials {
-  display: flex;
-  gap: 15px;
-  margin-top: 15px;
-}
-
-.team-socials a {
-  color: var(--secondary);
-  font-size: 1.2rem;
-  transition: color 0.3s ease;
-}
-
-.team-socials a:hover {
-  color: var(--primary);
-}
-
-/* Timeline Section Styles */
+   /* Timeline Section Styles */
 .timeline-container {
   position: relative;
   max-width: 1200px;
@@ -394,6 +79,14 @@ body {
   border: 2px solid var(--secondary);
 }
 
+.timeline-item.left .timeline-content {
+  margin-right: 0;
+}
+
+.timeline-item.right .timeline-content {
+  margin-left: 0;
+}
+
 .timeline-item.left .timeline-content:before {
   content: '';
   position: absolute;
@@ -447,6 +140,10 @@ body {
 
 .timeline-date i {
   font-size: 1.1rem;
+}
+
+.timeline-description {
+  margin-bottom: 20px;
 }
 
 .timeline-description p {
@@ -514,12 +211,23 @@ body {
   margin-bottom: 20px;
 }
 
+.debug-timeline {
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 30px;
+}
+
+.debug-info {
+  color: #6c757d;
+  font-family: monospace;
+  font-size: 0.9rem;
+  margin-bottom: 5px;
+}
+
 /* Mobile Responsive */
 @media (max-width: 768px) {
-  .hero-content h1 {
-    font-size: 2rem;
-  }
-  
   .timeline-line {
     left: 30px;
   }
@@ -553,15 +261,29 @@ body {
     border-top: 12px solid transparent;
     border-bottom: 12px solid transparent;
   }
+  
+  .timeline-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .timeline-date {
+    font-size: 0.9rem;
+  }
 }
 
 @media (max-width: 480px) {
-  .objective-card {
-    min-width: 280px;
-  }
-  
   .timeline-content {
     padding: 20px;
+  }
+  
+  .timeline-header h4 {
+    font-size: 1.2rem;
+  }
+  
+  .timeline-bullets ul {
+    padding-left: 15px;
   }
 }
 </style>
@@ -570,15 +292,15 @@ body {
   <nav class="navbar navbar-expand-lg navbar-light">
     <div class="container">
       <a class="navbar-brand" href="#">
-        <i class="fas fa-seedling"></i> RAISE Sub Program
+        <i class="fas fa-seedling"></i> RAISE Program
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="{% url 'appCmi:home' %}">Home</a></li>
-          <li class="nav-item"><a class="nav-link active" href="#">About US</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+          <li class="nav-item"><a class="nav-link active" href="index.php">About US</a></li>
           <li class="nav-item"><a class="nav-link" href="#">Projects</a></li>
           <li class="nav-item"><a class="nav-link" href="#">Resources</a></li>
           <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
@@ -597,12 +319,12 @@ body {
           <img src="https://via.placeholder.com/1400x600?text=No+Image+Available" alt="Placeholder Image">
         {% endif %}
         <div class="hero-content">
-          <h1>SUB PROJECT {{ featured_about.sub_id }}: RAISE</h1>
+          <h1>SUB PROJECT {{ featured_about.about_id }}: RAISE</h1>
           <h1>{{ featured_about.project_name|default:"No Title Available" }}</h1>
           <p>{{ featured_about.project_details|default:"No description available." }}</p>
           <div class="hero-actions">
             <a href="{% url 'appCmi:home' %}" class="btn btn-outline-light">
-              <i class="fas fa-arrow-left me-2"></i> Back to Home
+              <i class="fas fa-arrow-left me-2"></i>
             </a>
           </div>
         </div>
@@ -610,20 +332,21 @@ body {
     </div>
   </div>
 
-  <!-- Rationale Section -->
   <section class="section" id="rationale">
     <div class="container">
-      <h2 class="section-title">Project Rationale</h2>
-      <div class="row justify-content-center">
-        <div class="col-lg-8 text-center">
-          <p class="lead">{{ featured_about.project_rationale_desc|default:"No rationale description available." }}</p>
+      <div style="border:5px solid var(--primary);">
+        <h2 class="section-title">Project Rationale</h2>
+        <div class="row justify-content-center">
+          <div class="col-lg-8 text-center">
+            <p class="lead">{{ featured_about.project_rationale_desc|default:"No Title Available" }}</p>
+          </div>
         </div>
       </div>
       
       <div class="row mt-5">
         {% if rationales %}
           {% for rationale in rationales %}
-            <div class="col-md-4 mb-4">
+            <div class="col-md-4">
               <div class="card h-100">
                 <div class="card-body text-center">
                   <h5 class="card-title">{{ rationale.title }}</h5>
@@ -633,15 +356,12 @@ body {
             </div>
           {% endfor %}
         {% else %}
-          <div class="col-12">
-            <p class="text-center text-muted">No rationale information available.</p>
-          </div>
+          <p class="text-center">No rationale information available.</p>
         {% endif %}
       </div>
     </div>
   </section>
 
-  <!-- Objectives Section -->
   <section class="section" id="objectives" style="background-color: var(--primary-dark); padding:50px;">
     <div class="container" style="color:white;">
       <h2 class="section-title" style="color:white; margin-bottom:0;">Project Objectives</h2>
@@ -664,9 +384,7 @@ body {
               </div>
             {% endfor %}
           {% else %}
-            <div class="objective-card">
-              <p class="text-center">No objectives found for this project.</p>
-            </div>
+            <p class="text-center">No objectives found for this project.</p>
           {% endif %}
         </div>
         <button class="slider-arrow right" onclick="scrollObjectives(1)"><i class="fas fa-chevron-right"></i></button>
@@ -674,7 +392,6 @@ body {
     </div>
   </section>
 
-  <!-- Team Section -->
   <section class="section" id="team">
     <div class="container project-team">
       <h2 class="section-title">Project Team Structure</h2>
@@ -721,81 +438,83 @@ body {
     </div>
   </section>
 
-  <!-- Timeline Section -->
-  <section class="section" id="timeline">
-    <div class="container">
-      <h2 class="section-title">Project Timeline</h2>
+   <!-- Timeline Section -->
+<section class="section" id="timeline">
+  <div class="container">
+    <h2 class="section-title">Project Timeline</h2>
 
-      <div class="timeline-container">
+    <div class="timeline-container">
+      {% if timeline_items %}
         <div class="timeline-line"></div>
+      {% endif %}
 
-        {% if timeline_items %}
-          {% for timeline in timeline_items %}
-            <div class="timeline-item {% cycle 'left' 'right' %}">
-              <div class="timeline-marker">
-                <i class="fas fa-calendar-alt"></i>
-              </div>
-              <div class="timeline-content">
-                <div class="timeline-header">
-                  <h4>{{ timeline.title|default:"Untitled Timeline Item" }}</h4>
-                  <div class="timeline-date">
-                    <i class="fas fa-clock"></i>
-                    <span>
-                      {% if timeline.date_start %}
-                        {{ timeline.date_start|date:"F j, Y" }}
-                        {% if timeline.date_end %} - {{ timeline.date_end|date:"F j, Y" }}{% endif %}
-                      {% else %}
-                        Date not specified
-                      {% endif %}
-                    </span>
-                  </div>
-                </div>
-
-                <div class="timeline-description">
-                  <p>{{ timeline.description|default:"No description available." }}</p>
-                </div>
-
-                {% if timeline.bullets.all %}
-                  <div class="timeline-bullets">
-                    <h6>Key Points:</h6>
-                    <ul>
-                      {% for bullet in timeline.bullets.all %}
-                        <li>{{ bullet.details }}</li>
-                      {% endfor %}
-                    </ul>
-                  </div>
-                {% endif %}
-
-                {% if timeline.images.all %}
-                  <div class="timeline-images">
-                    <div class="timeline-image-grid">
-                      {% for image in timeline.images.all %}
-                        <div class="timeline-image-item">
-                          <img src="{{ image.image.url }}" alt="Timeline Image" class="timeline-img">
-                        </div>
-                      {% endfor %}
-                    </div>
-                  </div>
-                {% endif %}
-              </div>
+      {% if timeline_items %}
+        {% for timeline in timeline_items %}
+          <div class="timeline-item {% cycle 'left' 'right' %}">
+            <div class="timeline-marker">
+              <i class="fas fa-calendar-alt"></i>
             </div>
-          {% endfor %}
-        {% else %}
-          <div class="no-timeline">
-            <i class="fas fa-calendar-times fa-3x mb-3"></i>
-            <p>No timeline information available for this project.</p>
-          </div>
-        {% endif %}
-      </div>
-    </div>
-  </section>
+            <div class="timeline-content">
+              <div class="timeline-header">
+                <h4>{{ timeline.title|default:"Untitled Timeline Item" }}</h4>
+                <div class="timeline-date">
+                  <i class="fas fa-clock"></i>
+                  <span>
+                    {% if timeline.date_start %}
+                      {{ timeline.date_start|date:"F j, Y" }}
+                      {% if timeline.date_end %} - {{ timeline.date_end|date:"F j, Y" }}{% endif %}
+                    {% else %}
+                      Date not specified
+                    {% endif %}
+                  </span>
+                </div>
+              </div>
 
-  <!-- Footer -->
+              <div class="timeline-description">
+                <p>{{ timeline.description|default:"No description available." }}</p>
+              </div>
+
+              {% if timeline.bullets.all %}
+                <div class="timeline-bullets">
+                  <h6>Key Points:</h6>
+                  <ul>
+                    {% for bullet in timeline.bullets.all %}
+                      <li>{{ bullet.details }}</li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              {% endif %}
+
+              {% if timeline.images.all %}
+                <div class="timeline-images">
+                  <div class="timeline-image-grid">
+                    {% for image in timeline.images.all %}
+                      <div class="timeline-image-item">
+                        <img src="{{ image.image.url }}" alt="Timeline Image" class="timeline-img">
+                      </div>
+                    {% endfor %}
+                  </div>
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <div class="no-timeline">
+          <i class="fas fa-calendar-times fa-3x mb-3"></i>
+          <p>No timeline information available for this project.</p>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+
   <footer class="py-4 bg-dark text-white">
     <div class="container">
       <div class="row">
         <div class="col-md-6">
-          <p class="mb-0">&copy; 2025 RAISE Program - Sub Project. All rights reserved.</p>
+          <p class="mb-0">&copy; 2025 RAISE Program - Project ABH. All rights reserved.</p>
         </div>
         <div class="col-md-6 text-md-end">
           <a href="#" class="text-white me-3"><i class="fab fa-facebook-f"></i></a>
@@ -809,10 +528,47 @@ body {
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script>
+    // Hero Slider functionality
+    let currentHeroSlide = 0;
+    const heroSlides = document.querySelectorAll('.hero-slide');
+    const heroDots = document.querySelectorAll('.hero-dot');
+    
+    function showHeroSlide(n) {
+      heroSlides.forEach(slide => slide.classList.remove('active'));
+      heroDots.forEach(dot => dot.classList.remove('active'));
+      
+      currentHeroSlide = (n + heroSlides.length) % heroSlides.length;
+      heroSlides[currentHeroSlide].classList.add('active');
+      heroDots[currentHeroSlide].classList.add('active');
+    }
+    
+    function moveHeroSlide(n) {
+      showHeroSlide(currentHeroSlide + n);
+    }
+    
+    function goToHeroSlide(n) {
+      showHeroSlide(n);
+    }
+    
+    // Auto-rotate hero slider every 5 seconds
+    setInterval(() => {
+      moveHeroSlide(1);
+    }, 5000);
+
     // Objectives slider functionality
     function scrollObjectives(direction) {
       const slider = document.querySelector('.objectives-slider');
       const scrollAmount = slider.clientWidth;
+      slider.scrollBy({
+        left: direction * scrollAmount,
+        behavior: 'smooth'
+      });
+    }
+    
+    // Subprojects slider functionality
+    function scrollSubprojects(direction) {
+      const slider = document.querySelector('.subprojects-slider');
+      const scrollAmount = 320; // Width of card + gap
       slider.scrollBy({
         left: direction * scrollAmount,
         behavior: 'smooth'

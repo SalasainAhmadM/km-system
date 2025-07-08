@@ -169,7 +169,7 @@
                 {% endif %}
                 <h4>{{ about.project_name }}</h4>
                 <h4>{{ about.project_details }}</h4>
-                   <a href="{% url 'appCmi:project' about.about_id %}" class="btn-see-more">See Details</a>
+                   <a href="/cmis/project/{{ about.about_id }}/" class="btn-see-more">See Details</a>
               </div>
             {% endfor %}
           {% else %}

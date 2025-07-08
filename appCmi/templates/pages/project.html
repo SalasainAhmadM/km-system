@@ -455,7 +455,7 @@
                     </svg>
                     <h4>{{ sub.project_name|default:"Untitled Subproject" }}</h4>
                   </div>
-                  <a href="/cmis/project-sub/{{ sub.sub_id }}/" class="subproject-btn">See Details</a>
+                  <a href="{% url 'appCmi:project-sub' sub.sub_id %}" class="subproject-btn">See Details</a>
                 </div>
               </div>
             {% endfor %}
@@ -474,7 +474,9 @@
     <h2 class="section-title">Project Timeline</h2>
 
     <div class="timeline-container">
-      <div class="timeline-line"></div>
+      {% if timeline_items %}
+        <div class="timeline-line"></div>
+      {% endif %}
 
       {% if timeline_items %}
         {% for timeline in timeline_items %}
