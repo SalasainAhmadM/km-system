@@ -299,27 +299,30 @@
           <div class="col-md-6">
             <div class="d-flex justify-content-between align-items-center mb-3">
               <h5><i class="fa fa-bullseye"></i> Program Objectives</h5>
+              {% if not program.objectives.all %}
               <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addObjectiveModal{{ program.id }}">
                 <i class="fa fa-plus"></i> Add Objective
               </button>
+              {% endif %}
+
             </div>
             
             <div class="table-container">
               <table class="about-table table table-bordered table-striped">
                 <thead>
                   <tr>
-                    <th>Title</th>
-                    <th>Target</th>
-                    <th>Title Bullets</th>
-                    <th>Target Bullets</th>
+                    <!-- <th>Title</th>
+                    <th>Target</th> -->
+                    <th>Objectives Bullets</th>
+                    <!-- <th>Target Bullets</th> -->
                     <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
                   {% for obj in program.objectives.all %}
                   <tr>
-                    <td>{{ obj.title|default:"—" }}</td>
-                    <td>{{ obj.target|default:"—"|truncatewords:8 }}</td>
+                    <!-- <td>{{ obj.title|default:"—" }}</td>
+                    <td>{{ obj.target|default:"—"|truncatewords:8 }}</td> -->
                     <td>
                       <ul class="mb-0 pl-3">
                         {% for tb in obj.title_bullets.all %}
@@ -329,7 +332,7 @@
                         {% endfor %}
                       </ul>
                     </td>
-                    <td>
+                    <!-- <td>
                       <ul class="mb-0 pl-3">
                         {% for tgt in obj.target_bullets.all %}
                         <li class="text-success">✅ {{ tgt.text|truncatewords:5 }}</li>
@@ -337,7 +340,7 @@
                         <li class="text-muted">No bullets</li>
                         {% endfor %}
                       </ul>
-                    </td>
+                    </td> -->
                     <td>
                       <div class="action-buttons">
                        
@@ -357,7 +360,7 @@
                    <!-- Updated Edit Modal Template -->
 {% for obj in program.objectives.all %}
 <div class="modal fade" id="editObjectiveModal{{ obj.id }}" tabindex="-1" role="dialog">
-  <div class="modal-dialog modal-lg" role="document">
+  <div class="modal-dialog modal-md" role="document">
     <form method="post" action="{% url 'appAdmin:objective-edit' obj.id %}">
       {% csrf_token %}
       <div class="modal-content">
@@ -367,11 +370,11 @@
         </div>
 
         <div class="modal-body">
-          <div class="form-row">
+          <div class="form-row" style="display: none;">
             <div class="form-group col-md-6">
               <label for="edit_objective_title_{{ obj.id }}">Objective Title</label>
               <input type="text" class="form-control" name="title" id="edit_objective_title_{{ obj.id }}" 
-                     value="{{ obj.title }}" required>
+                     value="{{ obj.title }}">
             </div>
             <div class="form-group col-md-6">
               <label for="edit_objective_target_{{ obj.id }}">Objective Target</label>
@@ -382,8 +385,8 @@
 
           <div class="form-row">
             <!-- Title Bullets -->
-            <div class="form-group col-md-6">
-              <label>Title Bullets</label>
+            <div class="form-group col-md-12">
+              <label>Objective Bullets</label>
               <div id="editTitleBulletsContainer{{ obj.id }}">
                 <!-- Existing title bullets -->
                 {% for tb in obj.title_bullets.all %}
@@ -415,7 +418,7 @@
             </div>
 
             <!-- Target Bullets -->
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-6" style="display: none;">
               <label>Target Bullets</label>
               <div id="editTargetBulletsContainer{{ obj.id }}">
                 <!-- Existing target bullets -->
@@ -512,7 +515,7 @@
 
         <!-- Add Objective Modal -->
         <div class="modal fade" id="addObjectiveModal{{ program.id }}" tabindex="-1" role="dialog">
-          <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-dialog modal-md" role="document">
             <form method="post" action="{% url 'appAdmin:objective-add' program.id %}">
               {% csrf_token %}
               <div class="modal-content">
@@ -522,10 +525,10 @@
                 </div>
 
                 <div class="modal-body">
-                  <div class="form-row">
+                  <div class="form-row" style="display: none;">
                     <div class="form-group col-md-6">
                       <label for="objective_title_{{ program.id }}">Objective Title</label>
-                      <input type="text" class="form-control" name="title" id="objective_title_{{ program.id }}" required>
+                      <input type="text" class="form-control" name="title" id="objective_title_{{ program.id }}">
                     </div>
                     <div class="form-group col-md-6">
                       <label for="objective_target_{{ program.id }}">Objective Target</label>
@@ -535,8 +538,8 @@
 
                   <div class="form-row">
                     <!-- Title Bullets -->
-                    <div class="form-group col-md-6">
-                      <label>Title Bullets</label>
+                    <div class="form-group col-md-12">
+                      <label>Objective Bullets</label>
                       <div id="titleBulletsContainer{{ program.id }}">
                         <div class="input-group mb-2">
                           <input type="text" name="title_bullets[]" class="form-control" placeholder="Enter bullet">
@@ -550,7 +553,7 @@
                     </div>
 
                     <!-- Target Bullets -->
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-6" style="display: none;">
                       <label>Target Bullets</label>
                       <div id="targetBulletsContainer{{ program.id }}">
                         <div class="input-group mb-2">

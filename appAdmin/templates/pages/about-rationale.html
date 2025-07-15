@@ -30,12 +30,12 @@
 
           <!-- Navigation Tabs -->
           <div class="nav nav-pills nav-fill bg-light rounded p-1" role="tablist">
-            <a href="{% url 'appAdmin:about-rationale' about.about_id %}"
+            <!-- <a href="{% url 'appAdmin:about-rationale' about.about_id %}"
               class="nav-link btn btn-sm {% if request.resolver_match.url_name == 'about-rationale' %}btn-primary active{% else %}btn-outline-primary{% endif %} mx-1"
               role="tab">
               <i class="fas fa-lightbulb me-1"></i>
               Rationale
-            </a>
+            </a> -->
 
             <a href="{% url 'appAdmin:about-objective' about.about_id %}"
               class="nav-link btn btn-sm {% if request.resolver_match.url_name == 'about-objective' %}btn-primary active{% else %}btn-outline-primary{% endif %} mx-1"

@@ -671,7 +671,7 @@ def about_objective_add(request, pk):
                             detail=detail_text
                         )
                 
-                messages.success(request, f"Objective '{objective.title}' added successfully with {len(detail_data)} details!")
+                messages.success(request, f"Objective added successfully with {len(detail_data)} details!")
                 
             except Exception as e:
                 messages.error(request, f"Error adding objective: {str(e)}")
@@ -1399,7 +1399,7 @@ def about_objective_sub_add(request, pk):
                             detail=detail_text
                         )
                 
-                messages.success(request, f"Objective '{objective.title}' added successfully with {len(detail_data)} details!")
+                messages.success(request, f"Objective added successfully with {len(detail_data)} details!")
                 
             except Exception as e:
                 messages.error(request, f"Error adding objective: {str(e)}")

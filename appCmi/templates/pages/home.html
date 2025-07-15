@@ -9,8 +9,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
-  <link rel="icon" href="{% static 'assets/images/logo.png' %}" type="image/x-icon" />
-  <link rel="stylesheet" href="{% static 'style/style.css' %}">
+  <link rel="stylesheet" href="{% static 'style/main.css' %}">
+
 </head>
 <body>
 
@@ -23,7 +23,20 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
-          <li class="nav-item"><a class="nav-link active" href="#">About</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle active" href="#" id="aboutDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              About
+            </a>
+            <div class="dropdown-menu" aria-labelledby="aboutDropdown">
+              {% if about %}
+                {% for about_list in about %}
+                  <a class="dropdown-item" href="/cmis/project/{{ about_list.about_id }}/">{{ about_list.project_name }}</a>
+                {% endfor %}
+              {% else %}
+                <a class="dropdown-item" href="#">No Projects Yet</a>
+              {% endif %}
+            </div>
+          </li>
           <li class="nav-item"><a class="nav-link" href="#">Projects</a></li>
           <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
         </ul>
@@ -44,10 +57,10 @@
         </div>
       {% empty %}
         <div class="carousel-item active">
-          <img src="https://via.placeholder.com/1400x600?text=No+Image+Available" class="d-block w-100" alt="No image">
+          <img src="https://images.unsplash.com/photo-1556761175-4b46a572b786?auto=format&fit=crop&w=1400&q=80" class="d-block w-100" alt="Agricultural landscape">
           <div class="carousel-caption">
-            <h1>No Images</h1>
-            <p>Please add images from the admin panel.</p>
+            <h1>RAISE WESMIN</h1>
+            <p>Empowering agricultural communities through innovation and sustainability.</p>
           </div>
         </div>
       {% endfor %}
@@ -64,57 +77,50 @@
   </div>
   <!-- Carousel End -->
 
-  <div class="section" id="rationale">
-    <div class="container" style = "border:5px solid #4c956c; padding:20px; text-align:center;">
-      <h2 class="section-title" data-aos="fade-up">Project Rationale</h2>
-      <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">{{ main.project_rationale_desc|safe }}</p>
-   
-    </div>
-  </div>
-
-  <div class="section" id="objectives" style="background-color:  #2c6e49;">
-    <div class="" style = " text-align: center;" >
-      <h2 class="section-title" data-aos="fade-up" style = "color:white;">Project Objectives</h2>
-      <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100" style = "color:white;">{{ main.project_objectives_desc|safe }}</p>
-      
-      <div class="objectives-container">
-        <button class="slider-nav slider-prev" onclick="scrollObjectives(-1)">
-          <i class="fas fa-chevron-left"></i>
-        </button>
+  <div class="project-rationale-objective d-flex flex-wrap">
+    <div class="section col-md-6" id="rationale" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+      <div class="container" style="border:5px solid #4c956c; padding:20px; text-align:center; height:100%;">
+        <h2 class="section-title" data-aos="fade-up">RAISE Rationale</h2>
         
-        <div class="objectives-slider" id="objectivesSlider">
-          {% for obj in objectives %}
+        <div class="rationale-container">
+          <div class="rationale-slider">
+            <div class="rationale-content" style="overflow-y:auto;">
+              <p>{{ main.project_rationale_desc|safe }}</p>
+            </div>
+          </div>
+          
+          <div class="rationale-nav">
+            <button id="rationalePrev"><i class="fas fa-chevron-up"></i></button>
+            <button id="rationaleNext"><i class="fas fa-chevron-down"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section col-md-6" id="objectives" style="background-color: #2c6e49;">
+      <div class="" style="text-align: center; height:100%;">
+        <h2 class="section-title" data-aos="fade-up" style="color:white;">RAISE Objectives</h2>
+        
+        <div class="objectives-container">
           <div class="objective-card">
-            <!-- Front Side -->
             <div class="objective-card-front">
-              <div style="border:2px solid white; padding:10px;">
-                <!-- <i class="fas fa-store" style="font-size:36px; color: white; margin-right: 10px;"></i> -->
-                <h3>{{ obj.title }}</h3>
-                <ul>
-                  {% for bullet in obj.title_bullets.all %}
-                    <li>{{ bullet.text }}</li>
+              <div class="objective-lists">
+                <ul id="objectivesList">
+                  {% for obj in objectives %}
+                    <!-- <li><strong>{{ obj.title }}</strong></li> -->
+                    {% for bullet in obj.title_bullets.all %}
+                      <li>{{ bullet.text }}</li>
+                    {% endfor %}
                   {% endfor %}
                 </ul>
               </div>
-            </div>
-
-            <!-- Back Side -->
-            <div class="objective-card-back">
-              <h3>{{ obj.target|default:"No Target Title" }}</h3>
-              <ul>
-                {% for bullet in obj.target_bullets.all %}
-                  <li>{{ bullet.text }}</li>
-                {% endfor %}
-              </ul>
+              <div class="nav-buttons">
+                <button id="prevBtn"><i class="fas fa-chevron-up"></i></button>
+                <button id="nextBtn"><i class="fas fa-chevron-down"></i></button>
+              </div>
             </div>
           </div>
-          {% endfor %}
         </div>
-
-        
-        <button class="slider-nav slider-next" onclick="scrollObjectives(1)">
-          <i class="fas fa-chevron-right"></i>
-        </button>
       </div>
     </div>
   </div>
@@ -124,32 +130,19 @@
       <h2 class="section-title" data-aos="fade-up">Organizational Structure</h2>
       <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Our streamlined structure ensures efficient implementation across all project components.</p>
       
-      {% if main.org_struct_image %}
-        <img src="{{ main.org_struct_image.url }}" alt="Org Structure" class="img-fluid">
-      {% else %}
-        <img src="{% static 'assets/images/org.png' %}" alt="Default Org Structure" class="img-fluid">
-      {% endif %}
-      
-      <div class="text-center mt-5" data-aos="fade-up">
-        <p>The organizational structure consists of four main components working in synergy:</p>
-        <div class="d-flex flex-wrap justify-content-center gap-4 mt-4">
-          {% if about_list %}
-            {% for about in about_list %}
-          <div class="bg-white p-3 rounded shadow-sm" style="max-width: 250px;">
-            <h5 class="">{{ about.project_name }}</h5>
-            <p class="mb-0">{{ about.project_details }}</p>
-          </div>
-          {% endfor %}
-          {% else %}
-            <p>No project information available.</p>
-          {% endif %}
-        </div>
+      <div class="structure-img-container" data-aos="zoom-in">
+        {% if main.org_struct_image %}
+          <img src="{{ main.org_struct_image.url }}" alt="Organizational Structure" class="structure-img">
+        {% else %}
+          <img src="{% static 'assets/images/org.png' %}" alt="Default Org Structure" class="structure-img">
+        {% endif %}
       </div>
+      
     </div>
   </div>
 
-  <div class="section" id="projects" style = "text-align:center; border-top:2px solid #2c6e49; ">
-    <div class="" >
+  <div class="section" id="projects" style="text-align:center;">
+    <div class="">
       <h2 class="section-title" data-aos="fade-up">RAISE Projects</h2>
       <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">{{ main.raise_project_desc|safe }}</p>
       
@@ -168,14 +161,14 @@
                   <i class="fas fa-business-time"></i>
                 {% endif %}
                 <h4>{{ about.project_name }}</h4>
-                <h4>{{ about.project_details }}</h4>
-                   <a href="/cmis/project/{{ about.about_id }}/" class="btn-see-more">See Details</a>
+                <p>{{ about.project_details }}</p>
+                <a href="/cmis/project/{{ about.about_id }}/" class="btn-see-more">See Details <i class="fas fa-arrow-right"></i></a>
               </div>
             {% endfor %}
           {% else %}
             <p>No project information available.</p>
           {% endif %}
-       </div>
+        </div>
         
         <button class="slider-nav slider-next" onclick="scrollProjects(1)">
           <i class="fas fa-chevron-right"></i>

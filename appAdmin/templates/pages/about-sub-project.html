@@ -30,12 +30,12 @@
 
           <!-- Navigation Tabs -->
           <div class="nav nav-pills nav-fill bg-light rounded p-1" role="tablist">
-            <a href="{% url 'appAdmin:about-rationale' about.about_id %}"
+            <!-- <a href="{% url 'appAdmin:about-rationale' about.about_id %}"
               class="nav-link btn btn-sm {% if request.resolver_match.url_name == 'about-rationale' %}btn-primary active{% else %}btn-outline-primary{% endif %} mx-1"
               role="tab">
               <i class="fas fa-lightbulb me-1"></i>
               Rationale
-            </a>
+            </a> -->
 
             <a href="{% url 'appAdmin:about-objective' about.about_id %}"
               class="nav-link btn btn-sm {% if request.resolver_match.url_name == 'about-objective' %}btn-primary active{% else %}btn-outline-primary{% endif %} mx-1"
@@ -49,6 +49,13 @@
               role="tab">
               <i class="fas fa-calendar-alt me-1"></i>
               Timeline
+            </a>
+
+            <a href="{% url 'appAdmin:about-team' about.about_id %}"
+              class="nav-link btn btn-sm {% if request.resolver_match.url_name == 'about-timeline' %}btn-primary active{% else %}btn-outline-primary{% endif %} mx-1"
+              role="tab">
+               <i class="fas fa-users me-1"></i>
+              Team
             </a>
 
             <a href="{% url 'appAdmin:about-sub-project' about.about_id %}"
@@ -215,7 +222,7 @@
                   </td>
                   <td>
                     <div class="action-buttons">
-                       <a href="{% url 'appAdmin:about-sub-rationale' item.sub_id %}" class="btn btn-info" title="View">
+                       <a href="{% url 'appAdmin:about-sub-objective' item.sub_id %}" class="btn btn-info" title="View">
                       <i class="fa-solid fa-eye"></i>
                     </a>
                       <button type="button" class="btn btn-warning" data-toggle="modal"

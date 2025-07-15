@@ -300,7 +300,7 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
-          <li class="nav-item"><a class="nav-link active" href="index.php">About US</a></li>
+          <li class="nav-item"><a class="nav-link active" href="#">About</a></li>
           <li class="nav-item"><a class="nav-link" href="#">Projects</a></li>
           <li class="nav-item"><a class="nav-link" href="#">Resources</a></li>
           <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
@@ -308,7 +308,37 @@
       </div>
     </div>
   </nav>
+  <style>
+    .hero-slide {
+      position: relative;
+    }
 
+    .hero-slide img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .hero-content {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+
+      background: rgba(0, 0, 0, 0.4); 
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px); 
+      padding: 20px;
+    }
+
+  </style>
   <!-- Hero Slider -->
   <div class="hero-slider">
     <div class="hero-slides">
@@ -319,7 +349,7 @@
           <img src="https://via.placeholder.com/1400x600?text=No+Image+Available" alt="Placeholder Image">
         {% endif %}
         <div class="hero-content">
-          <h1>SUB PROJECT {{ featured_about.about_id }}: RAISE</h1>
+          <h1 style="margin-bottom: 15px; font-weight: 700; color: #90E0C9;">PROJECT {{ featured_about.about_id }}: RAISE</h1>
           <h1>{{ featured_about.project_name|default:"No Title Available" }}</h1>
           <p>{{ featured_about.project_details|default:"No description available." }}</p>
           <div class="hero-actions">
@@ -332,65 +362,221 @@
     </div>
   </div>
 
-  <section class="section" id="rationale">
-    <div class="container">
-      <div style="border:5px solid var(--primary);">
-        <h2 class="section-title">Project Rationale</h2>
-        <div class="row justify-content-center">
-          <div class="col-lg-8 text-center">
-            <p class="lead">{{ featured_about.project_rationale_desc|default:"No Title Available" }}</p>
-          </div>
-        </div>
+<style>
+  .raise-container {
+    display: flex;
+    min-height: 100vh;
+    align-items: stretch;
+  }
+
+  .rationale-section {
+    flex: 1;
+    background-color: #f9f9f9;
+    padding: 60px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .box-outline {
+    border: 3px solid #4E9F3D;
+    padding: 40px;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    max-width: 600px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .rationale-text {
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: #2e7d32;
+    line-height: 1.6;
+    text-align: justify;
+    margin-bottom: 30px;
+    max-height: 300px; /* Fixed height for scrolling */
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding-right: 10px; /* Prevent scrollbar overlap */
+  }
+
+  .objective-section {
+    flex: 1;
+    background-color: #2e7d32;
+    padding: 60px 40px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .objective-content {
+    max-width: 600px;
+    width: 100%;
+  }
+
+  .objective-box {
+    border: 2px solid white;
+    padding: 40px;
+    border-radius: 10px;
+    background-color: transparent;
+    max-height: 300px; /* Fixed height for scrolling */
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding-right: 10px; /* Prevent scrollbar overlap */
+  }
+
+  .objective-box ul {
+    padding-left: 0;
+    list-style: none;
+    text-align: left;
+  }
+
+  .objective-box li {
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+    line-height: 1.5;
+    position: relative;
+    padding-left: 25px;
+  }
+
+  .objective-box li:before {
+    content: "•";
+    color: white;
+    font-size: 1.5rem;
+    position: absolute;
+    left: 0;
+    top: -2px;
+  }
+
+  .arrow-btn {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+    cursor: pointer;
+    margin: 10px;
+    transition: all 0.3s ease;
+  }
+
+  .arrow-btn:hover {
+    background-color: #45a049;
+    transform: scale(1.1);
+  }
+
+  .section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 30px;
+  }
+
+  .rationale-title {
+    color: #2e7d32;
+  }
+
+  .objective-title {
+    color: white;
+  }
+
+  .arrow-controls {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  /* Mobile Responsive */
+  @media (max-width: 768px) {
+    .raise-container {
+      flex-direction: column;
+      min-height: auto;
+    }
+
+    .rationale-section,
+    .objective-section {
+      padding: 40px 20px;
+    }
+
+    .box-outline,
+    .objective-box {
+      padding: 30px;
+    }
+
+    .rationale-text,
+    .objective-box {
+      max-height: 200px; /* Adjusted height for mobile */
+    }
+
+    .section-title {
+      font-size: 2rem;
+    }
+
+    .rationale-text,
+    .objective-box li {
+      font-size: 1rem;
+    }
+  }
+</style>
+
+<!-- RAISE RATIONALE & OBJECTIVES COMBINED -->
+<div class="raise-container">
+  <!-- RAISE RATIONALE -->
+  <div class="rationale-section">
+    <div class="box-outline">
+      <h2 class="section-title rationale-title">RAISE Rationale</h2>
+      <p class="rationale-text" id="rationale-text">
+        {{ featured_about.project_rationale_desc|default:"No Rationale Yet." }}
+      </p>
+      <div class="arrow-controls">
+        <button class="arrow-btn" onclick="scrollElement('rationale-text', -100)"><i class="fas fa-chevron-up"></i></button>
+        <button class="arrow-btn" onclick="scrollElement('rationale-text', 100)"><i class="fas fa-chevron-down"></i></button>
       </div>
-      
-      <div class="row mt-5">
-        {% if rationales %}
-          {% for rationale in rationales %}
-            <div class="col-md-4">
-              <div class="card h-100">
-                <div class="card-body text-center">
-                  <h5 class="card-title">{{ rationale.title }}</h5>
-                  <p class="card-text">{{ rationale.detail }}</p>
-                </div>
-              </div>
-            </div>
+    </div>
+  </div>
+
+  <!-- RAISE OBJECTIVES -->
+  <div class="objective-section">
+    <div class="objective-content">
+      <h2 class="section-title objective-title text-center">RAISE Objectives</h2>
+      <div class="objective-box" id="objective-box">
+        {% if objectives %}
+          {% for objective in objectives %}
+            {% if objective.details.all %}
+              <ul>
+                {% for detail in objective.details.all %}
+                  <li>{{ detail.detail }}</li>
+                {% endfor %}
+              </ul>
+            {% else %}
+              <p>No details available for this objective.</p>
+            {% endif %}
           {% endfor %}
         {% else %}
-          <p class="text-center">No rationale information available.</p>
+          <ul>
+            <li>No Objectives Yet</li>
+          </ul>
         {% endif %}
       </div>
-    </div>
-  </section>
-
-  <section class="section" id="objectives" style="background-color: var(--primary-dark); padding:50px;">
-    <div class="container" style="color:white;">
-      <h2 class="section-title" style="color:white; margin-bottom:0;">Project Objectives</h2>
-      <div class="objectives-container">
-        <button class="slider-arrow left" onclick="scrollObjectives(-1)"><i class="fas fa-chevron-left"></i></button>
-        <div class="objectives-slider">
-          {% if objectives %}
-            {% for objective in objectives %}
-              <div class="objective-card">
-                <h4>{{ objective.title }}</h4>
-                {% if objective.details.all %}
-                  <ul>
-                    {% for detail in objective.details.all %}
-                      <li>{{ detail.detail }}</li>
-                    {% endfor %}
-                  </ul>
-                {% else %}
-                  <p>No details available for this objective.</p>
-                {% endif %}
-              </div>
-            {% endfor %}
-          {% else %}
-            <p class="text-center">No objectives found for this project.</p>
-          {% endif %}
-        </div>
-        <button class="slider-arrow right" onclick="scrollObjectives(1)"><i class="fas fa-chevron-right"></i></button>
+      <div class="arrow-controls">
+        <button class="arrow-btn" onclick="scrollElement('objective-box', -100)"><i class="fas fa-chevron-up"></i></button>
+        <button class="arrow-btn" onclick="scrollElement('objective-box', 100)"><i class="fas fa-chevron-down"></i></button>
       </div>
     </div>
-  </section>
+  </div>
+</div>
+
+<script>
+function scrollElement(elementId, scrollAmount) {
+  const element = document.getElementById(elementId);
+  element.scrollBy({
+    top: scrollAmount,
+    behavior: 'smooth'
+  });
+}
+</script>
+
 
   <section class="section" id="team">
     <div class="container project-team">

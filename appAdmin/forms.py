@@ -718,16 +718,25 @@ class AboutObjectiveForm(forms.ModelForm, CommonFormStyle):
     def __init__(self, *args, **kwargs):
         self.about_instance = kwargs.pop('about_instance', None)
         super().__init__(*args, **kwargs)
+
         if self.about_instance:
             self.fields['about'].initial = self.about_instance
+
+        # Remove labels
+        self.fields['about'].label = ''
+        self.fields['title'].label = ''
+        # Set default value for 'title' and hide it
+        self.fields['title'].initial = 'Objective'
+        self.fields['title'].widget = forms.HiddenInput()
 
     class Meta:
         model = AboutObjective
         fields = ['about', 'title']
         widgets = {
             'about': forms.HiddenInput(),
-            'title': forms.TextInput(attrs={**CommonFormStyle.common_input_attrs, 'placeholder': 'Enter title...'}),
+            # 'title' widget is overridden in __init__, so it's okay to skip styling here
         }
+
 
 
 # ✅ About Objective Detail Form
@@ -891,6 +900,9 @@ class AboutTeamMemberForm(forms.ModelForm):
     class Meta:
         model = AboutTeamMember
         fields = '__all__'
+        labels = {
+            'description': 'Specialization',
+        }
         widgets = {
             'about': forms.HiddenInput(),
             'profile_image': CustomClearableFileInput(attrs={'class': 'form-control'}),
@@ -902,7 +914,7 @@ class AboutTeamMemberForm(forms.ModelForm):
 
 
             'role': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter role...'}),
-            'description': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter description...'}),
+            'description': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter specialization...'}),
             'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Enter email...(optional)...'}),
         }
 
@@ -1012,16 +1024,26 @@ class AboutSubProjectObjectiveForm(forms.ModelForm, CommonFormStyle):
     def __init__(self, *args, **kwargs):
         self.about_instance = kwargs.pop('about_instance', None)
         super().__init__(*args, **kwargs)
+
         if self.about_instance:
             self.fields['about'].initial = self.about_instance
+
+        # Hide title field with default value
+        self.fields['title'].initial = 'Objective'
+        self.fields['title'].widget = forms.HiddenInput()
+
+        # Remove labels
+        self.fields['about'].label = ''
+        self.fields['title'].label = ''
 
     class Meta:
         model = AboutSubProjectObjective
         fields = ['about', 'title']
         widgets = {
             'about': forms.HiddenInput(),
-            'title': forms.TextInput(attrs={**CommonFormStyle.common_input_attrs, 'placeholder': 'Enter objective title...'}),
+            # 'title' widget is overridden above
         }
+
 
 class AboutSubProjectObjectiveDetailForm(forms.ModelForm, CommonFormStyle):
     def __init__(self, *args, **kwargs):
@@ -1116,6 +1138,9 @@ class AboutSubProjectTeamMemberForm(forms.ModelForm):
     class Meta:
         model = AboutSubProjectTeamMember
         fields = '__all__'
+        labels = {
+            'description': 'Specialization',
+        }
         widgets = {
             'about': forms.HiddenInput(),
             'profile_image': CustomClearableFileInput(attrs={'class': 'form-control'}),
@@ -1127,7 +1152,7 @@ class AboutSubProjectTeamMemberForm(forms.ModelForm):
 
 
             'role': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter role...'}),
-            'description': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter description...'}),
+            'description': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter specialization...'}),
             'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Enter email...(optional)...'}),
         }
 

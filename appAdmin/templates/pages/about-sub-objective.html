@@ -158,12 +158,12 @@
 
             <!-- Navigation Tabs -->
             <div class="nav nav-pills nav-fill bg-light rounded p-1" role="tablist">
-              <a href="{% url 'appAdmin:about-sub-rationale' sub_project.sub_id %}"
+              <!-- <a href="{% url 'appAdmin:about-sub-rationale' sub_project.sub_id %}"
                 class="nav-link btn btn-sm btn-outline-primary mx-1"
                 role="tab">
                 <i class="fas fa-lightbulb me-1"></i>
                 Rationale
-              </a>
+              </a> -->
 
               <a href="{% url 'appAdmin:about-sub-objective' sub_project.sub_id %}"
                 class="nav-link btn btn-sm btn-primary active mx-1"
@@ -192,9 +192,11 @@
         <div class="table-wrapper">
           <div class="d-flex justify-content-between align-items-center mb-3">
             <h4>{{ sub_project.title }} Objectives</h4>
-            <button style="color: white;" class="btn btn-primary" data-toggle="modal" data-target="#addObjectiveModal">
-              <i class="fa fa-plus"></i> Add New
-            </button>
+             {% if not objective_items %}
+              <button style="color: white;" class="btn btn-primary" data-toggle="modal" data-target="#addObjectiveModal">
+                <i class="fa fa-plus"></i> Add New
+              </button>
+              {% endif %}
           </div>
           <div class="table-container">
             <table class="about-table table table-bordered table-striped">
