@@ -18810,3 +18810,751 @@ Traceback (most recent call last):
     raise TemplateDoesNotExist(template_name, chain=chain)
 django.template.exceptions.TemplateDoesNotExist: pages/projectsub.html
 [2025-07-08 20:42:47] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-17 06:41:15] Not Found: /favicon.ico
+[2025-07-17 06:41:23] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-17 06:41:23] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-17 06:41:24] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-17 06:41:24] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-17 06:41:24] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-17 06:44:34] Not Found: /static/style/css/admin.about.css
+[2025-07-17 06:44:34] Not Found: /static/style/css/admin.about.css
+[2025-07-17 06:44:35] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-17 06:44:35] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-17 06:44:35] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-17 06:44:35] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-17 06:44:35] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-17 07:03:44] Not Found: /static/style/css/admin.about.css
+[2025-07-17 07:03:44] Not Found: /static/style/css/admin.about.css
+[2025-07-17 07:03:45] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-17 07:03:45] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-17 07:03:45] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-17 07:03:46] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-17 07:03:46] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-17 07:17:14] Not Found: /static/style/css/admin.about.css
+[2025-07-17 07:17:14] Not Found: /static/style/css/admin.about.css
+[2025-07-17 07:17:15] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-17 07:17:15] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-17 07:17:15] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-17 07:17:16] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-17 07:17:16] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-17 07:17:18] Not Found: /static/style/css/admin.about.css
+[2025-07-17 07:17:19] Not Found: /static/style/css/admin.about.css
+[2025-07-17 07:17:19] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-17 07:17:19] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-17 07:17:20] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-17 07:17:20] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-17 07:17:20] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-17 07:17:25] Not Found: /static/style/css/admin.about.css
+[2025-07-17 07:17:25] Not Found: /static/style/css/admin.about.css
+[2025-07-17 07:17:26] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-17 07:17:26] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-17 07:17:26] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-17 07:17:26] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-17 07:17:26] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-17 07:17:36] Not Found: /static/style/css/admin.about.css
+[2025-07-17 07:17:36] Not Found: /static/style/css/admin.about.css
+[2025-07-17 07:17:37] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-17 07:17:37] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-17 07:17:37] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-17 07:17:37] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-17 07:17:37] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-17 07:17:43] Not Found: /static/style/css/admin.about.css
+[2025-07-17 07:17:44] Not Found: /static/style/css/admin.about.css
+[2025-07-17 07:17:44] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-17 07:17:44] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-17 07:17:44] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-17 07:17:44] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-17 07:17:44] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-17 07:17:52] Not Found: /static/style/css/admin.about.css
+[2025-07-17 07:17:52] Not Found: /static/style/css/admin.about.css
+[2025-07-17 07:17:53] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-17 07:17:53] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-17 07:17:53] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-17 07:17:53] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-17 07:17:53] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-17 07:17:58] Not Found: /static/style/css/admin.about.css
+[2025-07-17 07:17:58] Not Found: /static/style/css/admin.about.css
+[2025-07-17 07:17:59] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-17 07:17:59] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-17 07:17:59] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-17 07:17:59] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-17 07:17:59] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-17 07:18:02] Not Found: /static/style/css/admin.about.css
+[2025-07-17 07:18:03] Not Found: /static/style/css/admin.about.css
+[2025-07-17 07:18:03] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-17 07:18:03] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-17 07:18:03] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-17 07:18:03] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-17 07:18:03] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-17 07:18:06] Not Found: /static/style/css/admin.about.css
+[2025-07-17 07:18:07] Not Found: /static/style/css/admin.about.css
+[2025-07-17 07:18:07] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-17 07:18:07] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-17 07:18:07] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-17 07:18:07] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-17 07:18:07] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-17 07:19:21] Not Found: /static/style/css/admin.about.css
+[2025-07-17 07:19:21] Not Found: /static/style/css/admin.about.css
+[2025-07-17 07:19:22] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-17 07:19:22] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-17 07:19:22] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-17 07:19:22] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-17 07:19:22] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-17 07:22:25] Not Found: /static/style/css/admin.about.css
+[2025-07-17 07:22:25] Not Found: /static/style/css/admin.about.css
+[2025-07-17 07:22:26] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-17 07:22:26] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-17 07:22:26] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-17 07:22:26] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-17 07:22:26] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-17 07:32:39] Not Found: /static/style/css/admin.about.css
+[2025-07-17 07:32:39] Not Found: /static/style/css/admin.about.css
+[2025-07-17 07:32:40] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-17 07:32:40] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-17 07:32:40] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-17 07:32:40] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-17 07:32:40] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-17 07:33:43] Not Found: /static/style/css/admin.about.css
+[2025-07-17 07:33:43] Not Found: /static/style/css/admin.about.css
+[2025-07-17 07:33:44] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-17 07:33:44] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-17 07:33:44] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-17 07:33:44] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-17 07:33:44] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-17 07:41:09] Not Found: /static/style/css/admin.about.css
+[2025-07-17 07:41:09] Not Found: /static/style/css/admin.about.css
+[2025-07-17 07:41:10] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-17 07:41:10] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-17 07:41:10] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-17 07:41:10] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-17 07:41:10] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-17 07:41:19] Internal Server Error: /cmis/cmi-about/1/
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/app/utils/user_control.py", line 45, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "/app/appCmi/views/cmi_about_view.py", line 37, in cmi_about
+    return render(request, "pages/cmi-about.html", context)
+  File "/usr/local/lib/python3.10/site-packages/django/shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/usr/local/lib/python3.10/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/defaulttags.py", line 321, in render
+    return nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/defaulttags.py", line 193, in render
+    values = list(values)
+TypeError: 'About' object is not iterable
+[2025-07-17 07:41:20] Not Found: /favicon.ico
+[2025-07-17 07:41:26] Internal Server Error: /cmis/cmi-about/2/
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/app/utils/user_control.py", line 45, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "/app/appCmi/views/cmi_about_view.py", line 37, in cmi_about
+    return render(request, "pages/cmi-about.html", context)
+  File "/usr/local/lib/python3.10/site-packages/django/shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/usr/local/lib/python3.10/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/defaulttags.py", line 321, in render
+    return nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/defaulttags.py", line 193, in render
+    values = list(values)
+TypeError: 'About' object is not iterable
+[2025-07-17 07:47:05] Internal Server Error: /cmis/home/
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/app/utils/user_control.py", line 45, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "/app/appCmi/views/home_view.py", line 37, in home
+    return render(request, "pages/home.html", context)
+  File "/usr/local/lib/python3.10/site-packages/django/shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/usr/local/lib/python3.10/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader_tags.py", line 208, in render
+    return template.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 177, in render
+    return self._render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/usr/local/lib/python3.10/site-packages/django/urls/base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/urls/resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'cmi-about' with no arguments not found. 1 pattern(s) tried: ['cmis/cmi\\-about/(?P<about_id>[0-9]+)/\\Z']
+[2025-07-17 07:50:54] Internal Server Error: /cmis/home/
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/app/utils/user_control.py", line 45, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "/app/appCmi/views/home_view.py", line 37, in home
+    return render(request, "pages/home.html", context)
+  File "/usr/local/lib/python3.10/site-packages/django/shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/usr/local/lib/python3.10/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader_tags.py", line 208, in render
+    return template.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 177, in render
+    return self._render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/defaulttags.py", line 321, in render
+    return nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/defaulttags.py", line 238, in render
+    nodelist.append(node.render_annotated(context))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/usr/local/lib/python3.10/site-packages/django/urls/base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/urls/resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'cmi-about' with arguments '(1,)' not found. 1 pattern(s) tried: ['cmis/cmi\\-about\\Z']
+[2025-07-17 07:51:01] Internal Server Error: /cmis/home/
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/app/utils/user_control.py", line 45, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "/app/appCmi/views/home_view.py", line 37, in home
+    return render(request, "pages/home.html", context)
+  File "/usr/local/lib/python3.10/site-packages/django/shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/usr/local/lib/python3.10/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader_tags.py", line 208, in render
+    return template.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 177, in render
+    return self._render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/defaulttags.py", line 321, in render
+    return nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/defaulttags.py", line 238, in render
+    nodelist.append(node.render_annotated(context))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/usr/local/lib/python3.10/site-packages/django/urls/base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/urls/resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'cmi-about' with arguments '(1,)' not found. 1 pattern(s) tried: ['cmis/cmi\\-about\\Z']
+[2025-07-17 07:52:30] Internal Server Error: /cmis/cmi-about
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/app/utils/user_control.py", line 45, in wrapper
+    return view_func(request, *args, **kwargs)
+TypeError: cmi_about() missing 1 required positional argument: 'about_id'
+[2025-07-17 07:53:25] Internal Server Error: /cmis/cmi-about
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/app/utils/user_control.py", line 45, in wrapper
+    return view_func(request, *args, **kwargs)
+TypeError: cmi_about() missing 1 required positional argument: 'about_id'
+[2025-07-17 07:55:28] Internal Server Error: /cmis/cmi-about
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/app/utils/user_control.py", line 45, in wrapper
+    return view_func(request, *args, **kwargs)
+TypeError: cmi_about() missing 1 required positional argument: 'about_id'
+[2025-07-17 08:12:38] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-17 08:12:38] Not Found: /static/assets/css/bootstrap.min.css.map
+[2025-07-17 08:20:26] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-17 08:20:27] Not Found: /static/assets/css/bootstrap.min.css.map
+[2025-07-17 08:22:37] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-17 08:22:37] Not Found: /static/assets/css/bootstrap.min.css.map
+[2025-07-17 08:22:47] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-17 08:22:48] Not Found: /static/assets/css/bootstrap.min.css.map
+[2025-07-17 08:22:55] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-17 08:39:02] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-17 08:39:02] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-17 08:39:02] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-17 08:39:02] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-17 08:39:02] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-17 08:39:51] Not Found: /static/style/css/admin.about.css
+[2025-07-17 08:39:51] Not Found: /static/style/css/admin.about.css
+[2025-07-17 08:39:52] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-17 08:39:52] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-17 08:39:52] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-17 08:39:52] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-17 08:39:52] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-17 08:40:01] Not Found: /static/style/css/admin.about.css
+[2025-07-17 08:40:02] Not Found: /static/style/css/admin.about.css
+[2025-07-17 08:40:02] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-17 08:40:02] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-17 08:40:02] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-17 08:40:02] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-17 08:40:02] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-17 08:45:28] Not Found: /static/style/css/admin.about.css
+[2025-07-17 08:49:09] Not Found: /static/style/css/admin.about.css
+[2025-07-17 08:49:10] Not Found: /static/style/css/admin.about.css
+[2025-07-17 08:49:10] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-17 08:49:10] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-17 08:49:11] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-17 08:49:11] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-17 08:49:11] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-17 08:58:23] Not Found: /static/style/css/admin.about.css
+[2025-07-17 08:58:23] Not Found: /static/style/css/admin.about.css
+[2025-07-17 08:58:24] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-17 08:58:24] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-17 08:58:24] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-17 08:58:24] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-17 08:58:24] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-17 09:01:53] Not Found: /static/style/css/admin.about.css
+[2025-07-17 09:01:54] Not Found: /static/style/css/admin.about.css
+[2025-07-17 09:01:54] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-17 09:01:55] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-17 09:01:55] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-17 09:01:55] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-17 09:01:55] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-17 09:05:54] Not Found: /static/style/css/admin.about.css
+[2025-07-17 09:05:54] Not Found: /static/style/css/admin.about.css
+[2025-07-17 09:05:55] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-17 09:05:55] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-17 09:05:55] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-17 09:05:55] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-17 09:05:55] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-17 09:06:44] Not Found: /static/style/css/admin.about.css
+[2025-07-17 09:07:03] Not Found: /static/style/css/admin.about.css
+[2025-07-17 09:07:03] Not Found: /static/style/css/admin.about.css
+[2025-07-17 09:07:04] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-17 09:07:04] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-17 09:07:04] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-17 09:07:04] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-17 09:07:04] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-17 09:07:10] Not Found: /static/style/css/admin.about.css
+[2025-07-17 09:07:10] Not Found: /static/style/css/admin.about.css
+[2025-07-17 09:07:11] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-17 09:07:11] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-17 09:07:11] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-17 09:07:11] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-17 09:07:11] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-17 09:07:24] Not Found: /static/style/css/admin.about.css
+[2025-07-17 09:07:24] Not Found: /static/style/css/admin.about.css
+[2025-07-17 09:07:24] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-17 09:07:24] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-17 09:07:24] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-17 09:07:24] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-17 09:07:24] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-17 09:07:38] Not Found: /static/style/css/admin.about.css
+[2025-07-17 09:07:38] Not Found: /static/style/css/admin.about.css
+[2025-07-17 09:07:39] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-17 09:07:39] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-17 09:07:39] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-17 09:07:39] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-17 09:07:39] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-17 09:11:04] Not Found: /static/style/css/admin.about.css
+[2025-07-17 09:11:04] Not Found: /static/style/css/admin.about.css
+[2025-07-17 09:11:05] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-17 09:11:05] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-17 09:11:05] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-17 09:11:05] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-17 09:11:05] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-17 09:12:43] Not Found: /static/style/css/admin.about.css
+[2025-07-17 09:12:43] Not Found: /static/style/css/admin.about.css
+[2025-07-17 09:12:43] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-17 09:12:43] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-17 09:12:44] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-17 09:12:44] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-17 09:12:44] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-17 09:12:46] Not Found: /static/style/css/admin.about.css
+[2025-07-17 09:12:46] Not Found: /static/style/css/admin.about.css
+[2025-07-17 09:12:47] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-17 09:12:47] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-17 09:12:47] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-17 09:12:47] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-17 09:12:47] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-17 09:12:58] Not Found: /static/style/css/admin.about.css
+[2025-07-17 09:12:58] Not Found: /static/style/css/admin.about.css
+[2025-07-17 09:12:58] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-17 09:12:58] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-17 09:12:58] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-17 09:12:58] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-17 09:12:58] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-17 09:13:24] Not Found: /static/style/css/admin.about.css
+[2025-07-17 09:13:24] Not Found: /static/style/css/admin.about.css
+[2025-07-17 09:13:25] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-17 09:13:25] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-17 09:13:25] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-17 09:13:25] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-17 09:13:25] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-17 09:13:26] Not Found: /static/style/css/admin.about.css
+[2025-07-17 09:13:27] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-17 09:13:27] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-17 09:13:27] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-17 09:13:27] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-17 09:13:27] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-17 09:13:37] Internal Server Error: /admin/about-sub-project/edit/1/
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/app/appAdmin/views/about_view.py", line 1232, in about_sub_project_edit
+    if form.is_valid():
+  File "/usr/local/lib/python3.10/site-packages/django/forms/forms.py", line 201, in is_valid
+    return self.is_bound and not self.errors
+  File "/usr/local/lib/python3.10/site-packages/django/forms/forms.py", line 196, in errors
+    self.full_clean()
+  File "/usr/local/lib/python3.10/site-packages/django/forms/forms.py", line 433, in full_clean
+    self._clean_fields()
+  File "/usr/local/lib/python3.10/site-packages/django/forms/forms.py", line 448, in _clean_fields
+    value = getattr(self, "clean_%s" % name)()
+  File "/app/appAdmin/forms.py", line 999, in clean_image
+    if not image.content_type.startswith('image/'):
+AttributeError: 'ImageFieldFile' object has no attribute 'content_type'
+[2025-07-17 09:13:53] Not Found: /static/style/css/admin.about.css
+[2025-07-17 09:13:54] Not Found: /static/style/css/admin.about.css
+[2025-07-17 09:13:54] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-17 09:13:54] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-17 09:13:54] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-17 09:13:54] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-17 09:13:54] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-17 09:13:58] Not Found: /static/style/css/admin.about.css
+[2025-07-17 09:13:58] Not Found: /static/style/css/admin.about.css
+[2025-07-17 09:13:59] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-17 09:13:59] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-17 09:13:59] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-17 09:13:59] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-17 09:13:59] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-17 09:14:03] Internal Server Error: /admin/about-sub-project/edit/1/
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/app/appAdmin/views/about_view.py", line 1232, in about_sub_project_edit
+    if form.is_valid():
+  File "/usr/local/lib/python3.10/site-packages/django/forms/forms.py", line 201, in is_valid
+    return self.is_bound and not self.errors
+  File "/usr/local/lib/python3.10/site-packages/django/forms/forms.py", line 196, in errors
+    self.full_clean()
+  File "/usr/local/lib/python3.10/site-packages/django/forms/forms.py", line 433, in full_clean
+    self._clean_fields()
+  File "/usr/local/lib/python3.10/site-packages/django/forms/forms.py", line 448, in _clean_fields
+    value = getattr(self, "clean_%s" % name)()
+  File "/app/appAdmin/forms.py", line 999, in clean_image
+    if not image.content_type.startswith('image/'):
+AttributeError: 'ImageFieldFile' object has no attribute 'content_type'
+[2025-07-17 09:14:28] Not Found: /static/style/css/admin.about.css
+[2025-07-17 09:14:28] Not Found: /static/style/css/admin.about.css
+[2025-07-17 09:14:28] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-17 09:14:28] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-17 09:14:29] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-17 09:14:29] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-17 09:14:29] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-17 09:14:53] Not Found: /static/style/css/admin.about.css
+[2025-07-17 09:14:54] Not Found: /static/style/css/admin.about.css
+[2025-07-17 09:14:54] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-17 09:14:54] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-17 09:14:54] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-17 09:14:54] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-17 09:14:54] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-17 09:17:31] Not Found: /static/style/css/admin.about.css
+[2025-07-17 09:17:31] Not Found: /static/style/css/admin.about.css
+[2025-07-17 09:17:31] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-17 09:17:31] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-17 09:17:31] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-17 09:17:31] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-17 09:17:31] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-17 09:19:29] Not Found: /static/style/css/admin.about.css
+[2025-07-17 09:19:29] Not Found: /static/style/css/admin.about.css
+[2025-07-17 09:19:30] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-17 09:19:30] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-17 09:19:30] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-17 09:19:30] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-17 09:19:30] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-17 09:19:42] Not Found: /static/style/css/admin.about.css
+[2025-07-17 09:19:42] Not Found: /static/style/css/admin.about.css
+[2025-07-17 09:19:43] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-17 09:19:43] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-17 09:19:43] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-17 09:19:43] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-17 09:19:43] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-17 09:19:48] Not Found: /static/style/css/admin.about.css
+[2025-07-17 09:19:48] Not Found: /static/style/css/admin.about.css
+[2025-07-17 09:19:49] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-17 09:19:49] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-17 09:19:49] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-17 09:19:49] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-17 09:19:49] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-17 09:19:54] Not Found: /static/style/css/admin.about.css
+[2025-07-17 09:19:55] Not Found: /static/style/css/admin.about.css
+[2025-07-17 09:19:55] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-17 09:19:55] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-17 09:19:55] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-17 09:19:55] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-17 09:19:55] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-17 09:19:57] Not Found: /static/style/css/admin.about.css
+[2025-07-17 09:19:57] Not Found: /static/style/css/admin.about.css
+[2025-07-17 09:19:58] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-17 09:19:58] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-17 09:19:58] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-17 09:19:58] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-17 09:19:58] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-17 09:20:01] Not Found: /static/style/css/admin.about.css
+[2025-07-17 09:20:01] Not Found: /static/style/css/admin.about.css
+[2025-07-17 09:20:02] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-17 09:20:02] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-17 09:20:02] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-17 09:20:02] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-17 09:20:02] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-17 09:20:14] Importing BlpImagePlugin
+[2025-07-17 09:20:14] Importing BmpImagePlugin
+[2025-07-17 09:20:14] Importing BufrStubImagePlugin
+[2025-07-17 09:20:14] Importing CurImagePlugin
+[2025-07-17 09:20:14] Importing DcxImagePlugin
+[2025-07-17 09:20:14] Importing DdsImagePlugin
+[2025-07-17 09:20:14] Importing EpsImagePlugin
+[2025-07-17 09:20:14] Importing FitsImagePlugin
+[2025-07-17 09:20:14] Importing FliImagePlugin
+[2025-07-17 09:20:14] Importing FpxImagePlugin
+[2025-07-17 09:20:14] Image: failed to import FpxImagePlugin: No module named 'olefile'
+[2025-07-17 09:20:14] Importing FtexImagePlugin
+[2025-07-17 09:20:14] Importing GbrImagePlugin
+[2025-07-17 09:20:14] Importing GifImagePlugin
+[2025-07-17 09:20:14] Importing GribStubImagePlugin
+[2025-07-17 09:20:14] Importing Hdf5StubImagePlugin
+[2025-07-17 09:20:14] Importing IcnsImagePlugin
+[2025-07-17 09:20:14] Importing IcoImagePlugin
+[2025-07-17 09:20:14] Importing ImImagePlugin
+[2025-07-17 09:20:14] Importing ImtImagePlugin
+[2025-07-17 09:20:14] Importing IptcImagePlugin
+[2025-07-17 09:20:14] Importing JpegImagePlugin
+[2025-07-17 09:20:14] Importing Jpeg2KImagePlugin
+[2025-07-17 09:20:14] Importing McIdasImagePlugin
+[2025-07-17 09:20:14] Importing MicImagePlugin
+[2025-07-17 09:20:14] Image: failed to import MicImagePlugin: No module named 'olefile'
+[2025-07-17 09:20:14] Importing MpegImagePlugin
+[2025-07-17 09:20:14] Importing MpoImagePlugin
+[2025-07-17 09:20:14] Importing MspImagePlugin
+[2025-07-17 09:20:14] Importing PalmImagePlugin
+[2025-07-17 09:20:14] Importing PcdImagePlugin
+[2025-07-17 09:20:14] Importing PcxImagePlugin
+[2025-07-17 09:20:14] Importing PdfImagePlugin
+[2025-07-17 09:20:14] Importing PixarImagePlugin
+[2025-07-17 09:20:14] Importing PngImagePlugin
+[2025-07-17 09:20:14] Importing PpmImagePlugin
+[2025-07-17 09:20:14] Importing PsdImagePlugin
+[2025-07-17 09:20:14] Importing QoiImagePlugin
+[2025-07-17 09:20:14] Importing SgiImagePlugin
+[2025-07-17 09:20:14] Importing SpiderImagePlugin
+[2025-07-17 09:20:14] Importing SunImagePlugin
+[2025-07-17 09:20:14] Importing TgaImagePlugin
+[2025-07-17 09:20:14] Importing TiffImagePlugin
+[2025-07-17 09:20:14] Importing WebPImagePlugin
+[2025-07-17 09:20:14] Importing WmfImagePlugin
+[2025-07-17 09:20:14] Importing XbmImagePlugin
+[2025-07-17 09:20:14] Importing XpmImagePlugin
+[2025-07-17 09:20:14] Importing XVThumbImagePlugin
+[2025-07-17 09:20:15] Not Found: /static/style/css/admin.about.css
+[2025-07-17 09:20:15] Not Found: /static/style/css/admin.about.css
+[2025-07-17 09:20:16] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-17 09:20:16] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-17 09:20:16] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-17 09:20:16] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-17 09:20:16] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-17 09:20:20] Not Found: /static/style/css/admin.about.css
+[2025-07-17 09:20:21] Not Found: /static/style/css/admin.about.css
+[2025-07-17 09:20:21] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-17 09:20:21] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-17 09:20:21] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-17 09:20:21] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-17 09:20:21] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-17 09:20:28] Not Found: /static/style/css/admin.about.css
+[2025-07-17 09:20:28] Not Found: /static/style/css/admin.about.css
+[2025-07-17 09:20:28] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-17 09:20:28] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-17 09:20:28] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-17 09:20:28] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-17 09:20:28] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-17 09:20:35] Not Found: /static/style/css/admin.about.css
+[2025-07-17 09:20:35] Not Found: /static/style/css/admin.about.css
+[2025-07-17 09:20:35] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-17 09:20:36] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-17 09:20:36] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-17 09:20:36] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-17 09:20:36] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-17 09:20:39] Not Found: /static/style/css/admin.about.css
+[2025-07-17 09:20:39] Not Found: /static/style/css/admin.about.css
+[2025-07-17 09:20:39] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-17 09:20:39] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-17 09:20:39] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-17 09:20:39] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-17 09:20:39] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-17 09:20:41] Not Found: /static/style/css/admin.about.css
+[2025-07-17 09:20:41] Not Found: /static/style/css/admin.about.css
+[2025-07-17 09:20:42] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-17 09:20:42] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-17 09:20:42] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-17 09:20:42] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-17 09:20:42] Not Found: /static/1e59d2330b4c6deb84b3.ttf
+[2025-07-17 09:23:46] Not Found: /static/style/css/admin.about.css
+[2025-07-17 09:23:46] Not Found: /static/style/css/admin.about.css
+[2025-07-17 09:23:47] Not Found: /static/29b39089170885ae2967.woff
+[2025-07-17 09:23:47] Not Found: /static/20fd1704ea223900efa9.woff2
+[2025-07-17 09:23:47] Not Found: /static/eda8b94308c6f538f04a.ttf
+[2025-07-17 09:23:47] Not Found: /static/f691f37e57f04c152e23.woff
+[2025-07-17 09:23:47] Not Found: /static/1e59d2330b4c6deb84b3.ttf

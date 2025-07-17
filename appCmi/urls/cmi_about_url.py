@@ -6,7 +6,8 @@ app_name = "appCmi"
 
 urlpatterns = (
     [
-        path('cmi-about/<int:about_id>/', cmi_about_view.cmi_about, name='cmi-about'),
+        path('cmi-about', cmi_about_view.cmi_about, name='cmi-about'),
+        path('project/<int:about_id>/', cmi_about_view.project_view, name='project'),
         # Remove or fix this route if 'about' doesn't exist:
         # path("about-km/", cmi_about_view.about, name="cmi-about"),
     ]

@@ -299,11 +299,10 @@
           <div class="col-md-6">
             <div class="d-flex justify-content-between align-items-center mb-3">
               <h5><i class="fa fa-bullseye"></i> Program Objectives</h5>
-              {% if not program.objectives.all %}
+           
               <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addObjectiveModal{{ program.id }}">
                 <i class="fa fa-plus"></i> Add Objective
               </button>
-              {% endif %}
 
             </div>
             
@@ -317,13 +316,13 @@
                     <!-- <th>Target Bullets</th> -->
                     <th>Actions</th>
                   </tr>
-                </thead>
+                </thead> 
                 <tbody>
                   {% for obj in program.objectives.all %}
                   <tr>
-                    <!-- <td>{{ obj.title|default:"—" }}</td>
-                    <td>{{ obj.target|default:"—"|truncatewords:8 }}</td> -->
-                    <td>
+                    <td>{{ obj.title|default:"—" }}</td>
+                   <!--  <td>{{ obj.target|default:"—"|truncatewords:8 }}</td> -->
+                    <!-- <td>
                       <ul class="mb-0 pl-3">
                         {% for tb in obj.title_bullets.all %}
                         <li class="text-primary">🎯 {{ tb.text|truncatewords:5 }}</li>
@@ -331,7 +330,7 @@
                         <li class="text-muted">No bullets</li>
                         {% endfor %}
                       </ul>
-                    </td>
+                    </td> -->
                     <!-- <td>
                       <ul class="mb-0 pl-3">
                         {% for tgt in obj.target_bullets.all %}
@@ -370,13 +369,13 @@
         </div>
 
         <div class="modal-body">
-          <div class="form-row" style="display: none;">
-            <div class="form-group col-md-6">
-              <label for="edit_objective_title_{{ obj.id }}">Objective Title</label>
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label for="edit_objective_title_{{ obj.id }}">Objective</label>
               <input type="text" class="form-control" name="title" id="edit_objective_title_{{ obj.id }}" 
                      value="{{ obj.title }}">
             </div>
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-6" style="display: none;">
               <label for="edit_objective_target_{{ obj.id }}">Objective Target</label>
               <textarea class="form-control" name="target" id="edit_objective_target_{{ obj.id }}" 
                         rows="2">{{ obj.target }}</textarea>
@@ -385,7 +384,7 @@
 
           <div class="form-row">
             <!-- Title Bullets -->
-            <div class="form-group col-md-12">
+            <div class="form-group col-md-12" style="display: none;">
               <label>Objective Bullets</label>
               <div id="editTitleBulletsContainer{{ obj.id }}">
                 <!-- Existing title bullets -->
@@ -525,12 +524,12 @@
                 </div>
 
                 <div class="modal-body">
-                  <div class="form-row" style="display: none;">
-                    <div class="form-group col-md-6">
+                  <div class="form-row">
+                    <div class="form-group col-md-12">
                       <label for="objective_title_{{ program.id }}">Objective Title</label>
                       <input type="text" class="form-control" name="title" id="objective_title_{{ program.id }}">
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-6"  style="display: none;">
                       <label for="objective_target_{{ program.id }}">Objective Target</label>
                       <textarea class="form-control" name="target" id="objective_target_{{ program.id }}" rows="1"></textarea>
                     </div>
@@ -538,7 +537,7 @@
 
                   <div class="form-row">
                     <!-- Title Bullets -->
-                    <div class="form-group col-md-12">
+                    <div class="form-group col-md-12"  style="display: none;">
                       <label>Objective Bullets</label>
                       <div id="titleBulletsContainer{{ program.id }}">
                         <div class="input-group mb-2">

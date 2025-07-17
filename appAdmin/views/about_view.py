@@ -1222,24 +1222,33 @@ def about_sub_project_add(request, about_id):
     
     return redirect('appAdmin:about-sub-project', pk=about_id)
 
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib import messages
+
 def about_sub_project_edit(request, sub_id):
     """Edit existing sub project"""
     sub_project = get_object_or_404(AboutSubProject, sub_id=sub_id)
     about_id = sub_project.about.about_id
-    
+
     if request.method == 'POST':
         form = AboutSubProjectForm(request.POST, request.FILES, instance=sub_project)
         if form.is_valid():
             form.save()
             messages.success(request, 'Sub project updated successfully!')
+            return redirect('appAdmin:about-sub-project', pk=about_id)
         else:
             messages.error(request, 'Please correct the errors below.')
-            # Add form errors to messages
             for field, errors in form.errors.items():
                 for error in errors:
                     messages.error(request, f'{field}: {error}')
-    
-    return redirect('appAdmin:about-sub-project', pk=about_id)
+    else:
+        form = AboutSubProjectForm(instance=sub_project)
+
+    return render(request, 'admin/about_sub_project_form.html', {
+        'form': form,
+        'sub_project': sub_project
+    })
+
 
 def about_sub_project_delete(request, sub_id):
     """Delete sub project"""
