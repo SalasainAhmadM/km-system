@@ -320,8 +320,27 @@
       <div class="navbar-center desktop-menu">
         <ul>
           <li><a href="{% url 'appCmi:home' %}">Home</a></li>
-          <li><a href="{% url 'appCmi:cmi-about' %}">About</a></li>
+            <li>
+            <div class="dropdown">
+              <a href="#" class="dropdown-fa-toggle-down" role="button" aria-haspopup="true" aria-expanded="false">
+                About
+                <i class="fa-solid fa-circle-chevron-down"></i>
+              </a>
+              <div class="dropdown-menu" role="menu">
+                <a href="{% url 'appCmi:cmi-about' %}">RAISE Main Project</a>
+                {% if about_list %}
+                  {% for about in about_list %}
+                    <a href="/cmis/project/{{ about.about_id }}/" class="dropdown-item" role="menuitem">
+                      {{ about.project_name }}
+                    </a>
+                  {% endfor %}
+                {% else %}
+                  <a href="#" class="dropdown-item" role="menuitem">No Projects Yet</a>
+                {% endif %}
+              </div>
 
+            </div>
+          </li>
           <!-- Useful Links Dropdown -->
           <li>
             <div class="dropdown">
@@ -495,9 +514,9 @@
           <img src="https://via.placeholder.com/1400x600?text=No+Image+Available" alt="Placeholder Image">
         {% endif %}
         <div class="hero-content">
-          <h1 style="margin-bottom: 15px; font-weight: 700; color: #90E0C9;">PROJECT {{ featured_about.about_id }}: RAISE</h1>
-          <h1>{{ featured_about.project_name|default:"No Title Available" }}</h1>
-          <p>{{ featured_about.project_details|default:"No description available." }}</p>
+          <h1 style="margin-bottom: 15px; font-weight: 700; color: #90E0C9; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);" >PROJECT {{ featured_about.about_id }}: RAISE</h1>
+          <h1 style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">{{ featured_about.project_name|default:"No Title Available" }}</h1>
+          <p style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">{{ featured_about.project_details|default:"No description available." }}</p>
           <div class="hero-actions">
             <a href="{% url 'appCmi:home' %}" class="btn btn-outline-light">
               <i class="fas fa-arrow-left me-2"></i>
@@ -668,6 +687,10 @@
   .arrow-controls.hidden {
     display: none;
   }
+  .invisible-link {
+  visibility: hidden;
+  pointer-events: none; 
+}
 </style>
 
 <!-- RAISE RATIONALE & OBJECTIVES COMBINED -->
@@ -675,7 +698,7 @@
   <!-- RAISE RATIONALE -->
   <div class="rationale-section">
     <div class="box-outline">
-      <h2 class="section-title rationale-title">RAISE Rationale</h2>
+      <h2 class="section-title rationale-title">Rationale</h2>
       <p class="rationale-text" id="rationale-text">
         {{ featured_about.project_rationale_desc|default:"No Rationale Yet." }}
       </p>
@@ -689,7 +712,7 @@
   <!-- RAISE OBJECTIVES -->
   <div class="objective-section">
     <div class="objective-content">
-      <h2 class="section-title objective-title text-center">RAISE Objectives</h2>
+      <h2 class="section-title objective-title text-center">Objectives</h2>
       <div class="objective-box" id="objective-box">
         {% if objectives %}
           {% for objective in objectives %}
@@ -786,11 +809,17 @@ window.addEventListener('resize', checkScrollability);
                     </div>
                   {% endif %}
                   <div class="team-socials">
-                    {% for social in member.socials.all %}
-                      <a href="{{ social.link }}" target="_blank">
-                        <i class="{{ social.platform }}"></i>
+                    {% if member.socials.all %}
+                      {% for social in member.socials.all %}
+                        <a href="{{ social.link }}" target="_blank">
+                          <i class="{{ social.platform }}"></i>
+                        </a>
+                      {% endfor %}
+                    {% else %}
+                      <a href="#" class="invisible-link">
+                        <i class="fab fa-facebook-f"></i>
                       </a>
-                    {% endfor %}
+                    {% endif %}
                   </div>
                 </div>
               </div>
@@ -803,7 +832,7 @@ window.addEventListener('resize', checkScrollability);
     </div>
   </section>
 
-   <!-- Timeline Section -->
+ <!-- Timeline Section -->
 <section class="section" id="timeline">
   <div class="container">
     <h2 class="section-title">Project Timeline</h2>
@@ -852,12 +881,84 @@ window.addEventListener('resize', checkScrollability);
 
               {% if timeline.images.all %}
                 <div class="timeline-images">
-                  <div class="timeline-image-grid">
-                    {% for image in timeline.images.all %}
-                      <div class="timeline-image-item">
-                        <img src="{{ image.image.url }}" alt="Timeline Image" class="timeline-img">
-                      </div>
-                    {% endfor %}
+                  <div class="timeline-image-container" style="position: relative;">
+                    <!-- Left Arrow (only show if more than 1 image) -->
+                    {% if timeline.images.all|length > 1 %}
+                      <button class="timeline-scroll-btn timeline-scroll-left" onclick="scrollTimelineImages(this, -1)" style="
+                        position: absolute;
+                        left: -15px;
+                        top: 50%;
+                        transform: translateY(-50%);
+                        background: rgba(0,0,0,0.7);
+                        color: white;
+                        border: none;
+                        border-radius: 50%;
+                        width: 30px;
+                        height: 30px;
+                        cursor: pointer;
+                        z-index: 10;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 12px;
+                        transition: background 0.3s;
+                      " onmouseover="this.style.background='rgba(0,0,0,0.9)'" onmouseout="this.style.background='rgba(0,0,0,0.7)'">
+                        <i class="fas fa-chevron-left"></i>
+                      </button>
+                    {% endif %}
+
+                    <!-- Scrollable Image Grid -->
+                    <div class="timeline-image-grid" style="
+                      display: flex;
+                      overflow-x: auto;
+                      gap: 10px;
+                      scroll-behavior: smooth;
+                      scrollbar-width: none;
+                      -ms-overflow-style: none;
+                    ">
+                      {% for image in timeline.images.all %}
+                        <div class="timeline-image-item" style="
+                          border-radius: 8px;
+                          overflow: hidden;
+                          box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+                          flex-shrink: 0;
+                          width: 100%;
+                          cursor: pointer;
+                        ">
+                          <img src="{{ image.image.url }}" alt="Timeline Image" class="timeline-img" style="
+                            width: 100%;
+                            height: 200px;
+                            object-fit: cover;
+                            transition: transform 0.3s ease;
+                          " onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" onclick="openFullscreen(this)">
+                        </div>
+                      {% endfor %}
+                    </div>
+
+                    <!-- Right Arrow (only show if more than 1 image) -->
+                    {% if timeline.images.all|length > 1 %}
+                      <button class="timeline-scroll-btn timeline-scroll-right" onclick="scrollTimelineImages(this, 1)" style="
+                        position: absolute;
+                        right: -15px;
+                        top: 50%;
+                        transform: translateY(-50%);
+                        background: rgba(0,0,0,0.7);
+                        color: white;
+                        border: none;
+                        border-radius: 50%;
+                        width: 30px;
+                        height: 30px;
+                        cursor: pointer;
+                        z-index: 10;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 12px;
+                        transition: background 0.3s;
+                      " onmouseover="this.style.background='rgba(0,0,0,0.9)'" onmouseout="this.style.background='rgba(0,0,0,0.7)'">
+                        <i class="fas fa-chevron-right"></i>
+                      </button>
+                    {% endif %}
                   </div>
                 </div>
               {% endif %}
@@ -874,6 +975,134 @@ window.addEventListener('resize', checkScrollability);
   </div>
 </section>
 
+<style>
+/* Hide scrollbar for timeline images */
+.timeline-image-grid::-webkit-scrollbar {
+  display: none;
+}
+
+/* Fullscreen modal styles */
+.fullscreen-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.fullscreen-modal.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.fullscreen-modal img {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+  cursor: pointer;
+  border-radius: 8px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+.fullscreen-close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  color: white;
+  font-size: 40px;
+  cursor: pointer;
+  z-index: 10000;
+  transition: color 0.3s ease;
+}
+
+.fullscreen-close:hover {
+  color: #ff4444;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+  .timeline-scroll-btn {
+    display: none !important;
+  }
+  
+  .timeline-image-grid {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .fullscreen-close {
+    font-size: 30px;
+    top: 15px;
+    right: 20px;
+  }
+}
+</style>
+
+<script>
+function scrollTimelineImages(button, direction) {
+  const container = button.closest('.timeline-image-container');
+  const grid = container.querySelector('.timeline-image-grid');
+  const scrollAmount = grid.clientWidth; // Scroll by full width since each image is 100% width
+  
+  grid.scrollBy({
+    left: direction * scrollAmount,
+    behavior: 'smooth'
+  });
+}
+
+function openFullscreen(img) {
+  // Create fullscreen modal if it doesn't exist
+  let modal = document.getElementById('fullscreen-modal');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'fullscreen-modal';
+    modal.className = 'fullscreen-modal';
+    modal.innerHTML = `
+      <span class="fullscreen-close" onclick="closeFullscreen()">&times;</span>
+      <img id="fullscreen-img" src="" alt="Fullscreen Image" onclick="closeFullscreen()">
+    `;
+    document.body.appendChild(modal);
+  }
+  
+  // Set the image source and show modal
+  const fullscreenImg = modal.querySelector('#fullscreen-img');
+  fullscreenImg.src = img.src;
+  fullscreenImg.alt = img.alt;
+  
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden'; // Prevent background scrolling
+}
+
+function closeFullscreen() {
+  const modal = document.getElementById('fullscreen-modal');
+  if (modal) {
+    modal.classList.remove('active');
+    document.body.style.overflow = 'auto'; // Restore background scrolling
+  }
+}
+
+// Close modal when clicking outside the image or pressing ESC
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    closeFullscreen();
+  }
+});
+
+document.addEventListener('click', function(e) {
+  const modal = document.getElementById('fullscreen-modal');
+  if (e.target === modal) {
+    closeFullscreen();
+  }
+});
+</script>
 
   <footer class="py-4 bg-dark text-white">
     <div class="container">

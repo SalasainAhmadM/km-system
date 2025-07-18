@@ -50,10 +50,13 @@ def get_input_from_search(request):
 @user_access_required(["admin", "cmi"], error_type=404)
 def project_view(request, about_id):
     project = get_object_or_404(About, pk=about_id)
-
+    about = About.objects.all() 
+    about_list = About.objects.all()
     context = {
         'featured_about': project,
         'project': project,
+        'about': about,
+        'about_list': about_list,
         'rationales': AboutRationale.objects.filter(about=project),
         'objectives': AboutObjective.objects.filter(about=project).prefetch_related('details'),
         'team_members': AboutTeamMember.objects.filter(about=project).prefetch_related('socials'),
@@ -66,10 +69,13 @@ def project_view(request, about_id):
 @user_access_required(["admin", "cmi"], error_type=404)
 def project_sub_view(request, sub_id):
     subproject = get_object_or_404(AboutSubProject, pk=sub_id)
-
+    about = About.objects.all() 
+    about_list = About.objects.all()
     context = {
         'featured_about': subproject,
         'project': subproject,
+        'about': about,
+        'about_list': about_list,
         'rationales': AboutSubProjectRationale.objects.filter(about=subproject),
         'objectives': AboutSubProjectObjective.objects.filter(about=subproject).prefetch_related('details'),
         'team_members': AboutSubProjectTeamMember.objects.filter(about=subproject).prefetch_related('socials'),

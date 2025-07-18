@@ -1223,7 +1223,7 @@ def about_sub_project_add(request, about_id):
     return redirect('appAdmin:about-sub-project', pk=about_id)
 
 from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib import messages
+from django.contrib import messages 
 
 def about_sub_project_edit(request, sub_id):
     """Edit existing sub project"""

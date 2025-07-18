@@ -58,6 +58,7 @@
                 <i class="fa-solid fa-circle-chevron-down"></i>
               </a>
               <div class="dropdown-menu" role="menu">
+                <a href="{% url 'appCmi:cmi-about' %}">RAISE Main Project</a>
                 {% if about_list %}
                   {% for about in about_list %}
                     <a href="/cmis/project/{{ about.about_id }}/" class="dropdown-item" role="menuitem">
@@ -203,7 +204,21 @@
     </nav>
   </nav>
 </header>
+<style>
+  /* .carousel-caption h1 {
+  -webkit-text-stroke: 2px #2d5016; 
+  text-stroke: 2px #2d5016;
+  color: white; 
+  text-shadow: 2px 2px 4px rgba(45, 80, 22, 0.8);
+}
 
+.carousel-caption p {
+  -webkit-text-stroke: 0.5px #2d5016; 
+  text-stroke: 0.5px #2d5016;
+  color: white;
+  text-shadow: 0.5px 0.5px 2px rgba(45, 80, 22, 0.8);
+} */
+</style>
   <!-- Carousel Start -->
   <div id="raiseCarousel" class="carousel slide" data-ride="carousel" data-interval="5000">
     <div class="carousel-inner">
@@ -211,8 +226,8 @@
         <div class="carousel-item {% if forloop.first %}active{% endif %}">
           <img src="{{ img.image.url }}" class="d-block w-100" alt="{{ img.title }}">
           <div class="carousel-caption">
-            <h1>{{ img.title }}</h1>
-            <p>{{ img.description }}</p>
+            <h1 style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">{{ img.title }}</h1>
+            <p style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">{{ img.description }}</p>
           </div>
         </div>
       {% empty %}
@@ -299,42 +314,58 @@
     </div>
   </div>
 
-  <div class="section" id="projects" style="text-align:center;">
-    <div class="">
-      <h2 class="section-title" data-aos="fade-up">RAISE Projects</h2>
-      <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">{{ main.raise_project_desc|safe }}</p>
-      
-      <div class="projects-container">
-        <button class="slider-nav slider-prev" onclick="scrollProjects(-1)">
-          <i class="fas fa-chevron-left"></i>
-        </button>
-        
-        <div class="projects-slider" id="projectsSlider">
-          {% if about_list %}
-            {% for about in about_list %}
-              <div class="project-card" data-aos="fade-up" data-aos-delay="200">
-                {% if about.image %}
-                  <img src="{{ about.image.url }}" alt="{{ about.project_name }}" class="img-fluid mb-3" style="max-height: 100px; object-fit: contain;">
-                {% else %}
-                  <i class="fas fa-business-time"></i>
-                {% endif %}
-                <h4>{{ about.project_name }}</h4>
-                <!-- <p>{{ about.project_details }}</p> -->
-                <a href="/cmis/project/{{ about.about_id }}/" class="btn-see-more">See Details <i class="fas fa-arrow-right"></i></a>
-              </div>
-            {% endfor %}
-          {% else %}
-            <p>No project information available.</p>
-          {% endif %}
-        </div>
-        
-        <button class="slider-nav slider-next" onclick="scrollProjects(1)">
-          <i class="fas fa-chevron-right"></i>
-        </button>
-      </div>
-    </div>
+  <div class="section" id="projects" style="text-align:center;"> 
+    <div class=""> 
+      <h2 class="section-title" data-aos="fade-up">RAISE Projects</h2> 
+      <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">{{ main.raise_project_desc|safe }}</p> 
+       
+      <div class="projects-container"> 
+        {% if about_list and about_list|length >= 5 %}
+          <button class="slider-nav slider-prev" onclick="scrollProjects(-1)"> 
+            <i class="fas fa-chevron-left"></i> 
+          </button> 
+        {% endif %}
+         
+        <div class="projects-slider{% if about_list and about_list|length >= 5 %} scrollable{% endif %}" id="projectsSlider"> 
+          {% if about_list %} 
+            {% for about in about_list %} 
+              <div class="project-card" data-aos="fade-up" data-aos-delay="200"> 
+                {% if about.image %} 
+                  <img src="{{ about.image.url }}" alt="{{ about.project_name }}" class="img-fluid mb-3" style="max-height: 100px; object-fit: contain;"> 
+                {% else %} 
+                  <i class="fas fa-business-time"></i> 
+                {% endif %} 
+                <h4>{{ about.project_name }}</h4> 
+                <!-- <p>{{ about.project_details }}</p> --> 
+                <a href="/cmis/project/{{ about.about_id }}/" class="btn-see-more">See Details <i class="fas fa-arrow-right"></i></a> 
+              </div> 
+            {% endfor %} 
+          {% else %} 
+            <p>No project information available.</p> 
+          {% endif %} 
+        </div> 
+         
+        {% if about_list and about_list|length >= 5 %}
+          <button class="slider-nav slider-next" onclick="scrollProjects(1)"> 
+            <i class="fas fa-chevron-right"></i> 
+          </button> 
+        {% endif %}
+      </div> 
+    </div> 
   </div>
-
+<script>
+function scrollProjects(direction) {
+  const slider = document.getElementById('projectsSlider');
+  const cardWidth = 300; // Card width + gap
+  const scrollAmount = cardWidth * 2; // Scroll 2 cards at a time
+  
+  if (direction === -1) {
+    slider.scrollLeft -= scrollAmount;
+  } else {
+    slider.scrollLeft += scrollAmount;
+  }
+}
+</script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>

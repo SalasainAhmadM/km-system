@@ -35,18 +35,18 @@ def cmi_about(request):
     }
     return render(request, "pages/cmi-about.html", context)
 
-@user_access_required(["admin", "cmi"], error_type=404)
-def project_view(request, about_id):
-    project = get_object_or_404(About, pk=about_id)
+# @user_access_required(["admin", "cmi"], error_type=404)
+# def project_view(request, about_id):
+#     project = get_object_or_404(About, pk=about_id)
 
-    context = {
-        'featured_about': project,
-        'project': project,
-        'rationales': AboutRationale.objects.filter(about=project),
-        'objectives': AboutObjective.objects.filter(about=project).prefetch_related('details'),
-        'team_members': AboutTeamMember.objects.filter(about=project).prefetch_related('socials'),
-        'subprojects': AboutSubProject.objects.filter(about=project),
-        'timeline_items': AboutTimeline.objects.filter(about=project).prefetch_related('bullets', 'images'),
-    }
+#     context = {
+#         'featured_about': project,
+#         'project': project,
+#         'rationales': AboutRationale.objects.filter(about=project),
+#         'objectives': AboutObjective.objects.filter(about=project).prefetch_related('details'),
+#         'team_members': AboutTeamMember.objects.filter(about=project).prefetch_related('socials'),
+#         'subprojects': AboutSubProject.objects.filter(about=project),
+#         'timeline_items': AboutTimeline.objects.filter(about=project).prefetch_related('bullets', 'images'),
+#     }
 
-    return render(request, 'pages/project.html', context)
+#     return render(request, 'pages/project.html', context)

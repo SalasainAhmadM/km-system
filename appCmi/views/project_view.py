@@ -12,7 +12,7 @@ from utils.user_control import user_access_required
 @user_access_required(["admin", "cmi"], error_type=404)
 def project_detail(request, about_id):
     models = get_active_models()
-    
+    about = About.objects.all()
     # Get the main project
     featured_about = get_object_or_404(About, pk=about_id)
     
@@ -36,6 +36,7 @@ def project_detail(request, about_id):
         'objectives': objectives,
         'team_members': team_members,
         'subprojects': subprojects,
+        "about": about,
         'timeline_items': timeline_items,
     })
 
@@ -91,3 +92,19 @@ def project_sub_view(request, sub_id):
 #         'team_members': team_members,
 #         'timeline_items': timeline_items,
 #     })
+
+@user_access_required(["admin", "cmi"], error_type=404)
+def project_view(request, about_id):
+    project = get_object_or_404(About, pk=about_id)
+
+    context = {
+        'featured_about': project,
+        'project': project,
+        'rationales': AboutRationale.objects.filter(about=project),
+        'objectives': AboutObjective.objects.filter(about=project).prefetch_related('details'),
+        'team_members': AboutTeamMember.objects.filter(about=project).prefetch_related('socials'),
+        'subprojects': AboutSubProject.objects.filter(about=project),
+        'timeline_items': AboutTimeline.objects.filter(about=project).prefetch_related('bullets', 'images'),
+    }
+
+    return render(request, 'pages/project.html', context)
