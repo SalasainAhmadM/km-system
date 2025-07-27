@@ -984,6 +984,69 @@ function scrollSubprojects(direction) {
   <div class="container">
     <h2 class="section-title">Project Timeline</h2>
 
+    <!-- Date Range Filter -->
+    <div class="timeline-filter-container" style="margin-bottom: 30px; text-align: center;">
+      <div class="date-range-filter" style="
+        display: inline-flex;
+        align-items: center;
+        gap: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
+        background: white;
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        border: 2px solid #f0f0f0;
+      ">
+        <div class="filter-group">
+          <label for="start-date-filter" style="display: block; margin-bottom: 5px; font-weight: 600; color: #333; font-size: 14px;">From:</label>
+          <input type="date" id="start-date-filter" class="date-input" onchange="filterTimelineItems()" style="
+            padding: 8px 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            background: white;
+            font-size: 14px;
+            color: #333;
+            outline: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+          ">
+        </div>
+        
+        <div class="filter-group">
+          <label for="end-date-filter" style="display: block; margin-bottom: 5px; font-weight: 600; color: #333; font-size: 14px;">To:</label>
+          <input type="date" id="end-date-filter" class="date-input" onchange="filterTimelineItems()" style="
+            padding: 8px 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            background: white;
+            font-size: 14px;
+            color: #333;
+            outline: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+          ">
+        </div>
+        
+        <div class="filter-actions" style="display: flex; gap: 10px; align-items: end;">
+          <button onclick="clearDateFilter()" class="clear-filter-btn" style="
+            padding: 8px 16px;
+            background: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+          " onmouseover="this.style.background='#5a6268'" onmouseout="this.style.background='#6c757d'">
+            Clear
+          </button>
+          
+        </div>
+      </div>
+    </div>
+
     <div class="timeline-container">
       {% if timeline_items %}
         <div class="timeline-line"></div>
@@ -991,7 +1054,9 @@ function scrollSubprojects(direction) {
 
       {% if timeline_items %}
         {% for timeline in timeline_items %}
-          <div class="timeline-item {% cycle 'left' 'right' %}">
+          <div class="timeline-item {% cycle 'left' 'right' %}" 
+               data-start-date="{{ timeline.date_start|date:'Y-m-d' }}"
+               data-end-date="{% if timeline.date_end %}{{ timeline.date_end|date:'Y-m-d' }}{% endif %}">
             <div class="timeline-marker">
               <i class="fas fa-calendar-alt"></i>
             </div>
@@ -1118,11 +1183,61 @@ function scrollSubprojects(direction) {
           <p>No timeline information available for this project.</p>
         </div>
       {% endif %}
+
+      <!-- No results message (hidden by default) -->
+      <div class="no-filter-results" style="
+        display: none;
+        text-align: center;
+        padding: 40px;
+        color: #666;
+      ">
+        <i class="fas fa-search fa-3x mb-3" style="color: #ccc;"></i>
+        <h3 style="margin-bottom: 10px;">No items found</h3>
+        <p>No timeline items match the selected filter criteria.</p>
+      </div>
     </div>
   </div>
 </section>
 
 <style>
+/* Date Range Filter Styles */
+.date-input:hover {
+  border-color: #007bff;
+  box-shadow: 0 2px 5px rgba(0,123,255,0.1);
+}
+
+.date-input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
+}
+
+.date-range-filter {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Timeline item animation */
+.timeline-item {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.timeline-item.filtered-out {
+  opacity: 0;
+  transform: scale(0.95);
+  pointer-events: none;
+  display: none;
+}
+
 /* Hide scrollbar for timeline images */
 .timeline-image-grid::-webkit-scrollbar {
   display: none;
@@ -1190,10 +1305,146 @@ function scrollSubprojects(direction) {
     top: 15px;
     right: 20px;
   }
+
+  .timeline-filter-container {
+    margin-bottom: 20px !important;
+  }
+
+  .date-range-filter {
+    flex-direction: column !important;
+    gap: 20px !important;
+    padding: 15px !important;
+  }
+
+  .filter-group {
+    width: 100%;
+    max-width: 200px;
+  }
+
+  .filter-actions {
+    flex-direction: column !important;
+    gap: 15px !important;
+    width: 100%;
+  }
+
+  .quick-filters {
+    justify-content: center;
+  }
+
+  .date-input {
+    width: 100% !important;
+  }
 }
 </style>
 
 <script>
+function filterTimelineItems() {
+  const startDateInput = document.getElementById('start-date-filter').value;
+  const endDateInput = document.getElementById('end-date-filter').value;
+  const timelineItems = document.querySelectorAll('.timeline-item');
+  const noResultsMsg = document.querySelector('.no-filter-results');
+  
+  let visibleCount = 0;
+
+  timelineItems.forEach(item => {
+    const itemStartDate = item.getAttribute('data-start-date');
+    const itemEndDate = item.getAttribute('data-end-date');
+    let shouldShow = true;
+
+    // If no filter dates are set, show all items
+    if (!startDateInput && !endDateInput) {
+      shouldShow = true;
+    } else {
+      // Check if item falls within the date range
+      const filterStartDate = startDateInput ? new Date(startDateInput) : null;
+      const filterEndDate = endDateInput ? new Date(endDateInput) : null;
+      
+      if (itemStartDate) {
+        const itemStart = new Date(itemStartDate);
+        const itemEnd = itemEndDate ? new Date(itemEndDate) : itemStart;
+        
+        // Item should show if:
+        // 1. Item starts before or on filter end date (if set)
+        // 2. Item ends after or on filter start date (if set)
+        if (filterEndDate && itemStart > filterEndDate) {
+          shouldShow = false;
+        }
+        if (filterStartDate && itemEnd < filterStartDate) {
+          shouldShow = false;
+        }
+      } else {
+        // If item has no date, hide it when filters are applied
+        shouldShow = false;
+      }
+    }
+
+    if (shouldShow) {
+      item.classList.remove('filtered-out');
+      item.style.display = '';
+      visibleCount++;
+    } else {
+      item.classList.add('filtered-out');
+    }
+  });
+
+  // Show/hide no results message
+  if (visibleCount === 0 && (startDateInput || endDateInput)) {
+    noResultsMsg.style.display = 'block';
+  } else {
+    noResultsMsg.style.display = 'none';
+  }
+
+  // Update timeline line visibility
+  const timelineLine = document.querySelector('.timeline-line');
+  if (timelineLine) {
+    timelineLine.style.display = visibleCount > 0 ? 'block' : 'none';
+  }
+}
+
+function clearDateFilter() {
+  document.getElementById('start-date-filter').value = '';
+  document.getElementById('end-date-filter').value = '';
+  filterTimelineItems();
+}
+
+function setQuickFilter(period) {
+  const today = new Date();
+  const startDateInput = document.getElementById('start-date-filter');
+  const endDateInput = document.getElementById('end-date-filter');
+  
+  // Clear existing values first
+  startDateInput.value = '';
+  endDateInput.value = '';
+  
+  const formatDate = (date) => {
+    return date.toISOString().split('T')[0];
+  };
+  
+  switch(period) {
+    case 'last30':
+      const thirtyDaysAgo = new Date(today);
+      thirtyDaysAgo.setDate(today.getDate() - 30);
+      startDateInput.value = formatDate(thirtyDaysAgo);
+      endDateInput.value = formatDate(today);
+      break;
+      
+    case 'last90':
+      const ninetyDaysAgo = new Date(today);
+      ninetyDaysAgo.setDate(today.getDate() - 90);
+      startDateInput.value = formatDate(ninetyDaysAgo);
+      endDateInput.value = formatDate(today);
+      break;
+      
+    case 'thisYear':
+      const startOfYear = new Date(today.getFullYear(), 0, 1);
+      startDateInput.value = formatDate(startOfYear);
+      endDateInput.value = formatDate(today);
+      break;
+  }
+  
+  filterTimelineItems();
+}
+
 function scrollTimelineImages(button, direction) {
   const container = button.closest('.timeline-image-container');
   const grid = container.querySelector('.timeline-image-grid');
@@ -1248,6 +1499,11 @@ document.addEventListener('click', function(e) {
   if (e.target === modal) {
     closeFullscreen();
   }
+});
+
+// Initialize filter on page load
+document.addEventListener('DOMContentLoaded', function() {
+  filterTimelineItems();
 });
 </script>
 

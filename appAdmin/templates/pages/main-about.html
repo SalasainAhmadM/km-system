@@ -116,7 +116,7 @@
         <th>Project Rationale</th>
         <th>Org Image</th>
         <!-- <th>Images w title and desc</th> -->
-        <th>Objectives</th>
+        <!-- <th>Objectives</th> -->
         <th>Date Created</th>
         <th>Actions</th>
       </tr>
@@ -134,7 +134,7 @@
              <i class="fa-solid fa-image"></i>
          {% endif %}
         </td>       
-      <td>{{ item.project_objectives_desc|default:"—"|truncatewords:10 }}</td>
+      <!-- <td>{{ item.project_objectives_desc|default:"—"|truncatewords:10 }}</td> -->
       <td>{{ item.date_created|date:"Y-m-d H:i" }}</td>
       <td>
         <div class="action-buttons">
@@ -1155,6 +1155,21 @@ $(document).ready(function() {
     });
   });
 
-  
+  document.addEventListener("DOMContentLoaded", function () {
+  const descriptionField = document.querySelector('textarea[name="description"]');
+
+  if (descriptionField) {
+    descriptionField.addEventListener("input", function () {
+      const words = descriptionField.value.trim().split(/\s+/);
+      if (words.length > 100) {
+        // Keep only the first 100 words
+        descriptionField.value = words.slice(0, 100).join(" ");
+        
+        // Optional: notify user (you can customize this)
+        alert("Description must not exceed 100 words.");
+      }
+    });
+  }
+});
 </script>
 {% endblock %}

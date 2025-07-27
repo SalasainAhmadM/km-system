@@ -577,15 +577,11 @@ class ObjectiveBulletForm(forms.Form):
 class MainProgramForm(forms.ModelForm, CommonFormStyle):
     class Meta:
         model = MainProgram
-        fields = '__all__'
+        fields = ['project_rationale_desc', 'raise_project_desc', 'org_struct_image']
         widgets = {
             'project_rationale_desc': forms.Textarea(attrs={
                 **CommonFormStyle.common_textarea_attrs,
                 'placeholder': 'Enter project rationale...',
-            }),
-            'project_objectives_desc': forms.Textarea(attrs={
-                **CommonFormStyle.common_textarea_attrs,
-                'placeholder': 'Enter project objectives...',
             }),
             'raise_project_desc': forms.Textarea(attrs={
                 **CommonFormStyle.common_textarea_attrs,
@@ -621,8 +617,8 @@ class MainTargetBulletForm(forms.ModelForm):
             }),
         }
 
-
-# 🖼️ Main Program Image Form with Custom File Input
+from django.core.exceptions import ValidationError
+# 🖼️ Main Program Image Form with Custom File Inputclass MainProgramImageForm(forms.ModelForm):
 class MainProgramImageForm(forms.ModelForm):
     class Meta:
         model = MainProgramImage
@@ -630,8 +626,21 @@ class MainProgramImageForm(forms.ModelForm):
         widgets = {
             'image': CustomClearableFileInput(attrs={'class': 'form-control'}),
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter title'}),
-            'description': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Enter description', 'rows': 3}),
+            'description': forms.Textarea(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter description',
+                'rows': 3
+            }),
         }
+
+    def clean_description(self):
+        description = self.cleaned_data.get('description', '')
+        word_count = len(description.split())
+
+        if word_count > 100:
+            raise ValidationError("Description must not exceed 100 words.")
+        
+        return description
 
 from django import forms
 from django import forms

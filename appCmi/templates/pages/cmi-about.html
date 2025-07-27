@@ -1,4 +1,6 @@
 {% load static %}
+{% load text_filters %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -224,12 +226,177 @@
     <div class="carousel-inner">
       {% for img in images %}
         <div class="carousel-item {% if forloop.first %}active{% endif %}">
-          <img src="{{ img.image.url }}" class="d-block w-100" alt="{{ img.title }}">
-          <div class="carousel-caption">
-            <h1 style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">{{ img.title }}</h1>
-            <p style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">{{ img.description }}</p>
+        <img src="{{ img.image.url }}" class="d-block w-100" alt="{{ img.title }}">
+        <div class="carousel-caption">
+          <h1 style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">{{ img.title }}</h1>
+          <p style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">
+            {{ img.description|first_100_words }}
+          </p>
+          {% if img.description|wordcount > 100 %}
+          <button class="btn btn-outline-light btn-sm see-more-btn" 
+                  data-description="{{ img.description|escape }}" 
+                  data-title="{{ img.title|escape }}">
+            See More
+          </button>
+          {% endif %}
+        </div>
+        
+        <!-- Full description overlay -->
+        <div class="description-overlay" style="display: none;">
+          <div class="description-modal">
+            <div class="description-header">
+              <h3 class="description-title">{{ img.title }}</h3>
+              <button class="btn-close-description" aria-label="Close">&times;</button>
+            </div>
+            <div class="description-content">
+              <p>{{ img.description }}</p>
+            </div>
           </div>
         </div>
+      </div>
+
+      <style>
+      .description-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.8);
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+
+      .description-modal {
+        background: white;
+        border-radius: 10px;
+        max-width: 80%;
+        max-height: 80%;
+        width: 500px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        display: flex;
+        flex-direction: column;
+      }
+
+      .description-header {
+        padding: 20px;
+        border-bottom: 1px solid #eee;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-shrink: 0;
+      }
+
+      .description-title {
+        margin: 0;
+        color: #333;
+        font-size: 1.5rem;
+      }
+
+      .btn-close-description {
+        background: none;
+        border: none;
+        font-size: 2rem;
+        color: #999;
+        cursor: pointer;
+        padding: 0;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        transition: all 0.2s ease;
+      }
+
+      .btn-close-description:hover {
+        background: #f0f0f0;
+        color: #333;
+      }
+
+      .description-content {
+        padding: 20px;
+        overflow-y: auto;
+        flex: 1;
+        color: #333;
+        line-height: 1.6;
+      }
+
+      .description-content p {
+        margin: 0;
+      }
+
+      .see-more-btn {
+        margin-top: 10px;
+        transition: all 0.3s ease;
+      }
+
+      .see-more-btn:hover {
+        background: rgba(255, 255, 255, 0.2);
+        border-color: rgba(255, 255, 255, 0.5);
+      }
+
+      /* Mobile responsiveness */
+      @media (max-width: 768px) {
+        .description-modal {
+          max-width: 95%;
+          max-height: 90%;
+          margin: 10px;
+        }
+        
+        .description-header {
+          padding: 15px;
+        }
+        
+        .description-title {
+          font-size: 1.2rem;
+        }
+        
+        .description-content {
+          padding: 15px;
+        }
+      }
+      </style>
+
+      <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // Handle See More button clicks
+        document.addEventListener('click', function(e) {
+          if (e.target.classList.contains('see-more-btn')) {
+            const overlay = e.target.closest('.carousel-item').querySelector('.description-overlay');
+            overlay.style.display = 'flex';
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+          }
+          
+          // Handle close button clicks
+          if (e.target.classList.contains('btn-close-description')) {
+            const overlay = e.target.closest('.description-overlay');
+            overlay.style.display = 'none';
+            document.body.style.overflow = ''; // Restore scrolling
+          }
+          
+          // Handle clicking outside the modal
+          if (e.target.classList.contains('description-overlay')) {
+            e.target.style.display = 'none';
+            document.body.style.overflow = ''; // Restore scrolling
+          }
+        });
+        
+        // Handle escape key
+        document.addEventListener('keydown', function(e) {
+          if (e.key === 'Escape') {
+            const visibleOverlay = document.querySelector('.description-overlay[style*="flex"]');
+            if (visibleOverlay) {
+              visibleOverlay.style.display = 'none';
+              document.body.style.overflow = '';
+            }
+          }
+        });
+      });
+      </script>
       {% empty %}
         <div class="carousel-item active">
           <img src="https://images.unsplash.com/photo-1556761175-4b46a572b786?auto=format&fit=crop&w=1400&q=80" class="d-block w-100" alt="Agricultural landscape">
